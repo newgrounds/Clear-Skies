@@ -69,13 +69,16 @@ namespace ClearSkies.Prefabs
             {
                 foreach (Prefab child in children)
                 {
-                    child.Rotation = value + this.Rotation - child.Rotation;
+                    child.Rotation = child.Rotation - this.Rotation + value;
 
-                    Matrix rotationMatrix = Matrix.RotationYawPitchRoll(value.X, value.Y, value.Z);
-                    Vector4 transformedReference = Vector3.Transform(child.Location, rotationMatrix);
-                    child.Location = new Vector3(transformedReference.X, transformedReference.Y, transformedReference.Z) + this.Location;
+                    Vector3 deltaRotation = value - this.Rotation;
+
+                    Vector3 temp = child.Location - this.Location;
+                    Vector4 transformed = Vector3.Transform(temp, Matrix.RotationYawPitchRoll(deltaRotation.X, deltaRotation.Y, deltaRotation.Z));
+                    temp = new Vector3(transformed.X, transformed.Y, transformed.Z);
+                    child.Location = this.Location + temp;
                 }
-                this.rotation = value; 
+                this.rotation = value;
             }
         }
 

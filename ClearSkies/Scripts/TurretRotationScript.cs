@@ -5,6 +5,7 @@ using System.Text;
 using ClearSkies.Prefabs;
 using DI = Microsoft.DirectX.DirectInput;
 using Microsoft.DirectX;
+using ClearSkies.Prefabs.Turrets;
 
 namespace ClearSkies.Scripts
 {
@@ -15,8 +16,8 @@ namespace ClearSkies.Scripts
     {
         #region Fields
 
-        private float translateSpeed;
-        private Prefab prefab;
+        private float rotationSpeed;
+        private Turret turret;
         private DI.Device keyboard;
 
         #endregion
@@ -24,17 +25,17 @@ namespace ClearSkies.Scripts
         #region Initializer Methods
 
         /// <summary>
-        /// Script allows a Prefab to translate based on keyboard input at a 
+        /// Script allows a Turret to rotate based on keyboard input at a 
         /// certain speed.
         /// </summary>
-        /// <param name="prefab">Prefab to translate.</param>
+        /// <param name="turret">Turret to translate.</param>
         /// <param name="keyboard">Keyboard Device to recieve input from.</param>
         /// <param name="translateSpeed">Speed to translate at.</param>
-        public TurretRotationScript(Prefab prefab, DI.Device keyboard, float translateSpeed)
+        public TurretRotationScript(Turret turret, DI.Device keyboard, float rotationSpeed)
         {
-            this.prefab = prefab;
+            this.turret = turret;
             this.keyboard = keyboard;
-            this.translateSpeed = translateSpeed;
+            this.rotationSpeed = rotationSpeed;
         }
 
         #endregion
@@ -49,50 +50,26 @@ namespace ClearSkies.Scripts
         public void run(float deltaTime)
         {
             DI.KeyboardState keys = keyboard.GetCurrentKeyboardState();
-            Vector3 location = Vector3.Empty;
+            Vector3 rotation = turret.Rotation;
 
             if (keys[DI.Key.Up] || keys[DI.Key.UpArrow] || keys[DI.Key.W])
             {
-                location.Z -= translateSpeed * deltaTime;
+                turret.BarrelRotation -= rotationSpeed * deltaTime;
             }
             if (keys[DI.Key.Left] || keys[DI.Key.LeftArrow] || keys[DI.Key.A])
             {
-                location.X += translateSpeed * deltaTime;
+                rotation.X += rotationSpeed * deltaTime;
             }
             if (keys[DI.Key.Down] || keys[DI.Key.DownArrow] || keys[DI.Key.S])
             {
-                location.Z += translateSpeed * deltaTime;
+                turret.BarrelRotation += rotationSpeed * deltaTime;
             }
             if (keys[DI.Key.Right] || keys[DI.Key.RightArrow] || keys[DI.Key.D])
             {
-                location.X -= translateSpeed * deltaTime;
+                rotation.X -= rotationSpeed * deltaTime;
             }
 
-            Matrix rotationMatrix = Matrix.RotationY(prefab.Rotation.X);
-            Vector4 transformedReference = Vector3.Transform(location, rotationMatrix);
-
-            location = new Vector3(transformedReference.X, transformedReference.Y, transformedReference.Z) + prefab.Location;
-
-            // Keeps the Prefab inside world
-            if (location.X > 20)
-            {
-                location.X = 20f;
-            }
-            else if (location.X < -20)
-            {
-                location.X = -20f;
-            }
-
-            if (location.Z > 20)
-            {
-                location.Z = 20f;
-            }
-            else if (location.Z < -20)
-            {
-                location.Z = -20f;
-            }
-
-            prefab.Location = location;
+            turret.Rotation = rotation;
         }
 
         #endregion

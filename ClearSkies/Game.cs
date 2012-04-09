@@ -24,7 +24,7 @@ namespace ClearSkies
         private Prefab playerTurret;
 
         private Device device;
-        private DI.Device keyBoard;
+        private DI.Device keyboard;
         private DI.Device mouse;
 
         private ClearSkies.Prefabs.Cameras.ThirdPersonCamera camera;
@@ -119,7 +119,7 @@ namespace ClearSkies
             Mesh turretBaseMesh = Mesh.Box(device, 1f, 0.5f, 1f);
             Model turretBase = new Model(turretBaseMesh, new Material[] { turretMaterial}, new Texture[] { null }, device, true);
 
-            playerTurret = new Turret(turretBarrel, turretBase, Vector3.Empty, Vector3.Empty);
+            playerTurret = new Turret(turretBarrel, turretBase, Vector3.Empty, Vector3.Empty, keyboard);
 
             this.camera = new Prefabs.Cameras.ThirdPersonCamera(device, playerTurret, new Vector3(0f, 2f, -5f));
 
@@ -133,14 +133,14 @@ namespace ClearSkies
         /// <exception cref="MouseNotFoundException">DirectInput could not aquire Mouse</exception>
         private void InitializeInputDevices()
         {
-            keyBoard = new DI.Device(DI.SystemGuid.Keyboard);
-            if (keyBoard == null) throw new KeyboardNotFoundException("No keyboard found.");
+            keyboard = new DI.Device(DI.SystemGuid.Keyboard);
+            if (keyboard == null) throw new KeyboardNotFoundException("No keyboard found.");
 
             mouse = new DI.Device(DI.SystemGuid.Mouse);
             if (mouse == null) throw new MouseNotFoundException("No mouse found.");
 
-            keyBoard.SetCooperativeLevel(this, DI.CooperativeLevelFlags.Background | DI.CooperativeLevelFlags.NonExclusive);
-            keyBoard.Acquire();
+            keyboard.SetCooperativeLevel(this, DI.CooperativeLevelFlags.Background | DI.CooperativeLevelFlags.NonExclusive);
+            keyboard.Acquire();
 
             mouse.SetCooperativeLevel(this, DI.CooperativeLevelFlags.NonExclusive | DI.CooperativeLevelFlags.Background);
             mouse.Acquire();
@@ -168,7 +168,7 @@ namespace ClearSkies
         /// <param name="deltaTime">The amount of miliseconds since last update.</param>
         private void update(TimeSpan deltaTime)
         {
-            DI.KeyboardState keys = keyBoard.GetCurrentKeyboardState();
+            DI.KeyboardState keys = keyboard.GetCurrentKeyboardState();
 
             switch (gameState)
             {
@@ -177,7 +177,7 @@ namespace ClearSkies
                 case GameState.Pause:
                     break;
                 case GameState.Play:
-                    float timeInSeconds = deltaTime.Milliseconds / 1000f;
+                    
                     // update stuff
                     break;
                 case GameState.Quit:
@@ -187,6 +187,10 @@ namespace ClearSkies
                 case GameState.Win:
                     break;
             }
+
+            float timeInSeconds = deltaTime.Milliseconds / 1000f;
+
+            playerTurret.update(timeInSeconds);
 
             if (keys[DI.Key.Escape])
             {
@@ -239,7 +243,7 @@ namespace ClearSkies
             device.Lights[0].Update();
             device.Lights[0].Enabled = true;
 
-            device.RenderState.Ambient = Color.White;
+            device.RenderState.AmbientColor = Color.White.ToArgb();
             
         }
 
