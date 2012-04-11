@@ -6,43 +6,60 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using ClearSkies.Scripts;
 using DI = Microsoft.DirectX.DirectInput;
+using ClearSkies.Managers;
 
 namespace ClearSkies.Prefabs.Turrets
 {
-    class Turret : Prefab
+    /// <summary>
+    /// A Prefab used to represent the Turrets that Players will use to shoot
+    /// at Enemies.
+    /// </summary>
+    abstract class Turret : Prefab
     {
+        #region Fields
+
+        private static Vector3 DEFAULT_TURRET_ROTATION = new Vector3(0f, (float)Math.PI / 2f, 0f);
+
         private List<TurretBarrel> barrels;
 
-        public Turret(Model barrelModel, Model baseModel, Vector3 location, Vector3 rotation, DI.Device keyboard)
-        {
-            this.models.Add(baseModel);
-            this.location = location;
-            this.rotation = rotation;
-            
-            barrels = new List<TurretBarrel>();
-            
-            addChild(new TurretBarrel(barrelModel,
-                new Vector3(location.X + 0.25f, location.Y + 0.5f, location.Z + 0.5f),
-                new Vector3(rotation.X, rotation.Y + 45f, rotation.Z)
-                ));
+        #endregion
 
-            addChild(new TurretBarrel(barrelModel,
-                new Vector3(location.X - 0.25f, location.Y + 0.5f, location.Z + 0.5f),
-                new Vector3(rotation.X, rotation.Y + 45f, rotation.Z)
-                ));
-            
-            this.scripts.Add(new TurretRotationScript(this, keyboard, 10f));
+        #region Initializer Methods
+
+        /// <summary>
+        /// Creates a vanilla Turret that will be at the given location and 
+        /// facing the given rotation. The turret is able to turn at the given
+        /// speed and is controlled with the given keyboard Device.
+        /// </summary>
+        /// <param name="location">Location of the Turret in game</param>
+        /// <param name="rotation">Rotation the Turret is facing</param>
+        /// <param name="turretRotationSpeed">Speed the Turret can rotate at</param>
+        /// <param name="keyboard">Keyboard Device used to controll the Turret</param>
+        public Turret(Vector3 location, Vector3 rotation, float turretRotationSpeed, DI.Device keyboard) : base(location, rotation)
+        {
+            this.barrels = new List<TurretBarrel>();
+
+            this.scripts.Add(new TurretRotationScript(this, keyboard, turretRotationSpeed));
         }
 
+        #endregion
+
+        #region Getters and Setters
+
+        /// <summary>
+        /// The angle of rotation for the TurretBarrels.
+        /// </summary>
         public float BarrelRotation
         {
             get 
             {
                 float barrelRotation = 0.0f;
+
                 if (children.Count > 0)
                 {
                     barrelRotation = children[0].Rotation.Y;
                 }
+
                 return barrelRotation;
             }
             set 
@@ -59,23 +76,6 @@ namespace ClearSkies.Prefabs.Turrets
             }
         }
 
-        //public override void draw(Device device)
-        //{
-        //    base.draw(device);
-
-        //    this.baseModel.draw();
-
-        //    device.Transform.World = Matrix.Multiply(
-        //        Matrix.RotationYawPitchRoll(rotation.X, rotation.Y + barrelRotation, rotation.Z),
-        //        Matrix.Translation(location.X + 0.25f, location.Y + 0.5f, location.Z + 0.5f));
-
-        //    this.barrelModel1.draw();
-
-        //    device.Transform.World = Matrix.Multiply(
-        //        Matrix.RotationYawPitchRoll(rotation.X, rotation.Y + barrelRotation, rotation.Z),
-        //        Matrix.Translation(location.X - 0.25f, location.Y + 0.5f, location.Z + 0.5f));
-
-        //    this.barrelModel1.draw();
-        //}
+        #endregion
     }
 }

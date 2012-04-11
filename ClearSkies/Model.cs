@@ -71,7 +71,6 @@ namespace ClearSkies
             this.models = new List<Model>();
         }
 
-
         #endregion
 
         #region Public Methods

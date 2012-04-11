@@ -8,31 +8,39 @@ using Microsoft.DirectX.Direct3D;
 namespace ClearSkies.Prefabs.Cameras
 {
     /// <summary>
-    /// A simple Third Person Camera that will chance the main prefab around at a set distance.
+    /// A simple Third Person Camera that will focus on a defined Prefab.
     /// </summary>
     class ThirdPersonCamera : Prefab
     {
         #region Fields
 
         private Prefab focusOn;
-        private Device device;
 
         #endregion
 
-        public ThirdPersonCamera(Device device, Prefab focusOn, Vector3 location)
+        #region Initializer Methods
+
+        /// <summary>
+        /// Creates a ThirdPersonCamera that will focus on the given Prefab.
+        /// Note that if you parent the Camera to the Prefab it will follow
+        /// the Prefab around the world.
+        /// </summary>
+        /// <param name="focusOn">Prefab to focus the Camera's view on.</param>
+        /// <param name="location">Location of the Camera in the world</param>
+        public ThirdPersonCamera(Prefab focusOn, Vector3 location) : base(location, Vector3.Empty)
         {
-            this.device = device;
-            this.location = location;
             this.focusOn = focusOn;
         }
+
+        #endregion
 
         #region Public Methods
 
         /// <summary>
-        /// Sets the devices View and Projection matrixes. Also readjusts 
-        /// the cameras position to be behind the prefab it focuses on.
+        /// Sets the devices View and Projection matrixes to focus on its 
+        /// target.
         /// </summary>
-        public void view()
+        public void view(Device device)
         {
             device.Transform.View = Matrix.LookAtLH(Location, focusOn.Location, new Vector3(0, 1f, 0));
             device.Transform.Projection = Matrix.PerspectiveFovLH((float)Math.PI / 4f, 1f, 1f, 100f);

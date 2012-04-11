@@ -10,7 +10,8 @@ using ClearSkies.Prefabs.Turrets;
 namespace ClearSkies.Scripts
 {
     /// <summary>
-    /// A script that will allow a Prefab to be shifted based on the current key state.
+    /// A script that will allow a Turret Prefab to be shifted based on the 
+    /// current key state.
     /// </summary>
     class TurretRotationScript : Script
     {
@@ -46,7 +47,7 @@ namespace ClearSkies.Scripts
         /// Translates the prefab according to the current KeyState. Will
         /// block movement in a certain direction if it is outside the worlds bounds.
         /// </summary>
-        /// <param name="deltaTime"></param>
+        /// <param name="deltaTime">Time in seconds since last Update</param>
         public void run(float deltaTime)
         {
             DI.KeyboardState keys = keyboard.GetCurrentKeyboardState();

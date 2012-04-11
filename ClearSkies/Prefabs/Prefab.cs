@@ -10,13 +10,13 @@ namespace ClearSkies.Prefabs
 {
     /// <summary>
     /// A prefab object is an object that is a mixture of models and scripts to
-    /// be run. This is useful for building any in game object. Some limitations
-    /// do apply such as to the Third Person Camera.
+    /// be run. This is useful for building any in game object.
     /// </summary>
     abstract class Prefab
     {
         #region Fields
 
+        protected bool alive;
         protected Vector3 location;
         protected Vector3 rotation;
         protected List<Model> models;
@@ -28,13 +28,17 @@ namespace ClearSkies.Prefabs
         #region Initializer Methods
 
         /// <summary>
-        /// Creates an empty Prefab, this way every component
-        /// can be tweaked as needed.
+        /// Creates an Prefab at a given location facing a given rotation. This
+        /// object is used as the base for all in game objects.
         /// </summary>
-        protected Prefab()
+        /// <param name="location">Location of the Prefab</param>
+        /// <param name="rotation">Rotation the Prefab is facing</param>
+        protected Prefab(Vector3 location, Vector3 rotation)
         {
-            this.location = Vector3.Empty;
-            this.rotation = Vector3.Empty;
+            this.alive = true;
+            this.location = location;
+            this.rotation = rotation;
+
             this.children = new List<Prefab>();
             this.scripts = new List<Script>();
             this.models = new List<Model>();
@@ -62,7 +66,7 @@ namespace ClearSkies.Prefabs
         /// <summary>
         /// Gets or Sets the Prefabs current rotation. TODO: TEST!!!
         /// </summary>
-        public Vector3 Rotation
+        public virtual Vector3 Rotation
         {
             get { return rotation; }
             set 
@@ -80,6 +84,15 @@ namespace ClearSkies.Prefabs
                 }
                 this.rotation = value;
             }
+        }
+        /// <summary>
+        /// Determines if the Prefab is still alive in the scene. If not it
+        /// should be removed by its Manager.
+        /// </summary>
+        public bool Alive
+        {
+            get { return alive; }
+            set { this.alive = value; }
         }
 
         /// <summary>
@@ -104,14 +117,25 @@ namespace ClearSkies.Prefabs
         #region Public Methods
 
         /// <summary>
+        /// Detects a collision with the given Prefab.
+        /// </summary>
+        /// <param name="collider">Prefab that has collided with this Prefab</param>
+        public virtual void detectCollision(Prefab collider) { }
+
+        /// <summary>
         /// Update simply runs every script associated with the current Prefab.
         /// </summary>
         /// <param name="deltaTime">Time since last update in seconds</param>
-        public void update(float deltaTime)
+        public virtual void update(float deltaTime)
         {
             foreach (Script script in scripts)
             {
                 script.run(deltaTime);
+            }
+
+            foreach (Prefab child in children)
+            {
+                child.update(deltaTime);
             }
         }
 

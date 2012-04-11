@@ -3,16 +3,61 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.DirectX;
+using DI = Microsoft.DirectX.DirectInput;
+using ClearSkies.Scripts;
+using ClearSkies.Managers;
 
 namespace ClearSkies.Prefabs.Turrets
 {
+    /// <summary>
+    /// A part of a Turret used to launch projectiles. Should only be used 
+    /// with Turret Prefabs.
+    /// </summary>
     class TurretBarrel : Prefab
     {
-        public TurretBarrel(Model barrelModel, Vector3 location, Vector3 rotation)
+        #region Initializer Methods
+
+        /// <summary>
+        /// Creates a single TurretBarrel which will be represented by the
+        /// given Model at the given location facing the given rotation. The
+        /// TurretBarrel will be controlled by the given keyboard Device.
+        /// </summary>
+        /// <param name="barrelModel">Model to represent the TurretBarrel</param>
+        /// <param name="location">Location of the TurretBarrel in the gameworld</param>
+        /// <param name="rotation">Rotation the TurretBarrel is facing</param>
+        /// <param name="keyboard">Keyboard Device used to controll the TurretBarrel</param>
+        public TurretBarrel(Model barrelModel, Vector3 location, Vector3 rotation, DI.Device keyboard) : base(location, rotation)
         {
             this.models.Add(barrelModel);
-            this.location = location;
-            this.rotation = rotation;
+            this.scripts.Add(new ShootScript(this, keyboard));
         }
+
+        #endregion
+
+        #region Getter and Setter Methods
+
+        /// <summary>
+        /// The rotation of the TurretBarrel. This value is clamped to a 
+        /// 90 degree turn.
+        /// </summary>
+        public override Vector3 Rotation
+        {
+            get { return this.rotation; }
+            set
+            {
+                this.rotation = value;
+
+                if (rotation.Y < 0)
+                {
+                    this.rotation.Y = 0;
+                }
+                else if (rotation.Y >= Math.PI / 2.0f)
+                {
+                    this.rotation.Y = (float)Math.PI / 2.0f;
+                }
+            }
+        }
+
+        #endregion
     }
 }

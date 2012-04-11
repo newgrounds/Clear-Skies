@@ -10,10 +10,13 @@ using D3DFont = Microsoft.DirectX.Direct3D.Font;
 using WinFont = System.Drawing.Font; 
 using DI = Microsoft.DirectX.DirectInput;
 using ClearSkies.Exceptions;
-using Microsoft.DirectX.Direct3D;
+using D3D = Microsoft.DirectX.Direct3D;
 using ClearSkies.Prefabs;
 using Microsoft.DirectX;
 using ClearSkies.Prefabs.Turrets;
+using ClearSkies.Managers;
+using ClearSkies.Content;
+using ClearSkies.Prefabs.Cameras;
 
 namespace ClearSkies
 {
@@ -21,15 +24,15 @@ namespace ClearSkies
     {
         #region Fields
 
-        private Prefab playerTurret;
-
-        private Device device;
+        private D3D.Device device;
         private DI.Device keyboard;
         private DI.Device mouse;
 
         private ClearSkies.Prefabs.Cameras.ThirdPersonCamera camera;
         private GameState gameState;
         private bool enterPressed; // used to prevent errors when holding enter
+
+        private List<Manager> managers;
 
         #endregion
 
@@ -53,7 +56,7 @@ namespace ClearSkies
             {
                 TimeSpan deltaTime = DateTime.Now.Subtract(lastUpdate);
 
-                update(deltaTime);
+                update(deltaTime.Milliseconds / 1000f);
                 lastUpdate = DateTime.Now;
 
                 draw();
@@ -88,14 +91,14 @@ namespace ClearSkies
         {
             #region Presentation Parameters
 
-            PresentParameters pres = new PresentParameters();
+            D3D.PresentParameters pres = new D3D.PresentParameters();
             pres.Windowed = true;
-            pres.SwapEffect = SwapEffect.Discard;
+            pres.SwapEffect = D3D.SwapEffect.Discard;
             pres.EnableAutoDepthStencil = true;
-            pres.AutoDepthStencilFormat = DepthFormat.D16;
+            pres.AutoDepthStencilFormat = D3D.DepthFormat.D16;
 
-            device = new Device(0, DeviceType.Hardware, this, CreateFlags.SoftwareVertexProcessing, pres);
-            device.RenderState.CullMode = Cull.None;
+            device = new D3D.Device(0, D3D.DeviceType.Hardware, this, D3D.CreateFlags.SoftwareVertexProcessing, pres);
+            device.RenderState.CullMode = D3D.Cull.None;
 
             #endregion
 
@@ -108,21 +111,18 @@ namespace ClearSkies
 
             #region Game Objects
 
-            Material turretMaterial = new Material();
-            turretMaterial.Diffuse = Color.White;
-            turretMaterial.Specular = Color.White;
-            turretMaterial.SpecularSharpness = 15.0f;
+            ContentLoader.initialize(device);
 
-            Mesh turretBarrelMesh = Mesh.Box(device, 0.1f, 1f, 0.1f);
-            Model turretBarrel = new Model(turretBarrelMesh, new Material[] { turretMaterial }, new Texture[] { null }, device, true);
+            managers = new List<Manager>();
+            BulletManager bulletManager = new BulletManager();
+            managers.Add(bulletManager);
+            TurretManager turretManager = new TurretManager();
+            managers.Add(turretManager);
 
-            Mesh turretBaseMesh = Mesh.Box(device, 1f, 0.5f, 1f);
-            Model turretBase = new Model(turretBaseMesh, new Material[] { turretMaterial}, new Texture[] { null }, device, true);
+            Turret player = TurretManager.spawnTurret(TurretType.Test, Vector3.Empty, Vector3.Empty, keyboard);
 
-            playerTurret = new Turret(turretBarrel, turretBase, Vector3.Empty, Vector3.Empty, keyboard);
-
-            this.camera = new Prefabs.Cameras.ThirdPersonCamera(device, playerTurret, new Vector3(0f, 2f, -5f));
-
+            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 2f, -5f));
+            
             #endregion
         }
 
@@ -165,8 +165,8 @@ namespace ClearSkies
         /// <summary>
         /// Updates all the game objects and listens for user input from mouse and keyboard.
         /// </summary>
-        /// <param name="deltaTime">The amount of miliseconds since last update.</param>
-        private void update(TimeSpan deltaTime)
+        /// <param name="deltaTime">Time in seconds since last update.</param>
+        private void update(float deltaTime)
         {
             DI.KeyboardState keys = keyboard.GetCurrentKeyboardState();
 
@@ -188,9 +188,12 @@ namespace ClearSkies
                     break;
             }
 
-            float timeInSeconds = deltaTime.Milliseconds / 1000f;
+            
 
-            playerTurret.update(timeInSeconds);
+            foreach (Manager m in managers)
+            {
+                m.update(deltaTime);
+            }
 
             if (keys[DI.Key.Escape])
             {
@@ -207,12 +210,11 @@ namespace ClearSkies
         /// </summary>
         private void draw()
         {
-            device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.BlueViolet, 1f, 0);
+            device.Clear(D3D.ClearFlags.Target | D3D.ClearFlags.ZBuffer, Color.BlueViolet, 1f, 0);
             device.BeginScene();
 
             SetupLights();
-
-            camera.view();
+            camera.view(device);
 
             switch (gameState)
             {
@@ -222,7 +224,11 @@ namespace ClearSkies
                 case GameState.Quit:
                 case GameState.Start:
                 case GameState.Win:
-                    playerTurret.draw(device);
+                    foreach (Manager m in managers)
+                    {
+                        m.draw(device);
+                    }
+
                     break;
             }
 
@@ -237,14 +243,13 @@ namespace ClearSkies
         {
             device.RenderState.Lighting = true;
 
-            device.Lights[0].Type = LightType.Directional;
+            device.Lights[0].Type = D3D.LightType.Directional;
             device.Lights[0].Diffuse = Color.White;
             device.Lights[0].Direction = new Vector3(0, -1, 0);
             device.Lights[0].Update();
             device.Lights[0].Enabled = true;
 
-            device.RenderState.AmbientColor = Color.White.ToArgb();
-            
+            device.RenderState.Ambient = Color.White;
         }
 
         /// <summary>
@@ -255,7 +260,7 @@ namespace ClearSkies
         protected void drawText(D3DFont font, string text)
         {
             Rectangle textRectangle = new Rectangle(this.Width / 6, this.Height / 6, this.Width * 2 / 3, this.Height * 2 / 3);
-            font.DrawText(null, text, textRectangle, DrawTextFormat.WordBreak | DrawTextFormat.Center, Color.Black);
+            font.DrawText(null, text, textRectangle, D3D.DrawTextFormat.WordBreak | D3D.DrawTextFormat.Center, Color.Black);
         }
 
         #endregion
