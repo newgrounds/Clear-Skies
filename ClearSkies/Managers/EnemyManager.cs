@@ -63,7 +63,7 @@ namespace ClearSkies.Managers
 
                     break;
                 case EnemyType.BasicTank:
-
+                    spawnedEnemy = new Tank(location, rotation);
                     break;
             }
 

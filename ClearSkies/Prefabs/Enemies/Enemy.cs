@@ -18,10 +18,10 @@ namespace ClearSkies.Prefabs.Enemies
 
         #endregion
 
-        #region Initailizer Methods
+        #region Initializer Methods
 
         /// <summary>
-        /// Creates a vanilla Enemy at the give locaiton facing the given
+        /// Creates a vanilla Enemy at the give location facing the given
         /// rotation with a collider of the given size.
         /// </summary>
         /// <param name="location">Location of Enemy in gameworld</param>

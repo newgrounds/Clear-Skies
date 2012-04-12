@@ -86,6 +86,7 @@
     <Compile Include="Prefabs\Enemies\Enemy.cs" />
     <Compile Include="Prefabs\Enemies\EnemyType.cs" />
     <Compile Include="Prefabs\Prefab.cs" />
+    <Compile Include="Scripts\TankMovementScript.cs" />
     <Compile Include="Prefabs\Turrets\TestTurret.cs" />
     <Compile Include="Prefabs\Turrets\Turret.cs" />
     <Compile Include="Prefabs\Turrets\TurretBarrel.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Scripts\Script.cs" />
     <Compile Include="Scripts\ShootScript.cs" />
     <Compile Include="Scripts\TurretRotationScript.cs" />
+    <Compile Include="Prefabs\Enemies\Tank.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

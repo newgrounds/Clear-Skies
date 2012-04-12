@@ -27,6 +27,8 @@ namespace ClearSkies.Content
         private static Model testTurretBarrelModel;
         private static Model testTurretBaseModel;
 
+        private static Model tankModel;
+
         #endregion
 
         #region Initalizer Methods
@@ -71,6 +73,12 @@ namespace ClearSkies.Content
                 new Material[] { defaultMaterial }, 
                 new Texture[] { defaultTexture }, 
                 device, 
+                true);
+
+            tankModel = new Model(Mesh.Box(device, 1f, 0.5f, 1f),
+                new Material[] { defaultMaterial },
+                new Texture[] { defaultTexture },
+                device,
                 true);
 
             initialized = true;
@@ -142,6 +150,14 @@ namespace ClearSkies.Content
             {
                 checkIfInitialized();
                 return testTurretBaseModel;
+            }
+        }
+        public static Model TankModel
+        {
+            get
+            {
+                checkIfInitialized();
+                return tankModel;
             }
         }
 

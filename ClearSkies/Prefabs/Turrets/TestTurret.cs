@@ -16,7 +16,7 @@ namespace ClearSkies.Prefabs.Turrets
         #region Fields
 
         private static Vector3 DEFAULT_TURRET_ROTATION = new Vector3(0f, (float)Math.PI / 2f, 0f);
-        private static float DEFLAUT_TURRET_ROTATION_SPEED = 1f;
+        private static float DEFAULT_TURRET_ROTATION_SPEED = 1f;
 
         #endregion
 
@@ -30,7 +30,7 @@ namespace ClearSkies.Prefabs.Turrets
         /// <param name="rotation">Rotation the Turret is facing</param>
         /// <param name="keyboard">Keyboard Device used to controll the Turret</param>
         public TestTurret(Vector3 location, Vector3 rotation, Device keyboard)
-            : base(location, rotation, DEFLAUT_TURRET_ROTATION_SPEED, keyboard)
+            : base(location, rotation, DEFAULT_TURRET_ROTATION_SPEED, keyboard)
         {
             this.models.Add(ContentLoader.TestTurretBaseModel);
 

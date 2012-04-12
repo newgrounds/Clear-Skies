@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using D3DFont = Microsoft.DirectX.Direct3D.Font;
-using WinFont = System.Drawing.Font; 
+using WinFont = System.Drawing.Font;
 using DI = Microsoft.DirectX.DirectInput;
 using ClearSkies.Exceptions;
 using D3D = Microsoft.DirectX.Direct3D;
 using ClearSkies.Prefabs;
 using Microsoft.DirectX;
 using ClearSkies.Prefabs.Turrets;
+using ClearSkies.Prefabs.Enemies;
 using ClearSkies.Managers;
 using ClearSkies.Content;
 using ClearSkies.Prefabs.Cameras;
@@ -118,8 +119,12 @@ namespace ClearSkies
             managers.Add(bulletManager);
             TurretManager turretManager = new TurretManager();
             managers.Add(turretManager);
+            EnemyManager enemyManager = new EnemyManager();
+            managers.Add(enemyManager);
 
             Turret player = TurretManager.spawnTurret(TurretType.Test, Vector3.Empty, Vector3.Empty, keyboard);
+
+            Enemy basicTank = EnemyManager.spawnEnemy(EnemyType.BasicTank, Vector3.Empty, Vector3.Empty);
 
             this.camera = new ThirdPersonCamera(player, new Vector3(0f, 2f, -5f));
             
