@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.DirectX;
 using ClearSkies.Scripts;
 using ClearSkies.Content;
+using ClearSkies.Prefabs.Bullets;
 
 namespace ClearSkies.Prefabs.Enemies
 {
@@ -15,7 +16,8 @@ namespace ClearSkies.Prefabs.Enemies
     {
         #region Fields
 
-        private static float TANK_SPEED = 1.0f;
+        private static float TANK_SPEED = -1.0f;
+        // we probably want this set to the size of the tank, which is currently 0.5f
         private static float COLLIDER_SIZE = 1.0f;
 
         #endregion
@@ -34,6 +36,22 @@ namespace ClearSkies.Prefabs.Enemies
             this.models.Add(ContentLoader.TankModel);
 
             this.scripts.Add(new TankMovementScript(this, TANK_SPEED));
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        // this detects and handles collisions for the tank
+        public override void detectCollision(Prefab collider)
+        {
+            base.detectCollision(collider);
+
+            if (collider is Bullet)
+            {
+                this.scripts.Clear();
+                // TODO: Add death animation script
+            }
         }
 
         #endregion

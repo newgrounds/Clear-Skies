@@ -124,7 +124,17 @@ namespace ClearSkies
 
             Turret player = TurretManager.spawnTurret(TurretType.Test, Vector3.Empty, Vector3.Empty, keyboard);
 
-            Enemy basicTank = EnemyManager.spawnEnemy(EnemyType.BasicTank, Vector3.Empty, Vector3.Empty);
+            for (int i = 0; i < 5; i++)
+            {
+                Enemy basicTank = 
+                    EnemyManager.spawnEnemy(EnemyType.BasicTank, new Vector3(0+i, 0, 15), Vector3.Empty);
+            }
+
+            for (int j = 0; j < 5; j++)
+            {
+                Enemy basicTank =
+                    EnemyManager.spawnEnemy(EnemyType.BasicTank, new Vector3(0 - j, 0, 15), Vector3.Empty);
+            }
 
             this.camera = new ThirdPersonCamera(player, new Vector3(0f, 2f, -5f));
             

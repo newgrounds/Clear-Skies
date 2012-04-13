@@ -46,21 +46,5 @@ namespace ClearSkies.Prefabs.Enemies
         }
 
         #endregion
-
-        #region Public Methods
-
-        // TODO: extract this to subclasses.
-        public override void detectCollision(Prefab collider)
-        {
-            base.detectCollision(collider);
-
-            if (collider is Bullet)
-            {
-                this.scripts.Clear();
-                // TODO: Add death animation script
-            }
-        }
-
-        #endregion
     }
 }

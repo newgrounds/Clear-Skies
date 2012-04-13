@@ -75,7 +75,7 @@ namespace ClearSkies.Content
                 device, 
                 true);
 
-            tankModel = new Model(Mesh.Box(device, 1f, 0.5f, 1f),
+            tankModel = new Model(Mesh.Box(device, 0.5f, 0.5f, 0.5f),
                 new Material[] { defaultMaterial },
                 new Texture[] { defaultTexture },
                 device,

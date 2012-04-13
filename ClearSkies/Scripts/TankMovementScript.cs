@@ -45,7 +45,7 @@ namespace ClearSkies.Scripts
         {
             Vector3 location = tank.Location;
 
-            location += new Vector3(0, 0, 1f*deltaTime);
+            location += new Vector3(0, 0, movementSpeed*deltaTime);
 
             tank.Location = location;
         }
