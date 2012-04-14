@@ -54,17 +54,17 @@ namespace ClearSkies.Managers
         /// <param name="location">Location to spawn bullet at</param>
         /// <param name="rotation">Rotation bullet should be facing</param>
         /// <returns>A refernce to the spawned Bullet</returns>
-        public static Bullet spawn(BulletType bulletType, Vector3 location, Vector3 rotation)
+        public static Bullet spawn(BulletType bulletType, Vector3 location, Vector3 rotation, Vector3 scale)
         {
             Bullet spawnedBullet = null;
 
             switch (bulletType)
             {
                 case BulletType.Basic:
-                    spawnedBullet= new BasicBullet(location, rotation);
+                    spawnedBullet= new BasicBullet(location, rotation, scale);
                     break;
                 case BulletType.Tracer:
-                    spawnedBullet = new TracerBullet(location, rotation);
+                    spawnedBullet = new TracerBullet(location, rotation, scale);
                     break;
             }
 

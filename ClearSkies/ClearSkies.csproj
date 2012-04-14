@@ -86,9 +86,12 @@
     <Compile Include="Prefabs\Enemies\Enemy.cs" />
     <Compile Include="Prefabs\Enemies\EnemyType.cs" />
     <Compile Include="Prefabs\Prefab.cs" />
-    <Compile Include="Scripts\TankMovementScript.cs" />
+    <Compile Include="Prefabs\Turrets\BasicTurret.cs" />
+    <Compile Include="Prefabs\Turrets\BasicTurretHead.cs" />
     <Compile Include="Prefabs\Turrets\TestTurret.cs" />
+    <Compile Include="Prefabs\Turrets\TestTurretHead.cs" />
     <Compile Include="Prefabs\Turrets\Turret.cs" />
+    <Compile Include="Prefabs\Turrets\TurretHead.cs" />
     <Compile Include="Prefabs\Turrets\TurretBarrel.cs" />
     <Compile Include="Prefabs\Turrets\TurretType.cs" />
     <Compile Include="Program.cs" />
@@ -98,7 +101,6 @@
     <Compile Include="Scripts\Script.cs" />
     <Compile Include="Scripts\ShootScript.cs" />
     <Compile Include="Scripts\TurretRotationScript.cs" />
-    <Compile Include="Prefabs\Enemies\Tank.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -109,6 +111,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
+    <None Include="Content\Models\BasicPlane\basicPlane.x" />
+    <None Include="Content\Models\BasicTurret\basicTurretBarrel.x" />
+    <None Include="Content\Models\BasicTurret\basicTurretBase.x" />
+    <None Include="Content\Models\BasicTurret\basicTurretHead.x" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -120,7 +126,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Models\" />
+    <Folder Include="Content\Models\BasicTank\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ParticleEngine\ParticleEngine.csproj">
+      <Project>{941F3EBF-AD9C-49AB-BB30-872361AB2CE1}</Project>
+      <Name>ParticleEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Textures\Particles\test_particle.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

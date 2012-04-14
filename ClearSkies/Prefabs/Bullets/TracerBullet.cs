@@ -29,7 +29,7 @@ namespace ClearSkies.Prefabs.Bullets
         /// </summary>
         /// <param name="location"></param>
         /// <param name="rotation"></param>
-        public TracerBullet(Vector3 location, Vector3 rotation) : base(location, rotation, ContentLoader.TracerBulletModel, DAMAGE, LIFESPAN, SPEED)
+        public TracerBullet(Vector3 location, Vector3 rotation, Vector3 scale) : base(location, rotation, scale, ContentLoader.TracerBulletModel, DAMAGE, LIFESPAN, SPEED)
         {
             this.scripts.Add(new BulletStraightMovementScript(this));
             // TODO: explode script

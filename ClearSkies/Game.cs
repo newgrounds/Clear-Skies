@@ -7,17 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using D3DFont = Microsoft.DirectX.Direct3D.Font;
-using WinFont = System.Drawing.Font;
+using WinFont = System.Drawing.Font; 
 using DI = Microsoft.DirectX.DirectInput;
 using ClearSkies.Exceptions;
 using D3D = Microsoft.DirectX.Direct3D;
 using ClearSkies.Prefabs;
 using Microsoft.DirectX;
 using ClearSkies.Prefabs.Turrets;
-using ClearSkies.Prefabs.Enemies;
 using ClearSkies.Managers;
 using ClearSkies.Content;
 using ClearSkies.Prefabs.Cameras;
+using ParticleEngine;
 
 namespace ClearSkies
 {
@@ -25,15 +25,13 @@ namespace ClearSkies
     {
         #region Fields
 
-        private static int score = 0;
-
         private D3D.Device device;
         private DI.Device keyboard;
         private DI.Device mouse;
 
         private ClearSkies.Prefabs.Cameras.ThirdPersonCamera camera;
         private GameState gameState;
-        private bool enterPressed; // used to prevent errors when holding enter
+        //private bool enterPressed; // used to prevent errors when holding enter
 
         private List<Manager> managers;
 
@@ -76,7 +74,7 @@ namespace ClearSkies
         {
             this.Width = 400;
             this.Height = 400;
-            enterPressed = false;
+            //enterPressed = false;
         }
 
         /// <summary>
@@ -121,16 +119,20 @@ namespace ClearSkies
             managers.Add(bulletManager);
             TurretManager turretManager = new TurretManager();
             managers.Add(turretManager);
-            // the enemy manager also adds enemies
-            EnemyManager enemyManager = new EnemyManager();
-            managers.Add(enemyManager);
 
-            Turret player = TurretManager.spawnTurret(TurretType.Test, Vector3.Empty, Vector3.Empty, keyboard);
+            Turret player = TurretManager.spawnTurret(TurretType.Basic, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
+            TurretManager.spawnTurret(TurretType.Test, new Vector3(5f, 0, 0), Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
 
-            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 1f, -3f));
+            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 10f, -15f));
+            player.Head.addChild(camera);
             
+            pe = new ExpolsionParticleEmitter(ContentLoader.TestParticleTexture, new Vector3(0f, 0f, 0f), new Vector3(1f, 1f, 1f), 20, 2f, -0.1f, 10f);
+
             #endregion
         }
+
+        ExpolsionParticleEmitter pe;
+
 
         /// <summary>
         /// Initializes the Keyboard and Mouse.
@@ -150,19 +152,6 @@ namespace ClearSkies
 
             mouse.SetCooperativeLevel(this, DI.CooperativeLevelFlags.NonExclusive | DI.CooperativeLevelFlags.Background);
             mouse.Acquire();
-        }
-
-        #endregion
-
-        #region Getter and Setter Methods
-
-        /// <summary>
-        /// The current score of the game
-        /// </summary>
-        public static int Score
-        {
-            get { return score; }
-            set { score = value; }
         }
 
         #endregion
@@ -205,14 +194,14 @@ namespace ClearSkies
                     break;
                 case GameState.Win:
                     break;
-            }
-
-            
+            }            
 
             foreach (Manager m in managers)
             {
                 m.update(deltaTime);
             }
+
+            pe.updateParticles(deltaTime);
 
             if (keys[DI.Key.Escape])
             {
@@ -233,7 +222,7 @@ namespace ClearSkies
             device.BeginScene();
 
             SetupLights();
-            camera.view(device);
+            
 
             switch (gameState)
             {
@@ -248,8 +237,12 @@ namespace ClearSkies
                         m.draw(device);
                     }
 
+                    pe.draw(camera.Rotation, device);
+
                     break;
             }
+
+            camera.view(device);
 
             device.EndScene();
             device.Present();

@@ -15,6 +15,8 @@ namespace ClearSkies.Prefabs.Turrets
     /// </summary>
     class TurretBarrel : Prefab
     {
+        private Vector3 drawLocation;
+
         #region Initializer Methods
 
         /// <summary>
@@ -26,16 +28,41 @@ namespace ClearSkies.Prefabs.Turrets
         /// <param name="location">Location of the TurretBarrel in the gameworld</param>
         /// <param name="rotation">Rotation the TurretBarrel is facing</param>
         /// <param name="keyboard">Keyboard Device used to controll the TurretBarrel</param>
-        public TurretBarrel(Model barrelModel, Vector3 location, Vector3 rotation, DI.Device keyboard) : base(location, rotation)
+        public TurretBarrel(Vector3 location, Vector3 rotation, Vector3 scale, Model barrelModel, DI.Device keyboard)
+            : base(location, rotation, scale)
         {
             this.models.Add(barrelModel);
             this.scripts.Add(new ShootScript(this, keyboard));
+            this.drawLocation = location;
         }
 
         #endregion
 
         #region Getter and Setter Methods
 
+        public Vector3 DrawLocation
+        {
+            get { return this.drawLocation; }
+            set { this.drawLocation = value; }
+        }
+
+        /// <summary>
+        /// The location of the TurretBarrel. Barrel contains a special draw location
+        /// variable is moved according to the given location.
+        /// </summary>
+        public override Vector3 Location
+        {
+            get
+            {
+                return base.Location;
+            }
+            set
+            {
+                drawLocation += value - this.Location;
+
+                base.Location = value;
+            }
+        }
         /// <summary>
         /// The rotation of the TurretBarrel. This value is clamped to a 
         /// 90 degree turn.
@@ -59,5 +86,23 @@ namespace ClearSkies.Prefabs.Turrets
         }
 
         #endregion
+
+        public override void draw(Microsoft.DirectX.Direct3D.Device device)
+        {
+            //do transformations
+            device.Transform.World = Matrix.Multiply(
+                Matrix.RotationYawPitchRoll(rotation.X, rotation.Y, rotation.Z),
+                Matrix.Translation(drawLocation.X, drawLocation.Y, drawLocation.Z));
+
+            foreach (Model model in models)
+            {
+                model.draw(device);
+            }
+
+            foreach (Prefab child in children)
+            {
+                child.draw(device);
+            }
+        }
     }
 }

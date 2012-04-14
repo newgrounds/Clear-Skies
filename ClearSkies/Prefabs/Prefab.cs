@@ -19,6 +19,7 @@ namespace ClearSkies.Prefabs
         protected bool alive;
         protected Vector3 location;
         protected Vector3 rotation;
+        protected Vector3 scale;
         protected List<Model> models;
         protected List<Prefab> children;
         protected List<Script> scripts = new List<Script>();
@@ -33,11 +34,12 @@ namespace ClearSkies.Prefabs
         /// </summary>
         /// <param name="location">Location of the Prefab</param>
         /// <param name="rotation">Rotation the Prefab is facing</param>
-        protected Prefab(Vector3 location, Vector3 rotation)
+        protected Prefab(Vector3 location, Vector3 rotation, Vector3 scale)
         {
             this.alive = true;
             this.location = location;
             this.rotation = rotation;
+            this.scale = scale;
 
             this.children = new List<Prefab>();
             this.scripts = new List<Script>();
@@ -51,7 +53,7 @@ namespace ClearSkies.Prefabs
         /// <summary>
         /// Gets or Sets the Prefabs current location.
         /// </summary>
-        public Vector3 Location
+        public virtual Vector3 Location
         {
             get { return location; }
             set 
@@ -64,25 +66,40 @@ namespace ClearSkies.Prefabs
             }
         }
         /// <summary>
-        /// Gets or Sets the Prefabs current rotation. TODO: TEST!!!
+        /// Gets or Sets the Prefabs current rotation.
         /// </summary>
         public virtual Vector3 Rotation
         {
-            get { return rotation; }
+            get { return this.rotation; }
             set 
             {
                 foreach (Prefab child in children)
                 {
-                    child.Rotation = child.Rotation - this.Rotation + value;
+                    child.Rotation = child.Rotation - this.rotation + value;
 
-                    Vector3 deltaRotation = value - this.Rotation;
+                    Vector3 deltaRotation = value - this.rotation;
 
-                    Vector3 temp = child.Location - this.Location;
+                    Vector3 temp = child.Location - this.location;
                     Vector4 transformed = Vector3.Transform(temp, Matrix.RotationYawPitchRoll(deltaRotation.X, deltaRotation.Y, deltaRotation.Z));
                     temp = new Vector3(transformed.X, transformed.Y, transformed.Z);
-                    child.Location = this.Location + temp;
+                    child.Location = this.location + temp;
                 }
                 this.rotation = value;
+            }
+        }
+        /// <summary>
+        /// Gets or Sets the Prefabs current scaling values.
+        /// </summary>
+        public virtual Vector3 Scale
+        {
+            get { return this.scale; }
+            set
+            {
+                this.scale = value;
+                foreach (Prefab child in children)
+                {
+                    child.Scale = new Vector3(child.Scale.X * value.X, child.Scale.Y * value.Y, child.Scale.Z * value.Z);
+                }
             }
         }
         /// <summary>
@@ -148,13 +165,15 @@ namespace ClearSkies.Prefabs
         public virtual void draw(Device device)
         {
             //do transformations
-            device.Transform.World = Matrix.Multiply(
-                Matrix.RotationYawPitchRoll(rotation.X, rotation.Y, rotation.Z),
-                Matrix.Translation(location.X, location.Y, location.Z));
+            device.Transform.World =
+                Matrix.Multiply(Matrix.Scaling(scale),
+                    Matrix.Multiply(
+                        Matrix.RotationYawPitchRoll(rotation.X, rotation.Y, rotation.Z),
+                        Matrix.Translation(location.X, location.Y, location.Z)));
 
             foreach (Model model in models)
             {
-                model.draw();
+                model.draw(device);
             }
 
             foreach (Prefab child in children)

@@ -19,7 +19,7 @@ namespace ClearSkies.Prefabs.Bullets
         private float lifespan;
         private float timeAlive;
         private float speed;
-        private bool destroy;
+        private bool destory;
 
         #endregion
 
@@ -38,8 +38,8 @@ namespace ClearSkies.Prefabs.Bullets
         /// <param name="damage">Damage Bullet will inflict</param>
         /// <param name="lifespan">Time in seconds the bullet will remain in scene</param>
         /// <param name="speed">Speed bullet will travel at</param>
-        public Bullet(Vector3 location, Vector3 rotation, Model bulletModel, float damage, float lifespan, float speed)
-            : base(location, rotation)
+        public Bullet(Vector3 location, Vector3 rotation, Vector3 scale, Model bulletModel, float damage, float lifespan, float speed)
+            : base(location, rotation, scale)
         {
             this.damage = damage;
             this.lifespan = lifespan;
@@ -56,10 +56,10 @@ namespace ClearSkies.Prefabs.Bullets
         /// <summary>
         /// True if Bullet should destory itself. Used for animation.
         /// </summary>
-        public bool Destroy
+        public bool Destory
         {
-            get { return this.destroy; }
-            set { this.destroy = value; }
+            get { return this.destory; }
+            set { this.destory = value; }
         }
 
         /// <summary>
@@ -84,10 +84,7 @@ namespace ClearSkies.Prefabs.Bullets
             base.update(deltaTime);
             this.timeAlive += deltaTime;
 
-            // the following line overrides the line:
-            // this.alive = !(collider is Enemy)
-            // in BasicBullet.cs
-            this.alive = this.alive && lifespan >= timeAlive && !destroy;
+            this.alive = lifespan >= timeAlive && !destory;
         }
         
         #endregion

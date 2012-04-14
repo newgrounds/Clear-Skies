@@ -18,6 +18,7 @@ namespace ClearSkies.Content
         private static bool initialized;
 
         private static Texture defaultTexture;
+        private static Texture testParticleTexture;
 
         private static Material defaultMaterial;
 
@@ -26,8 +27,13 @@ namespace ClearSkies.Content
 
         private static Model testTurretBarrelModel;
         private static Model testTurretBaseModel;
+        private static Model testTurretHeadModel;
 
-        private static Model tankModel;
+        private static Model basicTurretBarrelModel;
+        private static Model basicTurretBaseModel; 
+        private static Model basicTurretHeadModel;
+
+        private static Model basicPlaneModel;
 
         #endregion
 
@@ -40,6 +46,7 @@ namespace ClearSkies.Content
         public static void initialize(Device device)
         {
             defaultTexture = null;
+            testParticleTexture = TextureLoader.FromFile(device, @"Content\Textures\Particles\test_particle.png");
 
             defaultMaterial = new Material();
             defaultMaterial.Diffuse = Color.White;
@@ -68,18 +75,22 @@ namespace ClearSkies.Content
                 new Texture[] { defaultTexture }, 
                 device, 
                 true);
-
-            testTurretBaseModel = new Model(Mesh.Box(device, 1f, 0.5f, 1f), 
+            testTurretBaseModel = new Model(Mesh.Cylinder(device, 1f, 1f, 2f, 10, 1),
+                new Material[] { defaultMaterial },
+                new Texture[] { defaultTexture },
+                device,
+                true);
+            testTurretHeadModel = new Model(Mesh.Box(device, 1f, 0.5f, 1f), 
                 new Material[] { defaultMaterial }, 
                 new Texture[] { defaultTexture }, 
                 device, 
                 true);
 
-            tankModel = new Model(Mesh.Box(device, 0.5f, 0.5f, 0.5f),
-                new Material[] { defaultMaterial },
-                new Texture[] { defaultTexture },
-                device,
-                true);
+            basicTurretBarrelModel = new Model(@"Content\Models\BasicTurret\basicTurretBarrel.x", device);
+            basicTurretBaseModel = new Model(@"Content\Models\BasicTurret\basicTurretBase.x", device);
+            basicTurretHeadModel = new Model(@"Content\Models\BasicTurret\basicTurretHead.x", device);
+
+            basicPlaneModel = new Model(@"Content\Models\BasicPlane\basicPlane.x", device);
 
             initialized = true;
         }
@@ -107,6 +118,14 @@ namespace ClearSkies.Content
             {
                 checkIfInitialized();
                 return defaultTexture;
+            }
+        }
+        public static Texture TestParticleTexture
+        {
+            get
+            {
+                checkIfInitialized();
+                return testParticleTexture;
             }
         }
 
@@ -152,12 +171,46 @@ namespace ClearSkies.Content
                 return testTurretBaseModel;
             }
         }
-        public static Model TankModel
+        public static Model TestTurretHeadModel
         {
             get
             {
                 checkIfInitialized();
-                return tankModel;
+                return testTurretHeadModel;
+            }
+        }
+
+        public static Model BasicTurretBarrelModel
+        {
+            get
+            {
+                checkIfInitialized();
+                return basicTurretBarrelModel;
+            }
+        }
+        public static Model BasicTurretBaseModel
+        {
+            get
+            {
+                checkIfInitialized();
+                return basicTurretBaseModel;
+            }
+        }
+        public static Model BasicTurretHeadModel
+        {
+            get
+            {
+                checkIfInitialized();
+                return basicTurretHeadModel;
+            }
+        }
+
+        public static Model BasicPlaneModel
+        {
+            get 
+            { 
+                checkIfInitialized();
+                return basicPlaneModel;  
             }
         }
 

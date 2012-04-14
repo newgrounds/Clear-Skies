@@ -30,7 +30,7 @@ namespace ClearSkies.Prefabs.Bullets
         /// </summary>
         /// <param name="location">Location of the Bullet</param>
         /// <param name="rotation">Rotation the Bullet should face</param>
-        public BasicBullet(Vector3 location, Vector3 rotation) : base(location, rotation, ContentLoader.BasicBulletModel, DAMAGE, LIFESPAN, SPEED)
+        public BasicBullet(Vector3 location, Vector3 rotation, Vector3 scale) : base(location, rotation, scale, ContentLoader.BasicBulletModel, DAMAGE, LIFESPAN, SPEED)
         {
             this.scripts.Add(new BulletStraightMovementScript(this));
             this.scripts.Add(new BulletPlainCollisionScript(this));
@@ -47,12 +47,7 @@ namespace ClearSkies.Prefabs.Bullets
         public override void detectCollision(Prefab collider)
         {
             base.detectCollision(collider);
-            if (collider is Enemy)
-            {
-                this.alive = false;
-                //this.Destroy = true;
-            }
-            //this.alive = !(collider is Enemy);
+            this.alive = !(collider is  Enemy);
         }
 
         #endregion
