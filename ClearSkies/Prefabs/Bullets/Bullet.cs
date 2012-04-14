@@ -84,7 +84,6 @@ namespace ClearSkies.Prefabs.Bullets
             base.update(deltaTime);
             this.timeAlive += deltaTime;
 
-
             this.alive = this.alive && lifespan >= timeAlive && !destroy;
         }
         

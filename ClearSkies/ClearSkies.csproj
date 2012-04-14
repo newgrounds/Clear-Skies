@@ -85,14 +85,15 @@
     <Compile Include="Prefabs\Cameras\ThirdPersonCamera.cs" />
     <Compile Include="Prefabs\Enemies\Enemy.cs" />
     <Compile Include="Prefabs\Enemies\EnemyType.cs" />
+    <Compile Include="Prefabs\Enemies\Tank.cs" />
     <Compile Include="Prefabs\Prefab.cs" />
     <Compile Include="Prefabs\Turrets\BasicTurret.cs" />
     <Compile Include="Prefabs\Turrets\BasicTurretHead.cs" />
     <Compile Include="Prefabs\Turrets\TestTurret.cs" />
     <Compile Include="Prefabs\Turrets\TestTurretHead.cs" />
     <Compile Include="Prefabs\Turrets\Turret.cs" />
-    <Compile Include="Prefabs\Turrets\TurretHead.cs" />
     <Compile Include="Prefabs\Turrets\TurretBarrel.cs" />
+    <Compile Include="Prefabs\Turrets\TurretHead.cs" />
     <Compile Include="Prefabs\Turrets\TurretType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Scripts\BulletStraightMovementScript.cs" />
     <Compile Include="Scripts\Script.cs" />
     <Compile Include="Scripts\ShootScript.cs" />
+    <Compile Include="Scripts\TankMovementScript.cs" />
     <Compile Include="Scripts\TurretRotationScript.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

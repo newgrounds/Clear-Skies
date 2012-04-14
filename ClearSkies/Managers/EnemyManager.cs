@@ -5,6 +5,7 @@ using System.Text;
 using ClearSkies.Prefabs.Enemies;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX;
+using ClearSkies;
 
 namespace ClearSkies.Managers
 {
@@ -16,6 +17,7 @@ namespace ClearSkies.Managers
         #region Fields
 
         private static List<Enemy> managedEnemies;
+        private static int waveNumber;
 
         #endregion
 
@@ -27,6 +29,8 @@ namespace ClearSkies.Managers
         static EnemyManager() 
         {
             managedEnemies = new List<Enemy>();
+
+            waveNumber = 0;
         }
 
         #endregion
@@ -52,8 +56,9 @@ namespace ClearSkies.Managers
         /// <param name="enemyType">Type of Enemy to spawn</param>
         /// <param name="location">Locaiton to spawn Enemy at</param>
         /// <param name="rotation">Rotation for Enemy to face</param>
+        /// <param name="scale">Scale of the Enemy model</param>
         /// <returns>A reference to the spawned Enemy</returns>
-        public static Enemy spawnEnemy(EnemyType enemyType, Vector3 location, Vector3 rotation)
+        public static Enemy spawnEnemy(EnemyType enemyType, Vector3 location, Vector3 rotation, Vector3 scale)
         {
             Enemy spawnedEnemy = null;
 
@@ -63,7 +68,7 @@ namespace ClearSkies.Managers
 
                     break;
                 case EnemyType.BasicTank:
-
+                    spawnedEnemy = new Tank(location, rotation, scale);
                     break;
             }
 
@@ -91,9 +96,34 @@ namespace ClearSkies.Managers
                 }
                 else
                 {
+                    Game.Score += 1;
+
                     managedEnemies.RemoveAt(i);
                 }
             }
+
+            // spawn the next wave if there are no more enemies
+            if (managedEnemies.Count() == 0)
+            {
+                nextWave();
+            }
+        }
+
+        /// <summary>
+        /// Handles creation of waves of enemies.
+        /// </summary>
+        public void nextWave()
+        {
+            for (int j = 0; j < waveNumber; j++)
+            {
+                for (int i = 0; i < 11; i++)
+                {
+                    Enemy basicTank =
+                        EnemyManager.spawnEnemy(EnemyType.BasicTank, new Vector3(-5 + i, 2, 20 + (5 * j)), Vector3.Empty, new Vector3(1f,1f,1f));
+                }
+            }
+
+            waveNumber += 1;
         }
 
         /// <summary>

@@ -18,7 +18,6 @@ using ClearSkies.Prefabs.Enemies;
 using ClearSkies.Managers;
 using ClearSkies.Content;
 using ClearSkies.Prefabs.Cameras;
-using ParticleEngine;
 
 namespace ClearSkies
 {
@@ -111,13 +110,6 @@ namespace ClearSkies
 
             #endregion
 
-            #region Fonts
-
-            //infoWinFont = new WinFont(FontFamily.GenericSerif, 12, FontStyle.Bold);
-            //infoD3DFont = new D3DFont(device, infoWinFont);
-
-            #endregion
-
             #region Game Objects
 
             ContentLoader.initialize(device);
@@ -134,15 +126,11 @@ namespace ClearSkies
             Turret player = TurretManager.spawnTurret(TurretType.Test, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
             TurretManager.spawnTurret(TurretType.Test, new Vector3(5f, 0, 0), Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
 
-            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 1f, -3f));
+            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 3f, -3f));
             player.Head.addChild(camera);
-            
-            pe = new ExpolsionParticleEmitter(ContentLoader.TestParticleTexture, new Vector3(0f, 0f, 0f), new Vector3(1f, 1f, 1f), 20, 2f, -0.1f, 10f);
 
             #endregion
         }
-
-        ExpolsionParticleEmitter pe;
 
 
         /// <summary>
@@ -225,8 +213,6 @@ namespace ClearSkies
                 m.update(deltaTime);
             }
 
-            pe.updateParticles(deltaTime);
-
             if (keys[DI.Key.Escape])
             {
                 gameState = GameState.Quit;
@@ -260,8 +246,6 @@ namespace ClearSkies
                     {
                         m.draw(device);
                     }
-
-                    pe.draw(camera.Rotation, device);
 
                     break;
             }
