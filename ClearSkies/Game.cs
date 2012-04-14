@@ -31,6 +31,9 @@ namespace ClearSkies
         private DI.Device keyboard;
         private DI.Device mouse;
 
+        Font systemFont = new Font("Arial", 12f, FontStyle.Regular);
+        D3DFont theFont;
+
         private ClearSkies.Prefabs.Cameras.ThirdPersonCamera camera;
         private GameState gameState;
         private bool enterPressed; // used to prevent errors when holding enter
@@ -50,6 +53,8 @@ namespace ClearSkies
             InitializeInputDevices();
             InitializeGraphics();
             InitializeGame();
+
+            theFont = new D3DFont(device, systemFont);
 
             Show();
 
@@ -207,8 +212,6 @@ namespace ClearSkies
                     break;
             }
 
-            
-
             foreach (Manager m in managers)
             {
                 m.update(deltaTime);
@@ -251,6 +254,8 @@ namespace ClearSkies
                     break;
             }
 
+            drawText(theFont, new Rectangle(10, 10, 100, 20), "Score: " + score.ToString());
+
             device.EndScene();
             device.Present();
         }
@@ -272,14 +277,14 @@ namespace ClearSkies
         }
 
         /// <summary>
-        /// Draws the given text to the center of the screen using the given font.
+        /// Draws the given text to the given area of the screen using the given font.
         /// </summary>
         /// <param name="font">The font to write in.</param>
+        /// <param name="textRect">Where to display the text on the screen.</param>
         /// <param name="text">The text to write.</param>
-        protected void drawText(D3DFont font, string text)
+        protected void drawText(D3DFont font, Rectangle textRect, string text)
         {
-            Rectangle textRectangle = new Rectangle(this.Width / 6, this.Height / 6, this.Width * 2 / 3, this.Height * 2 / 3);
-            font.DrawText(null, text, textRectangle, D3D.DrawTextFormat.WordBreak | D3D.DrawTextFormat.Center, Color.Black);
+            font.DrawText(null, text, textRect, D3D.DrawTextFormat.WordBreak | D3D.DrawTextFormat.Center, Color.Black);
         }
 
         #endregion

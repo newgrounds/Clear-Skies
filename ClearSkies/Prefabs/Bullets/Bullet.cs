@@ -84,9 +84,6 @@ namespace ClearSkies.Prefabs.Bullets
             base.update(deltaTime);
             this.timeAlive += deltaTime;
 
-            // the following line overrides the line:
-            // this.alive = !(collider is Enemy)
-            // in BasicBullet.cs
             this.alive = this.alive && lifespan >= timeAlive && !destroy;
         }
         
