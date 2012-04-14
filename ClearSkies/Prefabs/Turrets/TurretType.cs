@@ -10,6 +10,7 @@ namespace ClearSkies.Prefabs.Turrets
     /// </summary>
     enum TurretType
     {
-        Test
+        Test,
+        Basic
     }
 }

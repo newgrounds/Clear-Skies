@@ -38,8 +38,8 @@ namespace ClearSkies.Prefabs.Bullets
         /// <param name="damage">Damage Bullet will inflict</param>
         /// <param name="lifespan">Time in seconds the bullet will remain in scene</param>
         /// <param name="speed">Speed bullet will travel at</param>
-        public Bullet(Vector3 location, Vector3 rotation, Model bulletModel, float damage, float lifespan, float speed)
-            : base(location, rotation)
+        public Bullet(Vector3 location, Vector3 rotation, Vector3 scale, Model bulletModel, float damage, float lifespan, float speed)
+            : base(location, rotation, scale)
         {
             this.damage = damage;
             this.lifespan = lifespan;
@@ -83,6 +83,7 @@ namespace ClearSkies.Prefabs.Bullets
         {
             base.update(deltaTime);
             this.timeAlive += deltaTime;
+
 
             this.alive = this.alive && lifespan >= timeAlive && !destroy;
         }

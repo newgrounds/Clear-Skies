@@ -18,7 +18,7 @@ namespace ClearSkies.Scripts
         #region Fields
 
         private float rotationSpeed;
-        private Turret turret;
+        private TurretHead turret;
         private DI.Device keyboard;
 
         #endregion
@@ -32,7 +32,7 @@ namespace ClearSkies.Scripts
         /// <param name="turret">Turret to translate.</param>
         /// <param name="keyboard">Keyboard Device to recieve input from.</param>
         /// <param name="translateSpeed">Speed to translate at.</param>
-        public TurretRotationScript(Turret turret, DI.Device keyboard, float rotationSpeed)
+        public TurretRotationScript(TurretHead turret, DI.Device keyboard, float rotationSpeed)
         {
             this.turret = turret;
             this.keyboard = keyboard;

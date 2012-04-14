@@ -20,14 +20,15 @@ namespace ClearSkies.Scripts
 
         private const float PULL_SPEED = 2f;
         private const float PUSH_SPEED = 1f;
-        private const float SHOOT_DELAY = 0.5f;
+        private const float SHOOT_DELAY = 0.2f;
 
         private const float PULL_TIME = SHOOT_DELAY * PUSH_SPEED / (PULL_SPEED + PUSH_SPEED);
         private const float PUSH_TIME = SHOOT_DELAY * PULL_SPEED / (PULL_SPEED + PUSH_SPEED);
 
-        private Prefab shooter;
+        private TurretBarrel shooter;
         private DI.Device keyboard;
-        private float timeSinceLastShot;        
+
+        private float timeSinceLastShot;
         private bool shooting;
 
         #endregion
@@ -41,7 +42,7 @@ namespace ClearSkies.Scripts
         /// </summary>
         /// <param name="shooter">Prefab to shoot the Bullets from</param>
         /// <param name="keyboard">Keyboard Device that determines when we shoot</param>
-        public ShootScript(Prefab shooter, DI.Device keyboard)
+        public ShootScript(TurretBarrel shooter, DI.Device keyboard)
         {
             this.shooter = shooter;
             this.keyboard = keyboard;
@@ -68,7 +69,7 @@ namespace ClearSkies.Scripts
             {
                 shooting = true;
                 this.timeSinceLastShot = 0.0f;
-                BulletManager.spawn(BulletType.Basic, shooter.Location, shooter.Rotation);
+                BulletManager.spawn(BulletType.Basic, shooter.Location, shooter.Rotation, shooter.Scale);;
             }
             else
             {
@@ -79,25 +80,30 @@ namespace ClearSkies.Scripts
             {
                 if (timeSinceLastShot <= PULL_TIME)
                 {
-                    Vector3 recoilLocation = shooter.Location;
+                    Vector3 recoilLocation = shooter.DrawLocation;
 
                     recoilLocation.Z -= deltaTime * PULL_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Cos(shooter.Rotation.X));
                     recoilLocation.X -= deltaTime * PULL_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Sin(shooter.Rotation.X));
                     recoilLocation.Y -= deltaTime * PULL_SPEED * (float)Math.Cos(shooter.Rotation.Y);
 
-                    shooter.Location = recoilLocation;
-
+                    shooter.DrawLocation = recoilLocation;
                 }
                 else
                 {
-                    Vector3 recoilLocation = shooter.Location;
+                    Vector3 recoilLocation = shooter.DrawLocation;
 
                     recoilLocation.Z += deltaTime * PUSH_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Cos(shooter.Rotation.X));
                     recoilLocation.X += deltaTime * PUSH_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Sin(shooter.Rotation.X));
                     recoilLocation.Y += deltaTime * PUSH_SPEED * (float)Math.Cos(shooter.Rotation.Y);
 
-                    shooter.Location = recoilLocation;
                     shooting = timeSinceLastShot <= PULL_TIME + PUSH_TIME;
+
+                    if (!shooting)
+                    {
+                        recoilLocation = shooter.Location;
+                    }
+
+                    shooter.DrawLocation = recoilLocation;
                 }
             }
         }

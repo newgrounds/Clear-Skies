@@ -8,43 +8,15 @@ using ClearSkies.Content;
 
 namespace ClearSkies.Prefabs.Turrets
 {
-    /// <summary>
-    /// A simple dual barreled Turret used for testing.
-    /// </summary>
     class TestTurret : Turret
     {
-        #region Fields
-
-        private static Vector3 DEFAULT_TURRET_ROTATION = new Vector3(0f, (float)Math.PI / 2f, 0f);
-        private static float DEFAULT_TURRET_ROTATION_SPEED = 1f;
-
-        #endregion
-
         #region Initializer Methods
 
-        /// <summary>
-        /// Creates a simple twin barreled Turret at the given location facing
-        /// the given rotation and controlled by the given kayboard Device.
-        /// </summary>
-        /// <param name="location">Location of the Turret in the gameworld</param>
-        /// <param name="rotation">Rotation the Turret is facing</param>
-        /// <param name="keyboard">Keyboard Device used to controll the Turret</param>
-        public TestTurret(Vector3 location, Vector3 rotation, Device keyboard)
-            : base(location, rotation, DEFAULT_TURRET_ROTATION_SPEED, keyboard)
+        public TestTurret(Vector3 location, Vector3 rotation, Vector3 scale, Device keyboard)
+            : base(location, rotation, scale, new TestTurretHead(location + new Vector3(0f, 1.25f, 0f), rotation, scale, keyboard))
         {
             this.models.Add(ContentLoader.TestTurretBaseModel);
-
-            addChild(new TurretBarrel(ContentLoader.TestTurretBarrelModel,
-                new Vector3(location.X + 0.25f, location.Y + 0.5f, location.Z + 0.5f),
-                new Vector3(rotation.X, rotation.Y, rotation.Z) + DEFAULT_TURRET_ROTATION,
-                keyboard
-                ));
-
-            addChild(new TurretBarrel(ContentLoader.TestTurretBarrelModel,
-                new Vector3(location.X - 0.25f, location.Y + 0.5f, location.Z + 0.5f),
-                new Vector3(rotation.X, rotation.Y, rotation.Z) + DEFAULT_TURRET_ROTATION,
-                keyboard
-                ));
+            this.rotation = new Vector3(0f, (float)(Math.PI / 2), 0f);
         }
 
         #endregion

@@ -7,6 +7,7 @@ using Microsoft.DirectX;
 using DI = Microsoft.DirectX.DirectInput;
 using D3D = Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.Direct3D;
+using ClearSkies.Prefabs;
 
 namespace ClearSkies.Managers
 {
@@ -57,14 +58,17 @@ namespace ClearSkies.Managers
         /// <param name="rotation">Rotation for turret to be facing</param>
         /// <param name="keyboard">Keyboard Device used to control turret</param>
         /// <returns>A reference to the spawned Turret</returns>
-        public static Turret spawnTurret(TurretType turretType, Vector3 location, Vector3 rotation, DI.Device keyboard)
+        public static Turret spawnTurret(TurretType turretType, Vector3 location, Vector3 rotation, Vector3 scale, DI.Device keyboard)
         {
             Turret spawnedTurret = null;
 
             switch (turretType)
             {
                 case TurretType.Test:
-                    spawnedTurret = new TestTurret(location, rotation, keyboard);
+                    spawnedTurret = new TestTurret(location, rotation, scale, keyboard);
+                    break;
+                case TurretType.Basic:
+                    spawnedTurret = new BasicTurret(location, rotation, scale, keyboard);
                     break;
             }
 
