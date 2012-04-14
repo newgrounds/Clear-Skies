@@ -35,7 +35,7 @@ namespace ClearSkies.Prefabs.Enemies
 
         #endregion
 
-        #region Getters and Setters
+        #region Getter Methods
 
         /// <summary>
         /// The size of the spherical collider for this Enemy.

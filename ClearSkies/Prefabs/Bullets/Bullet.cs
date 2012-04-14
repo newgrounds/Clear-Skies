@@ -19,7 +19,7 @@ namespace ClearSkies.Prefabs.Bullets
         private float lifespan;
         private float timeAlive;
         private float speed;
-        private bool destory;
+        private bool destroy;
 
         #endregion
 
@@ -56,10 +56,10 @@ namespace ClearSkies.Prefabs.Bullets
         /// <summary>
         /// True if Bullet should destory itself. Used for animation.
         /// </summary>
-        public bool Destory
+        public bool Destroy
         {
-            get { return this.destory; }
-            set { this.destory = value; }
+            get { return this.destroy; }
+            set { this.destroy = value; }
         }
 
         /// <summary>
@@ -84,7 +84,10 @@ namespace ClearSkies.Prefabs.Bullets
             base.update(deltaTime);
             this.timeAlive += deltaTime;
 
-            this.alive = lifespan >= timeAlive && !destory;
+            // the following line overrides the line:
+            // this.alive = !(collider is Enemy)
+            // in BasicBullet.cs
+            this.alive = this.alive && lifespan >= timeAlive && !destroy;
         }
         
         #endregion

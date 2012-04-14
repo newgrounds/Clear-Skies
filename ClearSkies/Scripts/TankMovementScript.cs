@@ -38,7 +38,7 @@ namespace ClearSkies.Scripts
         #region Public Methods
 
         /// <summary>
-        /// Moves the prefab.
+        /// Moves the prefab tank toward the turret.
         /// </summary>
         /// <param name="deltaTime">Time in seconds since last Update</param>
         public void run(float deltaTime)

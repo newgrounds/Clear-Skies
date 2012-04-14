@@ -25,6 +25,8 @@ namespace ClearSkies
     {
         #region Fields
 
+        private static int score = 0;
+
         private D3D.Device device;
         private DI.Device keyboard;
         private DI.Device mouse;
@@ -119,24 +121,13 @@ namespace ClearSkies
             managers.Add(bulletManager);
             TurretManager turretManager = new TurretManager();
             managers.Add(turretManager);
+            // the enemy manager also adds enemies
             EnemyManager enemyManager = new EnemyManager();
             managers.Add(enemyManager);
 
             Turret player = TurretManager.spawnTurret(TurretType.Test, Vector3.Empty, Vector3.Empty, keyboard);
 
-            for (int i = 0; i < 5; i++)
-            {
-                Enemy basicTank = 
-                    EnemyManager.spawnEnemy(EnemyType.BasicTank, new Vector3(0+i, 0, 15), Vector3.Empty);
-            }
-
-            for (int j = 0; j < 5; j++)
-            {
-                Enemy basicTank =
-                    EnemyManager.spawnEnemy(EnemyType.BasicTank, new Vector3(0 - j, 0, 15), Vector3.Empty);
-            }
-
-            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 2f, -5f));
+            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 1f, -3f));
             
             #endregion
         }
@@ -159,6 +150,19 @@ namespace ClearSkies
 
             mouse.SetCooperativeLevel(this, DI.CooperativeLevelFlags.NonExclusive | DI.CooperativeLevelFlags.Background);
             mouse.Acquire();
+        }
+
+        #endregion
+
+        #region Getter and Setter Methods
+
+        /// <summary>
+        /// The current score of the game
+        /// </summary>
+        public static int Score
+        {
+            get { return score; }
+            set { score = value; }
         }
 
         #endregion

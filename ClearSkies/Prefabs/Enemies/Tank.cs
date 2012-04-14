@@ -50,6 +50,8 @@ namespace ClearSkies.Prefabs.Enemies
             if (collider is Bullet)
             {
                 this.scripts.Clear();
+                // removes tank so eventually the next wave will spawn
+                this.alive = false;
                 // TODO: Add death animation script
             }
         }

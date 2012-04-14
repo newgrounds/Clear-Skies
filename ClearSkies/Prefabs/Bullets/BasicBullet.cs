@@ -47,7 +47,12 @@ namespace ClearSkies.Prefabs.Bullets
         public override void detectCollision(Prefab collider)
         {
             base.detectCollision(collider);
-            this.alive = !(collider is  Enemy);
+            if (collider is Enemy)
+            {
+                this.alive = false;
+                //this.Destroy = true;
+            }
+            //this.alive = !(collider is Enemy);
         }
 
         #endregion
