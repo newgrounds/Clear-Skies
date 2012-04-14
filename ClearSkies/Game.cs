@@ -100,6 +100,9 @@ namespace ClearSkies
 
             device = new D3D.Device(0, D3D.DeviceType.Hardware, this, D3D.CreateFlags.SoftwareVertexProcessing, pres);
             device.RenderState.CullMode = D3D.Cull.None;
+            device.RenderState.SourceBlend = D3D.Blend.SourceAlpha;
+            device.RenderState.DestinationBlend = D3D.Blend.InvSourceAlpha;
+            device.RenderState.AlphaBlendEnable = true;
 
             #endregion
 
