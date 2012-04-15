@@ -130,7 +130,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Toon.fx" />
+    <None Include="scene_toonEdges.fx\docs\GPU-Img-Proc-Intro.pdf" />
+    <None Include="scene_toonEdges.fx\HLSL\include\Quad.fxh" />
+    <None Include="scene_toonEdges.fx\HLSL\scene_toonEdges.fx" />
+    <None Include="scene_toonEdges.fx\textures\Default_color.dds" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Models\BasicTank\" />

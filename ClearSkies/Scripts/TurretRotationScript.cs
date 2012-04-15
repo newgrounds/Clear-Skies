@@ -59,7 +59,7 @@ namespace ClearSkies.Scripts
             }
             if (keys[DI.Key.Left] || keys[DI.Key.LeftArrow] || keys[DI.Key.A])
             {
-                rotation.X += rotationSpeed * deltaTime;
+                rotation.X -= rotationSpeed * deltaTime;
             }
             if (keys[DI.Key.Down] || keys[DI.Key.DownArrow] || keys[DI.Key.S])
             {
@@ -67,7 +67,7 @@ namespace ClearSkies.Scripts
             }
             if (keys[DI.Key.Right] || keys[DI.Key.RightArrow] || keys[DI.Key.D])
             {
-                rotation.X -= rotationSpeed * deltaTime;
+                rotation.X += rotationSpeed * deltaTime;
             }
 
             turret.Rotation = rotation;

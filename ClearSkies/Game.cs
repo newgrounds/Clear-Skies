@@ -34,6 +34,9 @@ namespace ClearSkies
         Font systemFont = new Font("Arial", 12f, FontStyle.Regular);
         D3DFont theFont;
 
+        Turret player;
+        float health;
+
         private ClearSkies.Prefabs.Cameras.ThirdPersonCamera camera;
         private GameState gameState;
         //private bool enterPressed; // used to prevent errors when holding enter
@@ -114,7 +117,7 @@ namespace ClearSkies
 
             ContentLoader.initialize(device);
 
-            Turret player = TurretManager.spawnTurret(TurretType.Test, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
+            player = TurretManager.spawnTurret(TurretType.Test, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
 
             managers = new List<Manager>();
             BulletManager bulletManager = new BulletManager(player);
@@ -189,6 +192,8 @@ namespace ClearSkies
         /// <param name="deltaTime">Time in seconds since last update.</param>
         private void update(float deltaTime)
         {
+            health = player.Health;
+
             DI.KeyboardState keys = keyboard.GetCurrentKeyboardState();
 
             switch (gameState)
@@ -233,6 +238,20 @@ namespace ClearSkies
             device.BeginScene();
 
             SetupLights();
+            /*
+            // BEGIN SHADER SNIPPET
+
+            // Load the effect from file.
+            D3D.Effect effect = D3D.Effect.FromFile(device, "../../scene_toonEdges.fx/HLSL/scene_toonEdges.fx", null,
+                                            null, D3D.ShaderFlags.Debug, null);
+            // Set the technique.
+            effect.Technique = "Main";
+
+            // Note: Effect.Begin returns the number of
+            // passes required to render the effect.
+            int passes = effect.Begin(0);
+
+            // END SHADER SNIPPET*/
 
             switch (gameState)
             {
@@ -253,31 +272,26 @@ namespace ClearSkies
             camera.view(device);
 
             drawText(theFont, new Rectangle(10, 10, 100, 20), "Score: " + score.ToString());
+            drawText(theFont, new Rectangle(this.Width - 120, 10, 100, 20), "Health: " + health.ToString());
 
             /*
             // BEGIN SHADER CODE
-            
-            // Load the effect from file.
-            D3D.Effect effect = D3D.Effect.FromFile(device, "Toon.fx", null,
-                                            null, D3D.ShaderFlags.None, null);
-            // Set the technique.
-            effect.Technique = "ShaderTechnique";
-
-            // Note: Effect.Begin returns the number of
-            // passes required to render the effect.
-            int passes = effect.Begin(0);
 
             // Loop through all of the effect's passes.
             for (int i = 0; i < passes; i++)
             {
                 // Set a shader constant
-                effect.SetValue("WorldMatrix", false);
+                //effect.SetValue("WorldMatrix", true);
 
                 // Set state for the current effect pass.
                 effect.BeginPass(i);
 
                 // Render some primitives.
-                device.DrawPrimitives(D3D.PrimitiveType.TriangleList, 0, 1);
+                //device.DrawPrimitives(D3D.PrimitiveType.TriangleList, 0, 1);
+                foreach (Manager m in managers)
+                {
+                    m.draw(device);
+                }
 
                 // End the effect pass
                 effect.EndPass();
@@ -298,14 +312,19 @@ namespace ClearSkies
         protected void SetupLights()
         {
             device.RenderState.Lighting = true;
-
+            
             device.Lights[0].Type = D3D.LightType.Directional;
-            device.Lights[0].Diffuse = Color.White;
-            device.Lights[0].Direction = new Vector3(0, -1, 0);
-            device.Lights[0].Update();
+            device.Lights[0].Diffuse = System.Drawing.Color.White;
+            device.Lights[0].Direction = new Vector3(0,-1,5);
             device.Lights[0].Enabled = true;
-
-            device.RenderState.Ambient = Color.White;
+            /*
+            device.Lights[1].Type = D3D.LightType.Directional;
+            device.Lights[1].Diffuse = System.Drawing.Color.White;
+            device.Lights[1].Direction = new Vector3(0, -3, -5);
+            device.Lights[1].Enabled = true;
+            */
+            // this doesn't show any noticeable changes:
+            //device.RenderState.Ambient = Color.Gray;
         }
 
         /// <summary>

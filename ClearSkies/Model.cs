@@ -6,6 +6,7 @@ using Microsoft.DirectX.Direct3D;
 using System.IO;
 using Microsoft.DirectX;
 using ClearSkies.Content;
+using System.Drawing;
 
 namespace ClearSkies
 {
@@ -106,6 +107,8 @@ namespace ClearSkies
                     device.SetTexture(0, ContentLoader.DefaultTexture);
                 }
 
+                // this makes ambient lighting work -- kind of
+                //materials[i].Ambient = Color.Gray;
                 device.Material = materials[i];
                 mesh.DrawSubset(i);
             }
