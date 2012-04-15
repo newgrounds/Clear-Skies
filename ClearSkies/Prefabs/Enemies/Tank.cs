@@ -30,12 +30,14 @@ namespace ClearSkies.Prefabs.Enemies
         /// </summary>
         /// <param name="location">Location of the Tank in the gameworld</param>
         /// <param name="rotation">Rotation the Tank is facing</param>
-        public Tank(Vector3 location, Vector3 rotation, Vector3 scale)
+        public Tank(Vector3 location, Vector3 rotation, Vector3 scale, Vector3 turretLoc)
             : base(location, rotation, scale, COLLIDER_SIZE)
         {
             this.models.Add(ContentLoader.TankModel);
 
             this.scripts.Add(new TankMovementScript(this, TANK_SPEED));
+
+            this.scripts.Add(new TankShootScript(this, turretLoc));
         }
 
         #endregion

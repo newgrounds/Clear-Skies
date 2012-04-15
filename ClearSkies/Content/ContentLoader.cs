@@ -19,6 +19,7 @@ namespace ClearSkies.Content
 
         private static Texture defaultTexture;
         private static Texture testParticleTexture;
+		private static Texture explosionParticleTexture;
 
         private static Material defaultMaterial;
 
@@ -49,6 +50,7 @@ namespace ClearSkies.Content
         {
             defaultTexture = null;
             testParticleTexture = TextureLoader.FromFile(device, @"Content\Textures\Particles\test_particle.png");
+            explosionParticleTexture = TextureLoader.FromFile(device, @"Content\Textures\Particles\explosion.png");
 
             defaultMaterial = new Material();
             defaultMaterial.Diffuse = Color.White;
@@ -88,9 +90,9 @@ namespace ClearSkies.Content
                 device, 
                 true);
 
-            basicTurretBarrelModel = new Model(@"Content\Models\BasicTurret\basicTurretBarrel.x", device);
-            basicTurretBaseModel = new Model(@"Content\Models\BasicTurret\basicTurretBase.x", device);
-            basicTurretHeadModel = new Model(@"Content\Models\BasicTurret\basicTurretHead.x", device);
+            basicTurretBarrelModel = new Model(@"Content\Models\BasicTurret\basic_turret_barrel.x", device);
+            basicTurretBaseModel = new Model(@"Content\Models\BasicTurret\basic_turret_base.x", device);
+            basicTurretHeadModel = new Model(@"Content\Models\BasicTurret\basic_turret_head.x", device);
 
             basicPlaneModel = new Model(@"Content\Models\BasicPlane\basicPlane.x", device);
 
@@ -134,6 +136,14 @@ namespace ClearSkies.Content
             {
                 checkIfInitialized();
                 return testParticleTexture;
+            }
+        }
+		public static Texture ExplosionParticleTexture
+        {
+            get 
+            {
+                checkIfInitialized();
+                return explosionParticleTexture; 
             }
         }
 
@@ -221,6 +231,7 @@ namespace ClearSkies.Content
                 return basicPlaneModel;  
             }
         }
+		
         public static Model TankModel
         {
             get

@@ -5,20 +5,22 @@ using System.Text;
 using Microsoft.DirectX;
 using ClearSkies.Scripts;
 using ClearSkies.Content;
-using ClearSkies.Prefabs.Enemies;
+using ClearSkies.Prefabs.Turrets;
 
 namespace ClearSkies.Prefabs.Bullets
 {
     /// <summary>
-    /// A simple Bullet with no special effects.
+    /// A tank Bullet with no special effects.
     /// </summary>
-    class BasicBullet : Bullet
+    class TankBullet : Bullet
     {
         #region Fields
 
-        private const float SPEED = 1f;
-        private const float DAMAGE = 10f;
+        private static float speed = 0;
+        private const float DAMAGE = 1f;
         private const float LIFESPAN = 2f;
+        private Turret turret;
+        Random rand = new Random();
 
         #endregion
 
@@ -30,10 +32,13 @@ namespace ClearSkies.Prefabs.Bullets
         /// </summary>
         /// <param name="location">Location of the Bullet</param>
         /// <param name="rotation">Rotation the Bullet should face</param>
-        public BasicBullet(Vector3 location, Vector3 rotation, Vector3 scale) : base(location, rotation, scale, ContentLoader.BasicBulletModel, DAMAGE, LIFESPAN, SPEED)
+        public TankBullet(Vector3 location, Vector3 rotation, Vector3 scale, Turret t)
+            : base(location, rotation, scale, ContentLoader.BasicBulletModel, DAMAGE, LIFESPAN, speed)
         {
-            this.scripts.Add(new BulletStraightMovementScript(this));
-            this.scripts.Add(new BulletPlainCollisionScript(this));
+            this.turret = t;
+            this.scripts.Add(new BulletLocationMovementScript(this, this.turret));
+            this.scripts.Add(new BulletTurretCollisionScript(this));
+            speed = ((float)(rand.Next(0, 5)) * 0.1f) + 1f;
         }
 
         #endregion
@@ -47,7 +52,7 @@ namespace ClearSkies.Prefabs.Bullets
         public override void detectCollision(Prefab collider)
         {
             base.detectCollision(collider);
-            this.alive = !(collider is  Enemy);
+            this.alive = !(collider is Turret);
         }
 
         #endregion

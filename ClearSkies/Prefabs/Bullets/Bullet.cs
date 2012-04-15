@@ -68,7 +68,15 @@ namespace ClearSkies.Prefabs.Bullets
         public float Speed
         {
             get { return this.speed; }
-        }  
+        }
+
+        /// <summary>
+        /// The amount of damage this bullet does.
+        /// </summary>
+        public float Damage
+        {
+            get { return this.damage; }
+        }
 
         #endregion
 

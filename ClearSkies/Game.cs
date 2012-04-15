@@ -114,17 +114,18 @@ namespace ClearSkies
 
             ContentLoader.initialize(device);
 
+            Turret player = TurretManager.spawnTurret(TurretType.Test, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
+
             managers = new List<Manager>();
-            BulletManager bulletManager = new BulletManager();
+            BulletManager bulletManager = new BulletManager(player);
             managers.Add(bulletManager);
             TurretManager turretManager = new TurretManager();
             managers.Add(turretManager);
             // the enemy manager also adds enemies
-            EnemyManager enemyManager = new EnemyManager();
+            EnemyManager enemyManager = new EnemyManager(player.Location);
             managers.Add(enemyManager);
 
-            Turret player = TurretManager.spawnTurret(TurretType.Test, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
-            TurretManager.spawnTurret(TurretType.Test, new Vector3(5f, 0, 0), Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
+            //TurretManager.spawnTurret(TurretType.Test, new Vector3(5f, 0, 0), Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
 
             this.camera = new ThirdPersonCamera(player, new Vector3(0f, 3f, -3f));
             player.Head.addChild(camera);
@@ -232,7 +233,6 @@ namespace ClearSkies
             device.BeginScene();
 
             SetupLights();
-            
 
             switch (gameState)
             {
@@ -253,6 +253,40 @@ namespace ClearSkies
             camera.view(device);
 
             drawText(theFont, new Rectangle(10, 10, 100, 20), "Score: " + score.ToString());
+
+            /*
+            // BEGIN SHADER CODE
+            
+            // Load the effect from file.
+            D3D.Effect effect = D3D.Effect.FromFile(device, "Toon.fx", null,
+                                            null, D3D.ShaderFlags.None, null);
+            // Set the technique.
+            effect.Technique = "ShaderTechnique";
+
+            // Note: Effect.Begin returns the number of
+            // passes required to render the effect.
+            int passes = effect.Begin(0);
+
+            // Loop through all of the effect's passes.
+            for (int i = 0; i < passes; i++)
+            {
+                // Set a shader constant
+                effect.SetValue("WorldMatrix", false);
+
+                // Set state for the current effect pass.
+                effect.BeginPass(i);
+
+                // Render some primitives.
+                device.DrawPrimitives(D3D.PrimitiveType.TriangleList, 0, 1);
+
+                // End the effect pass
+                effect.EndPass();
+            }
+
+            // Must call Effect.End to signal the end of the technique.
+            effect.End();
+
+            // END SHADER CODE*/
 
             device.EndScene();
             device.Present();

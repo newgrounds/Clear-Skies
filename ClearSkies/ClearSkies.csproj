@@ -81,6 +81,7 @@
     <Compile Include="Model.cs" />
     <Compile Include="Prefabs\Bullets\BasicBullet.cs" />
     <Compile Include="Prefabs\Bullets\Bullet.cs" />
+    <Compile Include="Prefabs\Bullets\TankBullet.cs" />
     <Compile Include="Prefabs\Bullets\TracerBullet.cs" />
     <Compile Include="Prefabs\Cameras\ThirdPersonCamera.cs" />
     <Compile Include="Prefabs\Enemies\Enemy.cs" />
@@ -97,11 +98,14 @@
     <Compile Include="Prefabs\Turrets\TurretType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\BulletLocationMovementScript.cs" />
     <Compile Include="Scripts\BulletPlainCollisionScript.cs" />
     <Compile Include="Scripts\BulletStraightMovementScript.cs" />
+    <Compile Include="Scripts\BulletTurretCollisionScript.cs" />
     <Compile Include="Scripts\Script.cs" />
     <Compile Include="Scripts\ShootScript.cs" />
     <Compile Include="Scripts\TankMovementScript.cs" />
+    <Compile Include="Scripts\TankShootScript.cs" />
     <Compile Include="Scripts\TurretRotationScript.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -126,6 +130,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Toon.fx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Models\BasicTank\" />

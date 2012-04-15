@@ -16,6 +16,10 @@ namespace ParticleEngine
         private Random randomizer;
         private Texture particleTexture;
 
+        private float timeAlive;
+        private float lifespan;
+        private Color fade;
+
         #endregion
 
         #region Initializer Methods
@@ -36,6 +40,7 @@ namespace ParticleEngine
         {
             this.particleList = new List<ParticleData>();
             this.particleTexture = particleTexture;
+            this.lifespan = lifespan;
 
             for (int i = 0; i < amountOfParticles; i++)
             {
@@ -75,6 +80,19 @@ namespace ParticleEngine
 
         public void updateParticles(float deltaTime)
         {
+            timeAlive += deltaTime;
+            float relativeTime = timeAlive / lifespan;
+            float inverseTime = 1.0f - relativeTime;
+            int shadingTint = (int)(inverseTime * 255);
+            if (shadingTint >= 0)
+            {
+                this.fade = Color.FromArgb(shadingTint, 0, 0, 0);
+            }
+            else
+            {
+                this.fade = Color.FromArgb(0, 0, 0, 0);
+            }
+
             for (int i = 0; i < particleList.Count; i++)
             {
                 ParticleData particle = particleList[i];
@@ -86,13 +104,13 @@ namespace ParticleEngine
                 }
                 else
                 {
-                    float relativeTime = particle.timeAlive / particle.lifespan;
-                    particle.location = 0.5f * particle.acceleration * relativeTime * relativeTime +
-                        particle.rotation * relativeTime + particle.spawnLocation;
-
-                    float inverseTime = 1.0f - relativeTime;
-                    int shadingTint = (int)(inverseTime * 255);
-                    particle.modColor = Color.FromArgb(shadingTint, shadingTint, shadingTint, shadingTint);
+                    //particle.location = 0.5f * particle.acceleration * relativeTime * relativeTime +
+                    //    particle.rotation * relativeTime + particle.spawnLocation;
+                    particle.location = 
+                        new Vector3(particle.acceleration.X * particle.rotation.X,
+                            particle.acceleration.Y * particle.rotation.Y,
+                            particle.acceleration.Z * particle.rotation.Z) 
+                            * deltaTime + particle.location;   
 
                     Vector3 positionFromCenter = particle.location - particle.spawnLocation;
                     particle.size += deltaTime * particle.growthRate;
@@ -105,7 +123,22 @@ namespace ParticleEngine
         public void draw(Vector3 cameraRotation, Device device)
         {
             device.SetTexture(0, particleTexture);
-            SurfaceDescription particleDescription = particleTexture.GetLevelDescription(0);
+            
+            device.TextureState[0].AlphaOperation = TextureOperation.Modulate;
+            device.TextureState[0].AlphaArgument0 = TextureArgument.Current;
+            device.TextureState[0].AlphaArgument1 = TextureArgument.Diffuse;
+            device.TextureState[0].AlphaArgument2 = TextureArgument.TextureColor;
+
+            device.TextureState[0].ColorArgument0 = TextureArgument.Current;
+            device.TextureState[0].ColorArgument1 = TextureArgument.Diffuse;
+            device.TextureState[0].ColorArgument2 = TextureArgument.TextureColor;
+            device.TextureState[0].ColorOperation = TextureOperation.Modulate;
+
+            Material material = device.Material;
+            Color diffuse = material.Diffuse;
+            material.Diffuse = fade;
+            material.Emissive = Color.White;
+            device.Material = material;
 
             foreach (ParticleData particle in particleList)
             {

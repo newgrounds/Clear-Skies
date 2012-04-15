@@ -7,6 +7,7 @@ using Microsoft.DirectX;
 using ClearSkies.Prefabs.Enemies;
 using Microsoft.DirectX.Direct3D;
 using ClearSkies.Content;
+using ClearSkies.Prefabs.Turrets;
 
 namespace ClearSkies.Managers
 {
@@ -19,6 +20,8 @@ namespace ClearSkies.Managers
 
         private static List<Bullet> managedBullets;
 
+        private static Turret turret;
+
         #endregion
 
         #region Initializer Methods
@@ -26,9 +29,10 @@ namespace ClearSkies.Managers
         /// <summary>
         /// Initailizes all data for use in the BulletManager.
         /// </summary>
-        static BulletManager() 
+        public BulletManager(Turret t)
         {
             managedBullets = new List<Bullet>();
+            turret = t;
         }
 
         #endregion
@@ -65,6 +69,9 @@ namespace ClearSkies.Managers
                     break;
                 case BulletType.Tracer:
                     spawnedBullet = new TracerBullet(location, rotation, scale);
+                    break;
+                case BulletType.Tank:
+                    spawnedBullet = new TankBullet(location, rotation, scale, turret);
                     break;
             }
 

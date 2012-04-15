@@ -17,6 +17,7 @@ namespace ClearSkies.Managers
         #region Fields
 
         private static List<Enemy> managedEnemies;
+        private static Vector3 turretLoc;
         private static int waveNumber;
 
         #endregion
@@ -26,9 +27,11 @@ namespace ClearSkies.Managers
         /// <summary>
         /// Initailizes all data for use in the EnemyManager.
         /// </summary>
-        static EnemyManager() 
+        public EnemyManager(Vector3 turretLocation)
         {
             managedEnemies = new List<Enemy>();
+
+            turretLoc = turretLocation;
 
             waveNumber = 0;
         }
@@ -68,7 +71,7 @@ namespace ClearSkies.Managers
 
                     break;
                 case EnemyType.BasicTank:
-                    spawnedEnemy = new Tank(location, rotation, scale);
+                    spawnedEnemy = new Tank(location, rotation, scale, turretLoc);
                     break;
             }
 
