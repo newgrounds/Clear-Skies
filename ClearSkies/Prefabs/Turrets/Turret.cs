@@ -15,6 +15,8 @@ namespace ClearSkies.Prefabs.Turrets
 
         private float colliderSize = 1f;
 
+        private int score = 0;
+
         private float health = 100f;
 
         #endregion
@@ -48,6 +50,12 @@ namespace ClearSkies.Prefabs.Turrets
         public float Health
         {
             get { return this.health; }
+        }
+
+        public int Score
+        {
+            get { return this.score; }
+            set { this.score = value; }
         }
 
         #endregion

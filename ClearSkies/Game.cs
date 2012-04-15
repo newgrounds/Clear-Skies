@@ -25,8 +25,6 @@ namespace ClearSkies
     {
         #region Fields
 
-        private static int score = 0;
-
         private D3D.Device device;
         private DI.Device keyboard;
         private DI.Device mouse;
@@ -36,6 +34,7 @@ namespace ClearSkies
 
         Turret player;
         float health;
+        int score;
 
         private ClearSkies.Prefabs.Cameras.ThirdPersonCamera camera;
         private GameState gameState;
@@ -43,12 +42,14 @@ namespace ClearSkies
 
         private List<Manager> managers;
 
+        private GUI gui;
+
         #endregion
 
         #region Initializer Methods
 
         /// <summary>
-        /// Creates a form for the Chase game
+        /// Creates a form for the Turret game
         /// </summary>
         public Game()
         {
@@ -125,10 +126,12 @@ namespace ClearSkies
             TurretManager turretManager = new TurretManager();
             managers.Add(turretManager);
             // the enemy manager also adds enemies
-            EnemyManager enemyManager = new EnemyManager(player.Location);
+            EnemyManager enemyManager = new EnemyManager(player);
             managers.Add(enemyManager);
 
-            //TurretManager.spawnTurret(TurretType.Test, new Vector3(5f, 0, 0), Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
+            gui = new GUI(player, new Rectangle(10, 10, 100, 20), new Point(0, 0),
+                new Rectangle(this.Width - 120, 10, 100, 20), new Point(0, 0), 
+                device, this.Width, this.Height);
 
             this.camera = new ThirdPersonCamera(player, new Vector3(0f, 3f, -3f));
             player.Head.addChild(camera);
@@ -159,19 +162,6 @@ namespace ClearSkies
 
         #endregion
 
-        #region Getter and Setter Methods
-
-        /// <summary>
-        /// The current score of the game
-        /// </summary>
-        public static int Score
-        {
-            get { return score; }
-            set { score = value; }
-        }
-
-        #endregion
-
         #region DisposalMethods
 
         /// <summary>
@@ -193,6 +183,7 @@ namespace ClearSkies
         private void update(float deltaTime)
         {
             health = player.Health;
+            score = player.Score;
 
             DI.KeyboardState keys = keyboard.GetCurrentKeyboardState();
 
@@ -271,8 +262,7 @@ namespace ClearSkies
 
             camera.view(device);
 
-            drawText(theFont, new Rectangle(10, 10, 100, 20), "Score: " + score.ToString());
-            drawText(theFont, new Rectangle(this.Width - 120, 10, 100, 20), "Health: " + health.ToString());
+            gui.draw();
 
             /*
             // BEGIN SHADER CODE

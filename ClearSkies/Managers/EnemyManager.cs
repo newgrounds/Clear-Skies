@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ClearSkies.Prefabs.Enemies;
+using ClearSkies.Prefabs.Turrets;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX;
 using ClearSkies;
@@ -17,7 +18,7 @@ namespace ClearSkies.Managers
         #region Fields
 
         private static List<Enemy> managedEnemies;
-        private static Vector3 turretLoc;
+        private static Turret turret;
         private static int waveNumber;
 
         #endregion
@@ -27,12 +28,10 @@ namespace ClearSkies.Managers
         /// <summary>
         /// Initailizes all data for use in the EnemyManager.
         /// </summary>
-        public EnemyManager(Vector3 turretLocation)
+        public EnemyManager(Turret t)
         {
             managedEnemies = new List<Enemy>();
-
-            turretLoc = turretLocation;
-
+            turret = t;
             waveNumber = 0;
         }
 
@@ -71,7 +70,7 @@ namespace ClearSkies.Managers
 
                     break;
                 case EnemyType.BasicTank:
-                    spawnedEnemy = new Tank(location, rotation, scale, turretLoc);
+                    spawnedEnemy = new Tank(location, rotation, scale, turret.Location);
                     break;
             }
 
@@ -99,7 +98,7 @@ namespace ClearSkies.Managers
                 }
                 else
                 {
-                    Game.Score += 1;
+                    turret.Score += 1;
 
                     managedEnemies.RemoveAt(i);
                 }

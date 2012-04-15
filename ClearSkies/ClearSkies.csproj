@@ -73,6 +73,7 @@
       <DependentUpon>Game.cs</DependentUpon>
     </Compile>
     <Compile Include="GameState.cs" />
+    <Compile Include="GUI.cs" />
     <Compile Include="Managers\BulletManager.cs" />
     <Compile Include="Prefabs\Bullets\BulletType.cs" />
     <Compile Include="Managers\EnemyManager.cs" />
