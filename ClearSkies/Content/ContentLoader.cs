@@ -43,6 +43,14 @@ namespace ClearSkies.Content
 
         private static Model radarEnemy;
 
+        private static Texture terrain;
+
+        private static Texture skyTop;
+        private static Texture skyLeft;
+        private static Texture skyRight;
+        private static Texture skyFront;
+        private static Texture skyBack;
+
         #endregion
 
         #region Initalizer Methods
@@ -119,6 +127,14 @@ namespace ClearSkies.Content
                 new Texture[] { defaultTexture },
                 device,
                 true);
+
+            terrain = TextureLoader.FromFile(device, @"Content\Textures\ground.jpg");
+
+            skyTop = TextureLoader.FromFile(device, @"Content\Textures\Sky1\stop37.jpg");
+            skyLeft = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sleft37.jpg");
+            skyRight = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sright37.jpg");
+            skyFront = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sfront37.jpg");
+            skyBack = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sback37.jpg");
 
             initialized = true;
         }
@@ -280,6 +296,55 @@ namespace ClearSkies.Content
             {
                 checkIfInitialized();
                 return radarEnemy;
+            }
+        }
+        public static Texture Terrain
+        {
+            get
+            {
+                checkIfInitialized();
+                return terrain;
+            }
+        }
+
+        public static Texture SkyTop
+        {
+            get
+            {
+                checkIfInitialized();
+                return skyTop;
+            }
+        }
+        public static Texture SkyLeft
+        {
+            get
+            {
+                checkIfInitialized();
+                return skyLeft;
+            }
+        }
+        public static Texture SkyRight
+        {
+            get
+            {
+                checkIfInitialized();
+                return skyRight;
+            }
+        }
+        public static Texture SkyFront
+        {
+            get
+            {
+                checkIfInitialized();
+                return skyFront;
+            }
+        }
+        public static Texture SkyBack
+        {
+            get
+            {
+                checkIfInitialized();
+                return skyBack;
             }
         }
 

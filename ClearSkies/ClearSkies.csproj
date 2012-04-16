@@ -150,10 +150,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Textures\ground.jpg" />
     <Content Include="Content\Textures\health.png" />
     <Content Include="Content\Textures\healthBar.png" />
     <Content Include="Content\Textures\Particles\explosion.png" />
     <Content Include="Content\Textures\Particles\test_particle.png" />
+    <Content Include="Content\Textures\Sky1\sback37.jpg" />
+    <Content Include="Content\Textures\Sky1\sfront37.jpg" />
+    <Content Include="Content\Textures\Sky1\sleft37.jpg" />
+    <Content Include="Content\Textures\Sky1\sright37.jpg" />
+    <Content Include="Content\Textures\Sky1\stop37.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

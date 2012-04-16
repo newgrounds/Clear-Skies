@@ -243,6 +243,58 @@ namespace ClearSkies
             device.BeginScene();
 
             SetupLights();
+
+            device.Transform.World = Matrix.Translation(0, 0, 0);
+
+
+            // TERRAIN
+            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-128f, 0, -128f), new Vector3(0, 0, 1), 0, 32),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-128f, 0, 128f), new Vector3(0, 0, 1), 0, 0),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(128f, 0, -128f), new Vector3(0, 0, 1), 32, 32),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(128f, 0, 128f), new Vector3(0, 0, 1), 32, 0),
+                ContentLoader.Terrain);
+            
+
+            // TOP OF SKYBOX
+            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-64f, 20, -64f), new Vector3(0, 0, -1), 0, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-64f, 20, 64f), new Vector3(0, 0, -1), 0, 0),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(64f, 20, -64f), new Vector3(0, 0, -1), 1, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(64f, 20, 64f), new Vector3(0, 0, -1), 1, 0),
+                ContentLoader.SkyTop);
+
+            
+            // LEFT OF SKYBOX
+            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, -64f), new Vector3(0, 0, -1), 0, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, 64f), new Vector3(0, 0, -1), 0, 0),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, -64f), new Vector3(0, 0, -1), 1, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, 64f), new Vector3(0, 0, -1), 1, 0),
+                ContentLoader.SkyLeft);
+
+            
+            // RIGHT OF SKYBOX
+            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, -64f), new Vector3(0, 0, -1), 0, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, 64f), new Vector3(0, 0, -1), 0, 0),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, -64f), new Vector3(0, 0, -1), 1, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, 64f), new Vector3(0, 0, -1), 1, 0),
+                ContentLoader.SkyRight);
+
+
+            // FRONT OF SKYBOX
+            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, -64f), new Vector3(0, 0, -1), 0, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, 64f), new Vector3(0, 0, -1), 0, 0),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, -64f), new Vector3(0, 0, -1), 1, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, 64f), new Vector3(0, 0, -1), 1, 0),
+                ContentLoader.SkyFront);
+
+
+            // BACK OF SKYBOX
+            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, -64f), new Vector3(0, 0, -1), 0, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, 64f), new Vector3(0, 0, -1), 0, 0),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, -64f), new Vector3(0, 0, -1), 1, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, 64f), new Vector3(0, 0, -1), 1, 0),
+                ContentLoader.SkyBack);
+
+
             /*
             // BEGIN SHADER SNIPPET
 
@@ -340,6 +392,39 @@ namespace ClearSkies
         protected void drawText(D3DFont font, Rectangle textRect, string text)
         {
             font.DrawText(null, text, textRect, D3D.DrawTextFormat.WordBreak | D3D.DrawTextFormat.Center, Color.Black);
+        }
+
+        /// <summary>
+        /// Creates and draws the terrain and skybox based on input vertices.
+        /// </summary>
+        /// <param name="vert0">The first vertex to be drawn.</param>
+        /// <param name="vert1">The second vertex to be drawn.</param>
+        /// <param name="vert2">The third vertex to be drawn.</param>
+        /// <param name="vert3">The fourth vertex to be drawn.</param>
+        /// <param name="texture">The texture to draw.</param>
+        protected void drawTerrain(D3D.CustomVertex.PositionNormalTextured vert0,
+            D3D.CustomVertex.PositionNormalTextured vert1, 
+            D3D.CustomVertex.PositionNormalTextured vert2,
+            D3D.CustomVertex.PositionNormalTextured vert3, 
+            D3D.Texture texture)
+        {
+            device.SetTexture(0, texture);
+
+            D3D.VertexBuffer buffer = new D3D.VertexBuffer(typeof(D3D.CustomVertex.PositionNormalTextured),
+                4, device, 0, D3D.CustomVertex.PositionNormalTextured.Format, D3D.Pool.Default);
+
+            D3D.CustomVertex.PositionNormalTextured[] vertices = (D3D.CustomVertex.PositionNormalTextured[])buffer.Lock(0, 0);
+
+            vertices[0] = vert0;
+            vertices[1] = vert1;
+            vertices[2] = vert2;
+            vertices[3] = vert3;
+
+            buffer.Unlock();
+
+            device.VertexFormat = D3D.CustomVertex.PositionNormalTextured.Format;
+            device.SetStreamSource(0, buffer, 0);
+            device.DrawPrimitives(D3D.PrimitiveType.TriangleStrip, 0, 2);
         }
 
         #endregion
