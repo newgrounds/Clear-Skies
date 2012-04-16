@@ -108,6 +108,9 @@
     <Compile Include="Scripts\TankMovementScript.cs" />
     <Compile Include="Scripts\TankShootScript.cs" />
     <Compile Include="Scripts\TurretRotationScript.cs" />
+    <EmbeddedResource Include="Game.resx">
+      <DependentUpon>Game.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -118,10 +121,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Content\Models\BasicPlane\basicPlane.x" />
-    <None Include="Content\Models\BasicTurret\basicTurretBarrel.x" />
-    <None Include="Content\Models\BasicTurret\basicTurretBase.x" />
-    <None Include="Content\Models\BasicTurret\basicTurretHead.x" />
+    <None Include="Content\Models\BasicTurret\basic_turret_barrel.x" />
+    <None Include="Content\Models\BasicTurret\basic_turret_base.x" />
+    <None Include="Content\Models\BasicTurret\basic_turret_head.x" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -146,6 +150,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Textures\health.png" />
+    <Content Include="Content\Textures\healthBar.png" />
+    <Content Include="Content\Textures\Particles\explosion.png" />
     <Content Include="Content\Textures\Particles\test_particle.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

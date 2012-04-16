@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +12,9 @@ namespace ClearSkies.Prefabs.Turrets
     {
         #region Initializer Methods
 
-        public BasicTurret(Vector3 location, Vector3 rotation, Vector3 scale, Device keyboard) : base(location, rotation, scale,
-            new BasicTurretHead(location, rotation, scale, keyboard))
+        public BasicTurret(Vector3 location, Vector3 rotation, Vector3 scale, Device keyboard)
+            : base(location, rotation, scale,
+                new BasicTurretHead(location + new Vector3(0f, 3.5f, 0f), rotation, scale, keyboard))
         {
             this.models.Add(ContentLoader.BasicTurretBaseModel);
         }

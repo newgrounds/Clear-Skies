@@ -18,9 +18,24 @@ namespace ClearSkies
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Game());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            Game app = new Game();
+            DateTime lastUpdate = DateTime.Now;
+            app.Show();
+            while (app.Created)
+            {
+                TimeSpan deltaTime = DateTime.Now.Subtract(lastUpdate);
+
+                app.update(deltaTime.Milliseconds / 1000f);
+                lastUpdate = DateTime.Now;
+
+                app.draw();
+                Application.DoEvents();
+            }
+            app.DisposeGraphics();
+            Application.Exit();
+            //Application.Run(new Game());
         }
 
         #endregion

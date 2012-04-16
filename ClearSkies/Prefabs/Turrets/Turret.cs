@@ -69,7 +69,12 @@ namespace ClearSkies.Prefabs.Turrets
 
             if (collider is Bullet)
             {
-                this.health -= ((Bullet)collider).Damage;
+                if (this.health <= 0)
+                    this.health = 0;
+                else
+                    this.health -= ((Bullet)collider).Damage;
+
+                // for debugging
                 System.Console.WriteLine(this.health);
                 // TODO: Add death animation script
             }

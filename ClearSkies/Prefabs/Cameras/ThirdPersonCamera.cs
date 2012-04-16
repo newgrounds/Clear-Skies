@@ -42,7 +42,7 @@ namespace ClearSkies.Prefabs.Cameras
         /// </summary>
         public void view(Device device)
         {
-            device.Transform.View = Matrix.LookAtLH(Location, focusOn.Location + new Vector3(0f,3f,0f), new Vector3(0, 1f, 0));
+            device.Transform.View = Matrix.LookAtLH(Location, focusOn.Location + new Vector3(0f,5f,0f), new Vector3(0, 1f, 0));
             device.Transform.Projection = Matrix.PerspectiveFovLH((float)Math.PI / 2, 1f, 1f, 100f);
         }
 

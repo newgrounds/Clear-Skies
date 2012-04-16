@@ -21,6 +21,7 @@ namespace ClearSkies.Scripts
         private const float PULL_SPEED = 2f;
         private const float PUSH_SPEED = 1f;
         private const float SHOOT_DELAY = 0.5f;
+        private Vector3 scale = new Vector3(10,10,10);
 
         private const float PULL_TIME = SHOOT_DELAY * PUSH_SPEED / (PULL_SPEED + PUSH_SPEED);
         private const float PUSH_TIME = SHOOT_DELAY * PULL_SPEED / (PULL_SPEED + PUSH_SPEED);
@@ -69,7 +70,7 @@ namespace ClearSkies.Scripts
             {
                 shooting = true;
                 this.timeSinceLastShot = 0.0f;
-                BulletManager.spawn(BulletType.Basic, shooter.Location, shooter.Rotation, shooter.Scale);;
+                BulletManager.spawn(BulletType.Basic, shooter.Location, shooter.Rotation, scale);
             }
             else
             {

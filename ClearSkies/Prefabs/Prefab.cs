@@ -112,6 +112,10 @@ namespace ClearSkies.Prefabs
             set { this.alive = value; }
         }
 
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
         /// Adds a new Child to the current Prefab.
         /// </summary>
@@ -120,6 +124,7 @@ namespace ClearSkies.Prefabs
         {
             this.children.Add(child);
         }
+
         /// <summary>
         /// Adds a new Script to the current Prefab.
         /// </summary>
@@ -128,10 +133,6 @@ namespace ClearSkies.Prefabs
         {
             this.scripts.Add(script);
         }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>
         /// Detects a collision with the given Prefab.

@@ -7,6 +7,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using D3DFont = Microsoft.DirectX.Direct3D.Font;
 using ClearSkies.Prefabs.Turrets;
+using ClearSkies.Content;
 
 namespace ClearSkies
 {
@@ -20,16 +21,17 @@ namespace ClearSkies
         private Turret player;
 
         private float score = 0;
-        private const Texture SCORE_TEXTURE = null;
+        private Texture scoreTexture = null;
         private const String SCORE_STRING = "Score: ";
         private Rectangle scoreArea;
         private Point scoreTexturePoint;
 
         private float health = 100;
-        private const Texture HEALTH_TEXTURE = null;
+        private Texture healthBarTexture = ContentLoader.HealthBarTexture;
+        private Texture healthTexture = ContentLoader.HealthTexture;
         private const String HEALTH_STRING = "Health: ";
-        private Rectangle healthArea;
-        private Point healthTexturePoint;
+        public Rectangle healthArea;
+        public Point healthTexturePoint;
 
         private Device device;
 
@@ -37,8 +39,8 @@ namespace ClearSkies
             new System.Drawing.Font("Arial", 12f, FontStyle.Regular);
         private D3DFont font;
 
-        private int width;
-        private int height;
+        public int width;
+        public int height;
 
         #endregion
 
@@ -52,6 +54,9 @@ namespace ClearSkies
         /// <param name="scoreP">Point for score on screen.</param>
         /// <param name="healthA">Area for health on screen.</param>
         /// <param name="healthP">Point for health on screen.</param>
+        /// <param name="device">The graphics device.</param>
+        /// <param name="w">Width of the screen.</param>
+        /// <param name="h">Height of the screen.</param>
         public GUI(Turret p, Rectangle scoreA, Point scoreP,
             Rectangle healthA, Point healthP,
             Device device, int w, int h)
@@ -80,23 +85,24 @@ namespace ClearSkies
             this.score = player.Score;
             this.health = player.Health;
 
-            if (SCORE_TEXTURE == null)
+            if (scoreTexture == null)
             {
                 drawText(new Rectangle(10, 10, 100, 20),
                     SCORE_STRING + score.ToString());
             }
             else
             {
-                drawTexture(SCORE_TEXTURE, scoreTexturePoint);
+                drawTexture(scoreTexture, scoreTexturePoint, 1f);
             }
-            if (HEALTH_TEXTURE == null)
+            if (healthBarTexture == null)
             {
                 drawText(new Rectangle(this.width - 120, 10, 100, 20),
                     HEALTH_STRING + health.ToString());
             }
             else
             {
-                drawTexture(HEALTH_TEXTURE, healthTexturePoint);
+                float newScale = player.Health * 0.01f;
+                drawTexture(healthBarTexture, healthTexturePoint, newScale);
             }
         }
 
@@ -115,11 +121,17 @@ namespace ClearSkies
         /// </summary>
         /// <param name="texture">The texture to draw.</param>
         /// <param name="point">Where to display the texture on the screen.</param>
-        public void drawTexture(Texture texture, Point point)
+        /// <param name="scale">The amount to scale the x value of the Sprite.</param>
+        public void drawTexture(Texture texture, Point point, float scale)
         {
+            Size healthSize = new Size((int)(277f * scale), 24);
+
             using (Sprite s = new Sprite(device))
             {
                 s.Begin(SpriteFlags.AlphaBlend);
+                s.Draw2D(healthTexture, new Rectangle(point, healthSize),
+                    healthSize, new Point(33 + point.X, 43 + point.Y), Color.Red);
+
                 s.Draw2D(texture, new Point(0, 0), 0f, point, Color.White);
                 s.End();
             }

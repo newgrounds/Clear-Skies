@@ -21,6 +21,9 @@ namespace ClearSkies.Content
         private static Texture testParticleTexture;
 		private static Texture explosionParticleTexture;
 
+        private static Texture healthBarTexture;
+        private static Texture healthTexture;
+
         private static Material defaultMaterial;
 
         private static Model basicBulletModel;
@@ -51,6 +54,13 @@ namespace ClearSkies.Content
             defaultTexture = null;
             testParticleTexture = TextureLoader.FromFile(device, @"Content\Textures\Particles\test_particle.png");
             explosionParticleTexture = TextureLoader.FromFile(device, @"Content\Textures\Particles\explosion.png");
+
+            // load health bar texture with alpha removed
+            healthBarTexture = TextureLoader.FromFile(device, @"Content\Textures\healthBar.png",
+                0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
+                Color.White.ToArgb());
+            // to fill the bar
+            healthTexture = TextureLoader.FromFile(device, @"Content\Textures\health.png");
 
             defaultMaterial = new Material();
             defaultMaterial.Diffuse = Color.White;
@@ -144,6 +154,22 @@ namespace ClearSkies.Content
             {
                 checkIfInitialized();
                 return explosionParticleTexture; 
+            }
+        }
+        public static Texture HealthBarTexture
+        {
+            get
+            {
+                checkIfInitialized();
+                return healthBarTexture;
+            }
+        }
+        public static Texture HealthTexture
+        {
+            get
+            {
+                checkIfInitialized();
+                return healthTexture;
             }
         }
 

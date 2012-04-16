@@ -35,7 +35,8 @@ namespace ClearSkies.Prefabs.Turrets
         /// <param name="rotation">Rotation the Turret is facing</param>
         /// <param name="turretRotationSpeed">Speed the Turret can rotate at</param>
         /// <param name="keyboard">Keyboard Device used to controll the Turret</param>
-        public TurretHead(Vector3 location, Vector3 rotation, Vector3 scale, float turretRotationSpeed, DI.Device keyboard) : base(location, rotation, scale)
+        public TurretHead(Vector3 location, Vector3 rotation, Vector3 scale, float turretRotationSpeed, DI.Device keyboard)
+            : base(location, rotation, scale)
         {
             this.barrels = new List<TurretBarrel>();
 
@@ -51,7 +52,7 @@ namespace ClearSkies.Prefabs.Turrets
         /// </summary>
         public float BarrelRotation
         {
-            get 
+            get
             {
                 float barrelRotation = 0.0f;
 
@@ -62,8 +63,8 @@ namespace ClearSkies.Prefabs.Turrets
 
                 return barrelRotation;
             }
-            set 
-            { 
+            set
+            {
                 foreach (Prefab child in children)
                 {
                     if (child is TurretBarrel)

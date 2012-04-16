@@ -60,22 +60,22 @@ namespace ClearSkies
 
             theFont = new D3DFont(device, systemFont);
 
-            Show();
+            //Show();
 
-            DateTime lastUpdate = DateTime.Now;
+            //DateTime lastUpdate = DateTime.Now;
 
-            while (gameState != GameState.Quit)
-            {
-                TimeSpan deltaTime = DateTime.Now.Subtract(lastUpdate);
+            //while (gameState != GameState.Quit)
+            //{
+                //TimeSpan deltaTime = DateTime.Now.Subtract(lastUpdate);
 
-                update(deltaTime.Milliseconds / 1000f);
-                lastUpdate = DateTime.Now;
+                //update(deltaTime.Milliseconds / 1000f);
+                //lastUpdate = DateTime.Now;
 
-                draw();
-            }
+                //draw();
+            //}
 
-            DisposeGraphics();
-            Application.Exit();
+            //DisposeGraphics();
+            //Application.Exit();
         }
 
         /// <summary>
@@ -83,8 +83,11 @@ namespace ClearSkies
         /// </summary>
         private void InitializeWindow()
         {
-            this.Width = 400;
-            this.Height = 400;
+            this.WindowState = FormWindowState.Maximized;
+            Rectangle scrn = Screen.GetBounds(this);
+            this.Width = scrn.Width;
+            this.Height = scrn.Height;
+            
             //enterPressed = false;
         }
 
@@ -118,7 +121,7 @@ namespace ClearSkies
 
             ContentLoader.initialize(device);
 
-            player = TurretManager.spawnTurret(TurretType.Test, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
+            player = TurretManager.spawnTurret(TurretType.Basic, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
 
             managers = new List<Manager>();
             BulletManager bulletManager = new BulletManager(player);
@@ -128,12 +131,13 @@ namespace ClearSkies
             // the enemy manager also adds enemies
             EnemyManager enemyManager = new EnemyManager(player);
             managers.Add(enemyManager);
-
+            
+            // TODO: make the gui redraw based on the window size
             gui = new GUI(player, new Rectangle(10, 10, 100, 20), new Point(0, 0),
-                new Rectangle(this.Width - 120, 10, 100, 20), new Point(0, 0), 
+                new Rectangle(this.Width - 140, 10, 100, 20), new Point(this.Width-350, 0), 
                 device, this.Width, this.Height);
-
-            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 3f, -3f));
+            
+            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 7f, -7f));
             player.Head.addChild(camera);
 
             #endregion
@@ -167,7 +171,7 @@ namespace ClearSkies
         /// <summary>
         /// Disposes of the graphics device.
         /// </summary>
-        private void DisposeGraphics()
+        public void DisposeGraphics()
         {
             device.Dispose();
         }
@@ -180,10 +184,14 @@ namespace ClearSkies
         /// Updates all the game objects and listens for user input from mouse and keyboard.
         /// </summary>
         /// <param name="deltaTime">Time in seconds since last update.</param>
-        private void update(float deltaTime)
+        public void update(float deltaTime)
         {
             health = player.Health;
             score = player.Score;
+            gui.width = this.Width;
+            gui.height = this.Height;
+            gui.healthArea = new Rectangle(this.Width - 140, 10, 100, 20);
+            gui.healthTexturePoint = new Point(this.Width - 350, 0);
 
             DI.KeyboardState keys = keyboard.GetCurrentKeyboardState();
 
@@ -223,7 +231,7 @@ namespace ClearSkies
         /// <summary>
         /// Draws everything to the device
         /// </summary>
-        private void draw()
+        public void draw()
         {
             device.Clear(D3D.ClearFlags.Target | D3D.ClearFlags.ZBuffer, Color.BlueViolet, 1f, 0);
             device.BeginScene();
@@ -233,8 +241,8 @@ namespace ClearSkies
             // BEGIN SHADER SNIPPET
 
             // Load the effect from file.
-            D3D.Effect effect = D3D.Effect.FromFile(device, "../../scene_toonEdges.fx/HLSL/scene_toonEdges.fx", null,
-                                            null, D3D.ShaderFlags.Debug, null);
+            D3D.Effect effect = D3D.Effect.FromFile(device, "../../scene_toonEdges.fx/HLSL/scene_toonEdges.fx", 
+                                            null, null, D3D.ShaderFlags.Debug, null);
             // Set the technique.
             effect.Technique = "Main";
 
@@ -307,12 +315,12 @@ namespace ClearSkies
             device.Lights[0].Diffuse = System.Drawing.Color.White;
             device.Lights[0].Direction = new Vector3(0,-1,5);
             device.Lights[0].Enabled = true;
-            /*
+            
             device.Lights[1].Type = D3D.LightType.Directional;
             device.Lights[1].Diffuse = System.Drawing.Color.White;
-            device.Lights[1].Direction = new Vector3(0, -3, -5);
+            device.Lights[1].Direction = new Vector3(0, -1, -5);
             device.Lights[1].Enabled = true;
-            */
+            
             // this doesn't show any noticeable changes:
             //device.RenderState.Ambient = Color.Gray;
         }

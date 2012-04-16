@@ -13,7 +13,8 @@ namespace ClearSkies.Prefabs.Turrets
         #region Initializer Methods
 
         public TestTurret(Vector3 location, Vector3 rotation, Vector3 scale, Device keyboard)
-            : base(location, rotation, scale, new TestTurretHead(location + new Vector3(0f, 1.25f, 0f), rotation, scale, keyboard))
+            : base(location, rotation, scale, 
+            new TestTurretHead(location + new Vector3(0f, 1.25f, 0f), rotation, scale, keyboard))
         {
             this.models.Add(ContentLoader.TestTurretBaseModel);
             this.rotation = new Vector3(0f, (float)(Math.PI / 2), 0f);
