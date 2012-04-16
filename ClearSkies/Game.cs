@@ -256,44 +256,44 @@ namespace ClearSkies
             
 
             // TOP OF SKYBOX
-            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-64f, 20, -64f), new Vector3(0, 0, -1), 0, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-64f, 20, 64f), new Vector3(0, 0, -1), 0, 0),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(64f, 20, -64f), new Vector3(0, 0, -1), 1, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(64f, 20, 64f), new Vector3(0, 0, -1), 1, 0),
+            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 254.5f, -256f), new Vector3(0, 0, -1), 0, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 254.5f, 256f), new Vector3(0, 0, -1), 0, 0),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, 254.5f, -256f), new Vector3(0, 0, -1), 1, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, 254.5f, 256f), new Vector3(0, 0, -1), 1, 0),
                 ContentLoader.SkyTop);
 
             
             // LEFT OF SKYBOX
-            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, -64f), new Vector3(0, 0, -1), 0, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, 64f), new Vector3(0, 0, -1), 0, 0),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, -64f), new Vector3(0, 0, -1), 1, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, 64f), new Vector3(0, 0, -1), 1, 0),
+            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, -256f, -256f), new Vector3(0, 0, 1), 0, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, 256f, -256f), new Vector3(0, 0, 1), 0, 0),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, -256f, 256f), new Vector3(0, 0, 1), 1, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, 256f, 256f), new Vector3(0, 0, 1), 1, 0),
                 ContentLoader.SkyLeft);
 
             
             // RIGHT OF SKYBOX
-            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, -64f), new Vector3(0, 0, -1), 0, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, 64f), new Vector3(0, 0, -1), 0, 0),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, -64f), new Vector3(0, 0, -1), 1, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, 64f), new Vector3(0, 0, -1), 1, 0),
+            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, -256f, -256f), new Vector3(0, 0, -1), 0, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, 256f, -256f), new Vector3(0, 0, -1), 0, 0),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, -256f, 256f), new Vector3(0, 0, -1), 1, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, 256f, 256f), new Vector3(0, 0, -1), 1, 0),
                 ContentLoader.SkyRight);
 
-
+            
             // FRONT OF SKYBOX
-            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, -64f), new Vector3(0, 0, -1), 0, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, 64f), new Vector3(0, 0, -1), 0, 0),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, -64f), new Vector3(0, 0, -1), 1, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, 64f), new Vector3(0, 0, -1), 1, 0),
+            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, -256f, 254.5f), new Vector3(0, 0, 1), 0, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 256f, 254.5f), new Vector3(0, 0, 1), 0, 0),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, -256f, 254.5f), new Vector3(0, 0, 1), 1, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, 256f, 254.5f), new Vector3(0, 0, 1), 1, 0),
                 ContentLoader.SkyFront);
 
 
             // BACK OF SKYBOX
-            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, -64f), new Vector3(0, 0, -1), 0, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, -64f, 64f), new Vector3(0, 0, -1), 0, 0),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, -64f), new Vector3(0, 0, -1), 1, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-20f, 64f, 64f), new Vector3(0, 0, -1), 1, 0),
+            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, -256f, -254.5f), new Vector3(0, 0, -1), 0, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 256f, -254.5f), new Vector3(0, 0, -1), 0, 0),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, -256f, -254.5f), new Vector3(0, 0, -1), 1, 1),
+                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, 256f, -254.5f), new Vector3(0, 0, -1), 1, 0),
                 ContentLoader.SkyBack);
-
+            
 
             /*
             // BEGIN SHADER SNIPPET
