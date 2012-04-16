@@ -5,6 +5,10 @@ using System.Text;
 using ClearSkies.Prefabs.Enemies;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX;
+using ClearSkies.Prefabs.Enemies.Planes;
+using ClearSkies.Exceptions;
+using ClearSkies.Properties;
+using ClearSkies.Prefabs.Enemies.Tanks;
 
 namespace ClearSkies.Managers
 {
@@ -16,6 +20,11 @@ namespace ClearSkies.Managers
         #region Fields
 
         private static List<Enemy> managedEnemies;
+        private static List<Wave> waves;
+        private static int currentWave;
+        private static float timeSinceLastSpawn;
+        private static Random random;
+        private static bool initialized;
 
         #endregion
 
@@ -24,9 +33,14 @@ namespace ClearSkies.Managers
         /// <summary>
         /// Initailizes all data for use in the EnemyManager.
         /// </summary>
-        static EnemyManager() 
+        public EnemyManager(List<Wave> wavesToSpawn, int startWave)
         {
             managedEnemies = new List<Enemy>();
+            waves = wavesToSpawn;
+            currentWave = startWave;
+            timeSinceLastSpawn = 0f;
+            random = new Random();
+            initialized = true;
         }
 
         #endregion
@@ -53,30 +67,47 @@ namespace ClearSkies.Managers
         /// <param name="location">Locaiton to spawn Enemy at</param>
         /// <param name="rotation">Rotation for Enemy to face</param>
         /// <returns>A reference to the spawned Enemy</returns>
-        public static Enemy spawnEnemy(EnemyType enemyType, Vector3 location, Vector3 rotation)
+        public static Enemy spawnEnemy(EnemyType enemyType, Vector3 location, Vector3 rotation, Vector3 scale, float speed, float turnSpeed)
         {
+            checkIfInitialized();
             Enemy spawnedEnemy = null;
 
             switch (enemyType)
             {
                 case EnemyType.BasicPlane:
-
+                    spawnedEnemy = new BasicPlane(location + Settings.DEFAULT_PLANE_HEIGHT, rotation, scale, speed, turnSpeed);
                     break;
                 case EnemyType.BasicTank:
-
+                    spawnedEnemy = new BasicTank(location, rotation, scale, speed, turnSpeed);
                     break;
             }
 
-            managedEnemies.Add(spawnedEnemy);
+            if (spawnedEnemy != null)
+            {
+                managedEnemies.Add(spawnedEnemy);
+            }
+
             return spawnedEnemy;
         }
         
         #endregion
 
+        #region Private Static Methods
+
+        private static void checkIfInitialized()
+        {
+            if (!initialized)
+            {
+                throw new UninitializedException(Resources.Enemy_Manager_Uninitialized_Exception);
+            }
+        }
+
+        #endregion
+
         #region Public Methods
 
         /// <summary>
-        /// Updates all Enemy Prefabs being managed within this manager. Also 
+        /// Updates all Enemy Prefabs being managed within this manager. Also
         /// removes any Enemy Prefabs that no longer meet the requirements of 
         /// being alive.
         /// </summary>
@@ -91,7 +122,69 @@ namespace ClearSkies.Managers
                 }
                 else
                 {
+                    Wave changedWave = waves[currentWave];
+
+                    if (managedEnemies[i] is BasicPlane)
+                    {
+                        changedWave.planesDestroyed++;
+                    }
+                    else if (managedEnemies[i] is BasicTank)
+                    {
+                        changedWave.tanksDestroyed++;
+                    }
+
                     managedEnemies.RemoveAt(i);
+                    waves[currentWave] = changedWave;
+                }
+            }
+
+            timeSinceLastSpawn += deltaTime;
+
+            if (currentWave < waves.Count && timeSinceLastSpawn >= waves[currentWave].spawnDelay)
+            {
+                Wave changedWave = waves[currentWave];
+
+                for (int i = 0; i < waves[currentWave].enemiesPerSpawn; i++)
+                {
+                    bool spawnTanks = changedWave.tanksSpawned < changedWave.tanksToSpawn;
+                    bool spawnPlanes = changedWave.planesSpawned < changedWave.planesToSpawn;
+
+                    Vector3 spawnRotation = new Vector3((float)(2 * Math.PI * random.NextDouble()), 0f, 0f);
+                    Vector3 spawnLocation = new Vector3((float)Math.Cos(spawnRotation.X) * changedWave.spawnDistance, 0f, (float)Math.Sin(spawnRotation.X) * changedWave.spawnDistance);
+
+                    if (spawnTanks & spawnPlanes)
+                    {
+                        switch (random.Next(1))
+                        {
+                            case 0:
+                                spawnEnemy(EnemyType.BasicTank, spawnLocation, -spawnRotation, Settings.DEFAULT_TANK_SCALE, changedWave.tankSpeed, changedWave.tankTurnSpeed);
+                                changedWave.tanksSpawned++;
+                                break;
+                            case 1:
+                                spawnEnemy(EnemyType.BasicPlane, spawnLocation, spawnRotation, Settings.DEFAULT_PLANE_SCALE, changedWave.planeSpeed, changedWave.planeTurnSpeed);
+                                changedWave.planesSpawned++;
+                                break;
+                        }
+                    }
+                    else if (spawnTanks)
+                    {
+                        spawnEnemy(EnemyType.BasicTank, spawnLocation, spawnRotation, Settings.DEFAULT_TANK_SCALE, changedWave.tankSpeed, changedWave.tankTurnSpeed);
+                        changedWave.tanksSpawned++;
+                    }
+                    else if (spawnPlanes)
+                    {
+                        spawnEnemy(EnemyType.BasicPlane, spawnLocation, spawnRotation,Settings.DEFAULT_PLANE_SCALE, changedWave.planeSpeed, changedWave.planeTurnSpeed);
+                        changedWave.planesSpawned++;
+                    }
+                }
+
+                waves[currentWave] = changedWave;
+
+                if (waves[currentWave].planesDestroyed == waves[currentWave].planesToSpawn &&
+                    waves[currentWave].tanksDestroyed == waves[currentWave].tanksToSpawn &&
+                    currentWave < waves.Count)
+                {
+                    currentWave++;
                 }
             }
         }

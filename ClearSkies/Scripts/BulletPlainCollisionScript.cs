@@ -47,7 +47,7 @@ namespace ClearSkies.Scripts
             foreach (Prefab prefab in EnemyManager.ManagedEnemies)
             {
                 Enemy enemy = (Enemy)prefab;
-                if (enemy.ColliderSize < (enemy.Location - bullet.Location).Length())
+                if (bullet.Owner != null && bullet.Owner != enemy && enemy.ColliderSize > (enemy.Location - bullet.Location).Length())
                 {
                     bullet.detectCollision(enemy);
                     enemy.detectCollision(bullet);

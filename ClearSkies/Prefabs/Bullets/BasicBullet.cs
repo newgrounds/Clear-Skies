@@ -14,14 +14,6 @@ namespace ClearSkies.Prefabs.Bullets
     /// </summary>
     class BasicBullet : Bullet
     {
-        #region Fields
-
-        private const float SPEED = 1f;
-        private const float DAMAGE = 1f;
-        private const float LIFESPAN = 2f;
-
-        #endregion
-
         #region Initializer Methods
 
         /// <summary>
@@ -30,7 +22,7 @@ namespace ClearSkies.Prefabs.Bullets
         /// </summary>
         /// <param name="location">Location of the Bullet</param>
         /// <param name="rotation">Rotation the Bullet should face</param>
-        public BasicBullet(Vector3 location, Vector3 rotation, Vector3 scale) : base(location, rotation, scale, ContentLoader.BasicBulletModel, DAMAGE, LIFESPAN, SPEED)
+        public BasicBullet(Prefab owner) : base(owner, ContentLoader.BasicBulletModel, Settings.BASIC_BULLET_DAMAGE, Settings.BASIC_BULLET_LIFESPAN, Settings.BASIC_BULLET_SPEED)
         {
             this.scripts.Add(new BulletStraightMovementScript(this));
             this.scripts.Add(new BulletPlainCollisionScript(this));
@@ -47,7 +39,7 @@ namespace ClearSkies.Prefabs.Bullets
         public override void detectCollision(Prefab collider)
         {
             base.detectCollision(collider);
-            this.alive = !(collider is  Enemy);
+            this.alive = !(collider !=  this.owner);
         }
 
         #endregion

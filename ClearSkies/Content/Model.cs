@@ -5,9 +5,8 @@ using System.Text;
 using Microsoft.DirectX.Direct3D;
 using System.IO;
 using Microsoft.DirectX;
-using ClearSkies.Content;
 
-namespace ClearSkies
+namespace ClearSkies.Content
 {
     /// <summary>
     /// A model class, used to make redering models easier
@@ -23,6 +22,8 @@ namespace ClearSkies
         private bool enableSpecular;
         private float boundingSphereRadius;
 
+        private Vector3 drawRotationOffset;
+
         #endregion
 
         #region Initializer Methods
@@ -33,10 +34,11 @@ namespace ClearSkies
         /// </summary>
         /// <param name="path">Path of model.</param>
         /// <param name="device">Device to draw to.</param>
-        public Model(string path, Device device)
+        public Model(string path, Vector3 drawRotationOffset, Device device)
         {
             ExtendedMaterial[] exMaterials;
 
+            this.drawRotationOffset = drawRotationOffset;
             this.models = new List<Model>();
             this.mesh = Mesh.FromFile(path, MeshFlags.SystemMemory, device, out exMaterials);
             this.textures = new Texture[exMaterials.Length];
@@ -66,8 +68,9 @@ namespace ClearSkies
         /// <param name="textures">Textures to apply to mesh</param>
         /// <param name="device">The device to draw to.</param>
         /// <param name="enableSpecular">True if use specular materials</param>
-        public Model(Mesh mesh, Material[] materials, Texture[] textures, Device device, bool enableSpecular)
+        public Model(Mesh mesh, Material[] materials, Texture[] textures, Vector3 drawRotationOffset, Device device, bool enableSpecular)
         {
+            this.drawRotationOffset = drawRotationOffset;
             this.mesh = mesh;
             this.materials = materials;
             this.textures = textures;
@@ -94,6 +97,10 @@ namespace ClearSkies
         public void draw(Device device)
         {
             device.RenderState.SpecularEnable = enableSpecular;
+            device.Transform.World =
+                Matrix.Multiply(
+                Matrix.RotationYawPitchRoll(drawRotationOffset.X, drawRotationOffset.Y, drawRotationOffset.Z),
+                device.Transform.World);
 
             for (int i = 0; i < materials.Length; i++)
             {

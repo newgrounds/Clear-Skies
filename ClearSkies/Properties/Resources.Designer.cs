@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClearSkies.Properties
-{
-
-
+namespace ClearSkies.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,49 +22,86 @@ namespace ClearSkies.Properties
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources
-    {
-
+    internal class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
-        {
+        internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if ((resourceMan == null))
-                {
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ClearSkies.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BulletManager was not initialized properly before being used. Please constructor method before using BulletManager..
+        /// </summary>
+        internal static string Bullet_Manager_Uninitialized_Exception {
+            get {
+                return ResourceManager.GetString("Bullet_Manager_Uninitialized_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ContentLoader was not initialized properly before being used. Please call initialize method before using ContentLoader..
+        /// </summary>
+        internal static string Content_Loader_Uninitialized_Exception {
+            get {
+                return ResourceManager.GetString("Content_Loader_Uninitialized_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EnemyManager was not initialized properly before being used. Please call constructor before using EnemyManager..
+        /// </summary>
+        internal static string Enemy_Manager_Uninitialized_Exception {
+            get {
+                return ResourceManager.GetString("Enemy_Manager_Uninitialized_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ParticleEmitterManager was not initialized properly before being used. Please call constructor beofre using ParticleEmitterManager..
+        /// </summary>
+        internal static string Particle_Emitter_Manager_Uninitialized_Exception {
+            get {
+                return ResourceManager.GetString("Particle_Emitter_Manager_Uninitialized_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TurretManager was not initialized properly before being used. Please call constructor before using TurretManager..
+        /// </summary>
+        internal static string Turret_Manager_Uninitialized_Exception {
+            get {
+                return ResourceManager.GetString("Turret_Manager_Uninitialized_Exception", resourceCulture);
             }
         }
     }

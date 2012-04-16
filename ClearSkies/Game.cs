@@ -14,6 +14,7 @@ using D3D = Microsoft.DirectX.Direct3D;
 using ClearSkies.Prefabs;
 using Microsoft.DirectX;
 using ClearSkies.Prefabs.Turrets;
+using ClearSkies.Prefabs.Enemies;
 using ClearSkies.Managers;
 using ClearSkies.Content;
 using ClearSkies.Prefabs.Cameras;
@@ -25,9 +26,14 @@ namespace ClearSkies
     {
         #region Fields
 
+        private static int score = 0;
+
         private D3D.Device device;
         private DI.Device keyboard;
         private DI.Device mouse;
+
+        Font systemFont = new Font("Arial", 12f, FontStyle.Regular);
+        D3DFont theFont;
 
         private ClearSkies.Prefabs.Cameras.ThirdPersonCamera camera;
         private GameState gameState;
@@ -48,6 +54,8 @@ namespace ClearSkies
             InitializeInputDevices();
             InitializeGraphics();
             InitializeGame();
+
+            theFont = new D3DFont(device, systemFont);
 
             Show();
 
@@ -128,13 +136,39 @@ namespace ClearSkies
 
             this.camera = new ThirdPersonCamera(player, new Vector3(0f, 10f, -15f));
             player.Head.addChild(camera);
+
             
-            pe = new ExpolsionParticleEmitter(ContentLoader.TestParticleTexture, new Vector3(0f, 0f, 0f), new Vector3(1f, 1f, 1f), 20, 2f, -0.1f, 10f);
+
+            // the enemy manager also adds enemies
+
+            Wave firstwave = new Wave();
+            firstwave.tanksToSpawn = 0;
+            firstwave.planesToSpawn = 1;
+            firstwave.planeSpeed = 5.0f;
+            firstwave.planeTurnSpeed = (float)(Math.PI / 8.0f);
+            firstwave.spawnDistance = 30.0f;
+            firstwave.enemiesPerSpawn = 1;
+            firstwave.spawnDelay = 0;
+            List<Wave> waves = new List<Wave>();
+            waves.Add(firstwave);
+            Wave secondwave = new Wave();
+            secondwave.planesToSpawn = 2;
+            secondwave.planeSpeed = 5f;
+            secondwave.planeTurnSpeed = (float)(Math.PI / 8.0f);
+            secondwave.spawnDistance = 40f;
+            secondwave.enemiesPerSpawn = 1;
+            secondwave.spawnDelay = 10f;
+            waves.Add(secondwave);
+
+
+            EnemyManager enemyManager = new EnemyManager(waves, 0);
+            managers.Add(enemyManager);
+
+            ParticleEmitterManager particleEmitterManager = new ParticleEmitterManager(camera);
+            managers.Add(particleEmitterManager);
 
             #endregion
         }
-
-        ExpolsionParticleEmitter pe;
 
 
         /// <summary>
@@ -155,6 +189,19 @@ namespace ClearSkies
 
             mouse.SetCooperativeLevel(this, DI.CooperativeLevelFlags.NonExclusive | DI.CooperativeLevelFlags.Background);
             mouse.Acquire();
+        }
+
+        #endregion
+
+        #region Getter and Setter Methods
+
+        /// <summary>
+        /// The current score of the game
+        /// </summary>
+        public static int Score
+        {
+            get { return score; }
+            set { score = value; }
         }
 
         #endregion
@@ -204,8 +251,6 @@ namespace ClearSkies
                 m.update(deltaTime);
             }
 
-            pe.updateParticles(deltaTime);
-
             if (keys[DI.Key.Escape])
             {
                 gameState = GameState.Quit;
@@ -225,7 +270,6 @@ namespace ClearSkies
             device.BeginScene();
 
             SetupLights();
-            
 
             switch (gameState)
             {
@@ -240,12 +284,12 @@ namespace ClearSkies
                         m.draw(device);
                     }
 
-                    pe.draw(camera.Rotation, device);
-
                     break;
             }
 
             camera.view(device);
+
+            drawText(theFont, new Rectangle(10, 10, 100, 20), "Score: " + score.ToString());
 
             device.EndScene();
             device.Present();
@@ -268,14 +312,14 @@ namespace ClearSkies
         }
 
         /// <summary>
-        /// Draws the given text to the center of the screen using the given font.
+        /// Draws the given text to the given area of the screen using the given font.
         /// </summary>
         /// <param name="font">The font to write in.</param>
+        /// <param name="textRect">Where to display the text on the screen.</param>
         /// <param name="text">The text to write.</param>
-        protected void drawText(D3DFont font, string text)
+        protected void drawText(D3DFont font, Rectangle textRect, string text)
         {
-            Rectangle textRectangle = new Rectangle(this.Width / 6, this.Height / 6, this.Width * 2 / 3, this.Height * 2 / 3);
-            font.DrawText(null, text, textRectangle, D3D.DrawTextFormat.WordBreak | D3D.DrawTextFormat.Center, Color.Black);
+            font.DrawText(null, text, textRect, D3D.DrawTextFormat.WordBreak | D3D.DrawTextFormat.Center, Color.Black);
         }
 
         #endregion

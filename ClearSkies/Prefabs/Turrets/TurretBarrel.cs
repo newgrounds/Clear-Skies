@@ -6,6 +6,7 @@ using Microsoft.DirectX;
 using DI = Microsoft.DirectX.DirectInput;
 using ClearSkies.Scripts;
 using ClearSkies.Managers;
+using ClearSkies.Content;
 
 namespace ClearSkies.Prefabs.Turrets
 {
@@ -31,9 +32,10 @@ namespace ClearSkies.Prefabs.Turrets
         public TurretBarrel(Vector3 location, Vector3 rotation, Vector3 scale, Model barrelModel, DI.Device keyboard)
             : base(location, rotation, scale)
         {
-            this.models.Add(barrelModel);
             this.scripts.Add(new ShootScript(this, keyboard));
             this.drawLocation = location;
+
+            this.models.Add(barrelModel);
         }
 
         #endregion

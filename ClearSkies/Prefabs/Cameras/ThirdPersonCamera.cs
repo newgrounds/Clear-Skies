@@ -42,8 +42,8 @@ namespace ClearSkies.Prefabs.Cameras
         /// </summary>
         public void view(Device device)
         {
-            device.Transform.View = Matrix.LookAtLH(Location, focusOn.Location, new Vector3(0, 1f, 0));
-            device.Transform.Projection = Matrix.PerspectiveFovLH((float)Math.PI / 4f, 1f, 1f, 100f);
+            device.Transform.View = Matrix.LookAtLH(Location, focusOn.Location + Settings.CAMERA_FOCUS_POINT_OFFSET, Settings.CAMERA_UP_VECTOR);
+            device.Transform.Projection = Matrix.PerspectiveFovLH(Settings.CAMERA_FIELD_OF_VIEW, Settings.CAMERA_ASPECT_RATIO, Settings.CAMERA_NEAR_PLANE, Settings.CAMERA_FAR_PLANE);
         }
 
         #endregion

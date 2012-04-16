@@ -8,7 +8,7 @@ namespace ClearSkies.Exceptions
     /// <summary>
     /// Exception for if ContentLoader was not initialized before use.
     /// </summary>
-    class ContentLoaderUninitializedException : Exception
+    class UninitializedException : Exception
     {
         #region Initializer Methods
 
@@ -16,7 +16,7 @@ namespace ClearSkies.Exceptions
         /// Exception to be thrown if ContentLoader is uninitialized before first use.
         /// </summary>
         /// <param name="message">Message to display on failure</param>
-        public ContentLoaderUninitializedException(string message) : base(message) { }
+        public UninitializedException(string message) : base(message) { }
 
         #endregion
     }

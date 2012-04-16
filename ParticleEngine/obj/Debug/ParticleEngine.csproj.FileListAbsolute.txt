@@ -1,0 +1,5 @@
+C:\Users\Benji\documents\visual studio 2010\Projects\ClearSkies\ParticleEngine\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Benji\documents\visual studio 2010\Projects\ClearSkies\ParticleEngine\bin\Debug\ParticleEngine.dll
+C:\Users\Benji\documents\visual studio 2010\Projects\ClearSkies\ParticleEngine\bin\Debug\ParticleEngine.pdb
+C:\Users\Benji\documents\visual studio 2010\Projects\ClearSkies\ParticleEngine\obj\Debug\ParticleEngine.dll
+C:\Users\Benji\documents\visual studio 2010\Projects\ClearSkies\ParticleEngine\obj\Debug\ParticleEngine.pdb

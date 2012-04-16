@@ -6,22 +6,16 @@ using Microsoft.DirectX;
 using ClearSkies.Content;
 using ClearSkies.Scripts;
 using ClearSkies.Prefabs.Enemies;
+using ClearSkies.Managers;
+using ParticleEngine;
 
 namespace ClearSkies.Prefabs.Bullets
 {
     /// <summary>
     /// A basic bullet that glows for extra visiability and explodes on impact with enemy.
     /// </summary>
-    class TracerBullet : Bullet
+    class BombBullet : Bullet
     {
-        #region Fields
-
-        private const float SPEED = 1f;
-        private const float DAMAGE = 3f;
-        private const float LIFESPAN = 2f;
-
-        #endregion
-
         #region Initializer Methods
 
         /// <summary>
@@ -29,10 +23,10 @@ namespace ClearSkies.Prefabs.Bullets
         /// </summary>
         /// <param name="location"></param>
         /// <param name="rotation"></param>
-        public TracerBullet(Vector3 location, Vector3 rotation, Vector3 scale) : base(location, rotation, scale, ContentLoader.TracerBulletModel, DAMAGE, LIFESPAN, SPEED)
+        public BombBullet(Prefab owner) : base(owner, ContentLoader.BombBulletModel, Settings.BOMB_BULLET_DAMAGE, Settings.BOMB_BULLET_LIFESPAN, Settings.BOMB_BULLET_SPEED)
         {
-            this.scripts.Add(new BulletStraightMovementScript(this));
-            // TODO: explode script
+            this.scripts.Add(new BombMovementScript(this, speed));
+            this.scripts.Add(new BombCollisionScript(this));
         }
 
         #endregion
@@ -46,12 +40,8 @@ namespace ClearSkies.Prefabs.Bullets
         public override void detectCollision(Prefab collider)
         {
             base.detectCollision(collider);
-
-            if (collider is Enemy)
-            {
-                this.scripts.Clear();
-                // TODO: add explosion script
-            }
+            ParticleEmitterManager.spawnParticleEmitter(ParticleEmitterType.explosion, this.location);
+            this.alive = false;
         }
 
         #endregion

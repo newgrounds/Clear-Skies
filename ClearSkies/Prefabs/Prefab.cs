@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.DirectX;
 using ClearSkies.Scripts;
 using Microsoft.DirectX.Direct3D;
+using ClearSkies.Content;
 
 namespace ClearSkies.Prefabs
 {

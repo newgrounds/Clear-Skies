@@ -18,13 +18,6 @@ namespace ClearSkies.Scripts
     {
         #region Fields
 
-        private const float PULL_SPEED = 2f;
-        private const float PUSH_SPEED = 1f;
-        private const float SHOOT_DELAY = 0.2f;
-
-        private const float PULL_TIME = SHOOT_DELAY * PUSH_SPEED / (PULL_SPEED + PUSH_SPEED);
-        private const float PUSH_TIME = SHOOT_DELAY * PULL_SPEED / (PULL_SPEED + PUSH_SPEED);
-
         private TurretBarrel shooter;
         private DI.Device keyboard;
 
@@ -48,7 +41,7 @@ namespace ClearSkies.Scripts
             this.keyboard = keyboard;
             
             this.shooting = false;
-            this.timeSinceLastShot = SHOOT_DELAY;
+            this.timeSinceLastShot = Settings.SHOOT_SHOOT_DELAY;
         }
 
         #endregion
@@ -65,11 +58,11 @@ namespace ClearSkies.Scripts
         {
             DI.KeyboardState keys = keyboard.GetCurrentKeyboardState();
 
-            if (keys[DI.Key.Space] && timeSinceLastShot >= SHOOT_DELAY)
+            if (keys[DI.Key.Space] && timeSinceLastShot >= Settings.SHOOT_SHOOT_DELAY)
             {
                 shooting = true;
                 this.timeSinceLastShot = 0.0f;
-                BulletManager.spawn(BulletType.Basic, shooter.Location, shooter.Rotation, shooter.Scale);;
+                BulletManager.spawn(BulletType.Basic, shooter);
             }
             else
             {
@@ -78,13 +71,13 @@ namespace ClearSkies.Scripts
 
             if (shooting)
             {
-                if (timeSinceLastShot <= PULL_TIME)
+                if (timeSinceLastShot <= Settings.SHOOT_PULL_TIME)
                 {
                     Vector3 recoilLocation = shooter.DrawLocation;
 
-                    recoilLocation.Z -= deltaTime * PULL_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Cos(shooter.Rotation.X));
-                    recoilLocation.X -= deltaTime * PULL_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Sin(shooter.Rotation.X));
-                    recoilLocation.Y -= deltaTime * PULL_SPEED * (float)Math.Cos(shooter.Rotation.Y);
+                    recoilLocation.Z -= deltaTime * Settings.SHOOT_PULL_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Cos(shooter.Rotation.X));
+                    recoilLocation.X -= deltaTime * Settings.SHOOT_PULL_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Sin(shooter.Rotation.X));
+                    recoilLocation.Y -= deltaTime * Settings.SHOOT_PULL_SPEED * (float)Math.Cos(shooter.Rotation.Y);
 
                     shooter.DrawLocation = recoilLocation;
                 }
@@ -92,11 +85,11 @@ namespace ClearSkies.Scripts
                 {
                     Vector3 recoilLocation = shooter.DrawLocation;
 
-                    recoilLocation.Z += deltaTime * PUSH_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Cos(shooter.Rotation.X));
-                    recoilLocation.X += deltaTime * PUSH_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Sin(shooter.Rotation.X));
-                    recoilLocation.Y += deltaTime * PUSH_SPEED * (float)Math.Cos(shooter.Rotation.Y);
+                    recoilLocation.Z += deltaTime * Settings.SHOOT_PUSH_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Cos(shooter.Rotation.X));
+                    recoilLocation.X += deltaTime * Settings.SHOOT_PUSH_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Sin(shooter.Rotation.X));
+                    recoilLocation.Y += deltaTime * Settings.SHOOT_PUSH_SPEED * (float)Math.Cos(shooter.Rotation.Y);
 
-                    shooting = timeSinceLastShot <= PULL_TIME + PUSH_TIME;
+                    shooting = timeSinceLastShot <= Settings.SHOOT_PULL_TIME + Settings.SHOOT_PUSH_TIME;
 
                     if (!shooting)
                     {

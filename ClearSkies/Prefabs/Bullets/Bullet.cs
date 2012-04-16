@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.DirectX;
 using ClearSkies.Prefabs.Enemies;
 using ClearSkies.Scripts;
+using ClearSkies.Content;
 
 namespace ClearSkies.Prefabs.Bullets
 {
@@ -15,11 +16,12 @@ namespace ClearSkies.Prefabs.Bullets
     {
         #region Fields
 
-        private float damage;
-        private float lifespan;
-        private float timeAlive;
-        private float speed;
-        private bool destory;
+        protected Prefab owner;
+        protected float damage;
+        protected float lifespan;
+        protected float timeAlive;
+        protected float speed;
+        protected bool destroy;
 
         #endregion
 
@@ -38,9 +40,10 @@ namespace ClearSkies.Prefabs.Bullets
         /// <param name="damage">Damage Bullet will inflict</param>
         /// <param name="lifespan">Time in seconds the bullet will remain in scene</param>
         /// <param name="speed">Speed bullet will travel at</param>
-        public Bullet(Vector3 location, Vector3 rotation, Vector3 scale, Model bulletModel, float damage, float lifespan, float speed)
-            : base(location, rotation, scale)
+        public Bullet(Prefab owner, Model bulletModel, float damage, float lifespan, float speed)
+            : base(owner.Location, owner.Rotation, owner.Scale)
         {
+            this.owner = owner;
             this.damage = damage;
             this.lifespan = lifespan;
             this.timeAlive = 0.0f;
@@ -56,10 +59,10 @@ namespace ClearSkies.Prefabs.Bullets
         /// <summary>
         /// True if Bullet should destory itself. Used for animation.
         /// </summary>
-        public bool Destory
+        public bool Destroy
         {
-            get { return this.destory; }
-            set { this.destory = value; }
+            get { return this.destroy; }
+            set { this.destroy = value; }
         }
 
         /// <summary>
@@ -68,7 +71,12 @@ namespace ClearSkies.Prefabs.Bullets
         public float Speed
         {
             get { return this.speed; }
-        }  
+        }
+
+        public Prefab Owner
+        {
+            get { return this.owner; }
+        }
 
         #endregion
 
@@ -84,7 +92,8 @@ namespace ClearSkies.Prefabs.Bullets
             base.update(deltaTime);
             this.timeAlive += deltaTime;
 
-            this.alive = lifespan >= timeAlive && !destory;
+
+            this.alive = this.alive && lifespan >= timeAlive && !destroy;
         }
         
         #endregion

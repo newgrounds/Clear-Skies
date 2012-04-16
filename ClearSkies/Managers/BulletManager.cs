@@ -7,6 +7,9 @@ using Microsoft.DirectX;
 using ClearSkies.Prefabs.Enemies;
 using Microsoft.DirectX.Direct3D;
 using ClearSkies.Content;
+using ClearSkies.Prefabs;
+using ClearSkies.Exceptions;
+using ClearSkies.Properties;
 
 namespace ClearSkies.Managers
 {
@@ -17,7 +20,8 @@ namespace ClearSkies.Managers
     {
         #region Fields
 
-        private static List<Bullet> managedBullets;
+        private static List<Bullet> managedBullets = new List<Bullet>();
+        private static bool initialized;
 
         #endregion
 
@@ -26,9 +30,9 @@ namespace ClearSkies.Managers
         /// <summary>
         /// Initailizes all data for use in the BulletManager.
         /// </summary>
-        static BulletManager() 
+        public BulletManager() 
         {
-            managedBullets = new List<Bullet>();
+            initialized = true;
         }
 
         #endregion
@@ -45,7 +49,7 @@ namespace ClearSkies.Managers
 
         #endregion
 
-        #region Static Methods
+        #region Public Static Methods
 
         /// <summary>
         /// Spawns a single Bullet of the give type at the desired location and rotation.
@@ -54,17 +58,18 @@ namespace ClearSkies.Managers
         /// <param name="location">Location to spawn bullet at</param>
         /// <param name="rotation">Rotation bullet should be facing</param>
         /// <returns>A refernce to the spawned Bullet</returns>
-        public static Bullet spawn(BulletType bulletType, Vector3 location, Vector3 rotation, Vector3 scale)
+        public static Bullet spawn(BulletType bulletType, Prefab owner)
         {
+            checkIfInitialized();
             Bullet spawnedBullet = null;
 
             switch (bulletType)
             {
                 case BulletType.Basic:
-                    spawnedBullet= new BasicBullet(location, rotation, scale);
+                    spawnedBullet= new BasicBullet(owner);
                     break;
-                case BulletType.Tracer:
-                    spawnedBullet = new TracerBullet(location, rotation, scale);
+                case BulletType.Bomb:
+                    spawnedBullet = new BombBullet(owner);
                     break;
             }
 
@@ -74,6 +79,18 @@ namespace ClearSkies.Managers
             }
 
             return spawnedBullet;
+        }
+
+        #endregion
+
+        #region Private Static Methods
+
+        private static void checkIfInitialized()
+        {
+            if (!initialized)
+            {
+                throw new UninitializedException(Resources.Bullet_Manager_Uninitialized_Exception);
+            }
         }
 
         #endregion

@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.DirectX;
 using ClearSkies.Prefabs;
 using ClearSkies.Prefabs.Enemies;
+using ClearSkies.Prefabs.Enemies.Tanks;
 
 namespace ClearSkies.Scripts
 {
@@ -15,8 +16,9 @@ namespace ClearSkies.Scripts
     {
         #region Fields
 
-        private float movementSpeed;
-        private Tank tank;
+        private float driveSpeed;
+        private float turnSpeed;
+        private BasicTank tank;
 
         #endregion
 
@@ -27,10 +29,11 @@ namespace ClearSkies.Scripts
         /// </summary>
         /// <param name="turret">Tank to translate.</param>
         /// <param name="movementSpeed">Speed to move at.</param>
-        public TankMovementScript(Tank tank, float movementSpeed)
+        public TankMovementScript(BasicTank tank, float driveSpeed, float turnSpeed)
         {
             this.tank = tank;
-            this.movementSpeed = movementSpeed;
+            this.driveSpeed = driveSpeed;
+            this.turnSpeed = turnSpeed;
         }
 
         #endregion
@@ -45,7 +48,10 @@ namespace ClearSkies.Scripts
         {
             Vector3 location = tank.Location;
 
-            location += new Vector3(0, 0, movementSpeed*deltaTime);
+            location += new Vector3(
+                (float)(Math.Cos(tank.Rotation.X) * driveSpeed * deltaTime), 
+                0f,
+                (float)(Math.Sin(tank.Rotation.X) * driveSpeed * deltaTime));
 
             tank.Location = location;
         }

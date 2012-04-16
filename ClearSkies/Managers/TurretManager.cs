@@ -8,6 +8,8 @@ using DI = Microsoft.DirectX.DirectInput;
 using D3D = Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX.Direct3D;
 using ClearSkies.Prefabs;
+using ClearSkies.Exceptions;
+using ClearSkies.Properties;
 
 namespace ClearSkies.Managers
 {
@@ -19,6 +21,7 @@ namespace ClearSkies.Managers
         #region Fields
 
         private static List<Turret> managedTurrets;
+        private static bool initialized;
 
         #endregion
 
@@ -30,6 +33,7 @@ namespace ClearSkies.Managers
         static TurretManager() 
         {
             managedTurrets = new List<Turret>();
+            initialized = true;
         }
 
         #endregion
@@ -60,6 +64,7 @@ namespace ClearSkies.Managers
         /// <returns>A reference to the spawned Turret</returns>
         public static Turret spawnTurret(TurretType turretType, Vector3 location, Vector3 rotation, Vector3 scale, DI.Device keyboard)
         {
+            checkIfInitialized();
             Turret spawnedTurret = null;
 
             switch (turretType)
@@ -74,6 +79,18 @@ namespace ClearSkies.Managers
 
             managedTurrets.Add(spawnedTurret);
             return spawnedTurret;
+        }
+
+        #endregion
+
+        #region Private Static Methods
+
+        private static void checkIfInitialized()
+        {
+            if (!initialized)
+            {
+                throw new UninitializedException(Resources.Turret_Manager_Uninitialized_Exception);
+            }
         }
 
         #endregion
