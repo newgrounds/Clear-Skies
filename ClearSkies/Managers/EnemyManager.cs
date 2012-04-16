@@ -47,6 +47,11 @@ namespace ClearSkies.Managers
             get { return managedEnemies; }
         }
 
+        public static int WaveNumber
+        {
+            get { return waveNumber; }
+        }
+
         #endregion
 
         #region Static Methods
@@ -98,8 +103,6 @@ namespace ClearSkies.Managers
                 }
                 else
                 {
-                    turret.Score += 1;
-
                     managedEnemies.RemoveAt(i);
                 }
             }

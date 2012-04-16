@@ -41,6 +41,8 @@ namespace ClearSkies.Content
 
         private static Model tankModel;
 
+        private static Model radarEnemy;
+
         #endregion
 
         #region Initalizer Methods
@@ -107,6 +109,12 @@ namespace ClearSkies.Content
             basicPlaneModel = new Model(@"Content\Models\BasicPlane\basicPlane.x", device);
 
             tankModel = new Model(Mesh.Box(device, 0.5f, 0.5f, 0.5f),
+                new Material[] { defaultMaterial },
+                new Texture[] { defaultTexture },
+                device,
+                true);
+
+            radarEnemy = new Model(Mesh.Sphere(device, 0.3f, 3, 3),
                 new Material[] { defaultMaterial },
                 new Texture[] { defaultTexture },
                 device,
@@ -264,6 +272,14 @@ namespace ClearSkies.Content
             {
                 checkIfInitialized();
                 return tankModel;
+            }
+        }
+        public static Model RadarEnemy
+        {
+            get
+            {
+                checkIfInitialized();
+                return radarEnemy;
             }
         }
 

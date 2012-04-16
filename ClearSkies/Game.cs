@@ -34,7 +34,6 @@ namespace ClearSkies
 
         Turret player;
         float health;
-        int score;
 
         private ClearSkies.Prefabs.Cameras.ThirdPersonCamera camera;
         private GameState gameState;
@@ -133,8 +132,11 @@ namespace ClearSkies
             managers.Add(enemyManager);
             
             // TODO: make the gui redraw based on the window size
-            gui = new GUI(player, new Rectangle(10, 10, 100, 20), new Point(0, 0),
-                new Rectangle(this.Width - 140, 10, 100, 20), new Point(this.Width-350, 0), 
+            gui = new GUI(new Rectangle(this.Width - (int)(this.Width * 0.0625),
+                (int)(this.Height * 0.0052),
+                (int)(this.Width * 0.0521),
+                (int)(this.Height * 0.0104)),
+                new Point(this.Width - (int)(this.Width * 0.183), 0), 
                 device, this.Width, this.Height);
             
             this.camera = new ThirdPersonCamera(player, new Vector3(0f, 7f, -7f));
@@ -186,12 +188,16 @@ namespace ClearSkies
         /// <param name="deltaTime">Time in seconds since last update.</param>
         public void update(float deltaTime)
         {
-            health = player.Health;
-            score = player.Score;
+            health = Turret.Health;
             gui.width = this.Width;
             gui.height = this.Height;
-            gui.healthArea = new Rectangle(this.Width - 140, 10, 100, 20);
-            gui.healthTexturePoint = new Point(this.Width - 350, 0);
+            gui.healthArea = new Rectangle(
+                this.Width - (int)(this.Width * 0.0625),
+                (int)(this.Height * 0.0052), 
+                (int)(this.Width * 0.0521),
+                (int)(this.Height * 0.0104));
+            gui.healthTexturePoint = new Point(this.Width - (int)(this.Width * 2 * 0.183),
+                -(int)(this.Height * 0.05f));
 
             DI.KeyboardState keys = keyboard.GetCurrentKeyboardState();
 

@@ -18,8 +18,6 @@ namespace ClearSkies
         [STAThread]
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
             Game app = new Game();
             DateTime lastUpdate = DateTime.Now;
             app.Show();
@@ -35,7 +33,6 @@ namespace ClearSkies
             }
             app.DisposeGraphics();
             Application.Exit();
-            //Application.Run(new Game());
         }
 
         #endregion

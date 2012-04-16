@@ -15,9 +15,7 @@ namespace ClearSkies.Prefabs.Turrets
 
         private float colliderSize = 1f;
 
-        private int score = 0;
-
-        private float health = 100f;
+        private static float health = 100f;
 
         #endregion
 
@@ -47,15 +45,9 @@ namespace ClearSkies.Prefabs.Turrets
             get { return this.colliderSize; }
         }
 
-        public float Health
+        public static float Health
         {
-            get { return this.health; }
-        }
-
-        public int Score
-        {
-            get { return this.score; }
-            set { this.score = value; }
+            get { return health; }
         }
 
         #endregion
@@ -69,13 +61,13 @@ namespace ClearSkies.Prefabs.Turrets
 
             if (collider is Bullet)
             {
-                if (this.health <= 0)
-                    this.health = 0;
+                if (health <= 0)
+                    health = 0;
                 else
-                    this.health -= ((Bullet)collider).Damage;
+                    health -= ((Bullet)collider).Damage;
 
                 // for debugging
-                System.Console.WriteLine(this.health);
+                //System.Console.WriteLine(health);
                 // TODO: Add death animation script
             }
         }
