@@ -132,8 +132,16 @@ namespace ClearSkies
             firstWave.enemiesPerSpawn = 1;
             firstWave.planeSpeed = 5f;
             firstWave.planeTurnSpeed = (float)(Math.PI / 8);
-            firstWave.planesToSpawn = 1;
+            firstWave.tankSpeed = 5f;
+            firstWave.tankTurnSpeed = (float)(Math.PI / 8);
+            firstWave.planesToSpawn = 3;
+            firstWave.tanksToSpawn = 3;
             firstWave.spawnDelay = 0f;
+            firstWave.tanksSpawned = 0;
+            firstWave.planesSpawned = 0;
+            firstWave.tanksDestroyed = 0;
+            firstWave.planesDestroyed = 0;
+            firstWave.spawnDistance = 50f;
             waves.Add(firstWave);
 
             managers = new List<Manager>();
@@ -341,7 +349,7 @@ namespace ClearSkies
 
             camera.view(device);
 
-            //gui.draw();
+            gui.draw();
 
             /*
             // BEGIN SHADER CODE

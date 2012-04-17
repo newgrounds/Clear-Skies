@@ -11,10 +11,10 @@ namespace ClearSkies
         public const string TEST_PARTICLE_TEXTURE_PATH = @"Content\Textures\Particles\test_particle.png";
         public const string EXPLOSION_PARTICLE_TEXTURE_PATH = @"Content\Textures\Particles\explosion.png";
         public const string CLOUD_PARTICLE_TEXTURE_PATH = @"Content\Textures\Particles\cloud_particle.png";
-        public const string BASIC_TURRET_BARREL_MODEL_PATH = @"Content\Models\BasicTurret\basic_turret_barrel.x";
-        public const string BASIC_TURRET_BASE_MODEL_PATH = @"Content\Models\BasicTurret\basic_turret_base.x";
-        public const string BASIC_TURRET_HEAD_MODEL_PATH = @"Content\Models\BasicTurret\basic_turret_head.x";
-        public const string BASIC_PLANE_MODEL_PATH = @"Content\Models\BasicPlane\basicPlane.x";
+        public const string BASIC_TURRET_BARREL_MODEL_PATH = @"Content\Models\Turrets\BasicTurret\basic_turret_barrel.x";
+        public const string BASIC_TURRET_BASE_MODEL_PATH = @"Content\Models\Turrets\BasicTurret\basic_turret_base.x";
+        public const string BASIC_TURRET_HEAD_MODEL_PATH = @"Content\Models\Turrets\BasicTurret\basic_turret_head.x";
+        public const string BASIC_PLANE_MODEL_PATH = @"Content\Models\Planes\BasicPlane\basicPlane.x";
 
         public static Vector3 BASIC_TURRET_HEAD_OFFSET
         {

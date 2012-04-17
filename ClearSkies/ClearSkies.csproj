@@ -131,12 +131,13 @@
     </Compile>
     <None Include="app.config" />
     <None Include="bin\Debug\ClearSkies.exe.config" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="Content\Models\BasicPlane\basicPlane.x" />
-    <None Include="Content\Models\BasicTurret\basic_turret_barrel.x" />
-    <None Include="Content\Models\BasicTurret\basic_turret_base.x" />
-    <None Include="Content\Models\BasicTurret\basic_turret_head.x" />
+    <None Include="Content\Models\Planes\BasicPlane\basicPlane.x" />
+    <None Include="Content\Models\Tanks\BasicTank\basic_tank_barrel.x" />
+    <None Include="Content\Models\Tanks\BasicTank\basic_tank_body.x" />
+    <None Include="Content\Models\Tanks\BasicTank\basic_tank_head.x" />
+    <None Include="Content\Models\Turrets\BasicTurret\basic_turret_barrel.x" />
+    <None Include="Content\Models\Turrets\BasicTurret\basic_turret_base.x" />
+    <None Include="Content\Models\Turrets\BasicTurret\basic_turret_head.x" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -163,6 +164,7 @@
   <ItemGroup>
     <Content Include="bin\Debug\ClearSkies.exe" />
     <Content Include="bin\Debug\ClearSkies.pdb" />
+    <Content Include="Content\Textures\enemy.png" />
     <Content Include="Content\Textures\ground.jpg" />
     <Content Include="Content\Textures\health.png" />
     <Content Include="Content\Textures\healthBar.png" />
