@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.DirectX.Direct3D;
-using ClearSkies.Prefabs;
+﻿using Microsoft.DirectX.Direct3D;
 
 namespace ClearSkies.Managers
 {
     /// <summary>
-    /// Manages the drawing, updating, and creation of all Prefabs for use within the game.
+    /// Manages the drawing, updating, and creation of all Prefabs for use 
+    /// within the game.
     /// </summary>
     interface Manager
     {

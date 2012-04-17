@@ -1,18 +1,13 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
 using ClearSkies.Scripts;
+using Microsoft.DirectX;
 using DI = Microsoft.DirectX.DirectInput;
-using ClearSkies.Managers;
 
 namespace ClearSkies.Prefabs.Turrets
 {
     /// <summary>
-    /// A Prefab used to represent the Turrets that Players will use to shoot
-    /// at Enemies.
+    /// A Prefab used to represent the TurretHead that Players will use to 
+    /// shoot at Enemies.
     /// </summary>
     abstract class TurretHead : Prefab
     {
@@ -29,10 +24,15 @@ namespace ClearSkies.Prefabs.Turrets
         /// facing the given rotation. The turret is able to turn at the given
         /// speed and is controlled with the given keyboard Device.
         /// </summary>
-        /// <param name="location">Location of the Turret in game</param>
-        /// <param name="rotation">Rotation the Turret is facing</param>
-        /// <param name="turretRotationSpeed">Speed the Turret can rotate at</param>
-        /// <param name="keyboard">Keyboard Device used to controll the Turret</param>
+        /// <param name="location">Location of the TurretHead in game</param>
+        /// <param name="rotation">Rotation the TurretHead is facing</param>
+        /// <param name="scale">Scale of the TurretHead</param>
+        /// <param name="turretRotationSpeed">
+        /// Speed the TurretHead can rotate at
+        /// </param>
+        /// <param name="keyboard">
+        /// Keyboard Device used to control the TurretHead
+        /// </param>
         public TurretHead(Vector3 location, Vector3 rotation, Vector3 scale, float turretRotationSpeed, DI.Device keyboard) : base(location, rotation, scale)
         {
             this.barrels = new List<TurretBarrel>();

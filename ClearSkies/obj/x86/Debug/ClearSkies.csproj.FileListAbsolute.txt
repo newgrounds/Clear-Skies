@@ -1,14 +1,3 @@
-C:\Users\Benji\Documents\Visual Studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Benji\Documents\Visual Studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\ClearSkies.Properties.Resources.resources
-C:\Users\Benji\Documents\Visual Studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\GenerateResource.read.1.tlog
-C:\Users\Benji\Documents\Visual Studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\GenerateResource.write.1.tlog
-C:\Users\Benji\Documents\Visual Studio 2010\Projects\ClearSkies\ClearSkies\bin\Debug\ClearSkies.exe
-C:\Users\Benji\Documents\Visual Studio 2010\Projects\ClearSkies\ClearSkies\bin\Debug\ClearSkies.pdb
-C:\Users\Benji\Documents\Visual Studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\ClearSkies.exe
-C:\Users\Benji\Documents\Visual Studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\ClearSkies.pdb
-C:\Users\Benji\Documents\Visual Studio 2010\Projects\ClearSkies\ClearSkies\bin\Debug\ClearSkies.exe.config
-C:\Users\Benji\documents\visual studio 2010\Projects\ClearSkies\ClearSkies\bin\Debug\ParticleEngine.dll
-C:\Users\Benji\documents\visual studio 2010\Projects\ClearSkies\ClearSkies\bin\Debug\ParticleEngine.pdb
 C:\Users\Adam NU\Downloads\Northeastern Spring 2012\Computer Graphics\Final Project\ClearSkies\bin\Debug\ClearSkies.exe.config
 C:\Users\Adam NU\Downloads\Northeastern Spring 2012\Computer Graphics\Final Project\ClearSkies\obj\x86\Debug\ClearSkies.exe
 C:\Users\Adam NU\Downloads\Northeastern Spring 2012\Computer Graphics\Final Project\ClearSkies\obj\x86\Debug\ClearSkies.pdb
@@ -21,3 +10,15 @@ C:\Users\Adam NU\Downloads\Northeastern Spring 2012\Computer Graphics\Final Proj
 C:\Users\Adam NU\Downloads\Northeastern Spring 2012\Computer Graphics\Final Project\ClearSkies\bin\Debug\ParticleEngine.dll
 C:\Users\Adam NU\Downloads\Northeastern Spring 2012\Computer Graphics\Final Project\ClearSkies\bin\Debug\ParticleEngine.pdb
 C:\Users\Adam NU\Downloads\Northeastern Spring 2012\Computer Graphics\Final Project\ClearSkies\obj\x86\Debug\ClearSkies.Game.resources
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\ClearSkies.Game.resources
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\ClearSkies.Properties.Resources.resources
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\bin\Debug\ClearSkies.exe.config
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\bin\Debug\ClearSkies.exe
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\bin\Debug\ClearSkies.pdb
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\bin\Debug\ParticleEngine.dll
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\bin\Debug\ParticleEngine.pdb
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\ClearSkies.exe
+C:\Users\Benji\Documents\visual studio 2010\Projects\ClearSkies\ClearSkies\obj\x86\Debug\ClearSkies.pdb

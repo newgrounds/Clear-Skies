@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.DirectX;
-using ClearSkies.Prefabs.Enemies;
-using ClearSkies.Scripts;
-using ClearSkies.Content;
+﻿using ClearSkies.Content;
 
 namespace ClearSkies.Prefabs.Bullets
 {
     /// <summary>
-    /// A Prefab used to represent the projectiles fired from Players and Enemies.
+    /// A Prefab used to represent the projectiles fired from Players and 
+    /// Enemies.
     /// </summary>
     abstract class Bullet : Prefab
     {
         #region Fields
 
-        protected Prefab owner;
         protected float damage;
         protected float lifespan;
-        protected float timeAlive;
+        protected Prefab owner;
         protected float speed;
-        protected bool destroy;
+        protected float timeAlive;
 
         #endregion
 
@@ -34,8 +27,7 @@ namespace ClearSkies.Prefabs.Bullets
         /// to Enemies it collides with, and will remain alive for the given
         /// lifespan unless a collision occures.
         /// </summary>
-        /// <param name="location">Location to place Bullet in scene</param>
-        /// <param name="rotation">Rotation for Bullet to face</param>
+        /// <param name="owner">The Prefab that owns the Bullet</param>
         /// <param name="bulletModel">Model to represent Bullet</param>
         /// <param name="damage">Damage Bullet will inflict</param>
         /// <param name="lifespan">Time in seconds the bullet will remain in scene</param>
@@ -57,15 +49,6 @@ namespace ClearSkies.Prefabs.Bullets
         #region Getter and Setter Methods
 
         /// <summary>
-        /// True if Bullet should destory itself. Used for animation.
-        /// </summary>
-        public bool Destroy
-        {
-            get { return this.destroy; }
-            set { this.destroy = value; }
-        }
-
-        /// <summary>
         /// Speed bullet should travel at.
         /// </summary>
         public float Speed
@@ -73,6 +56,9 @@ namespace ClearSkies.Prefabs.Bullets
             get { return this.speed; }
         }
 
+        /// <summary>
+        /// The Prefab that owns the Bullet.
+        /// </summary>
         public Prefab Owner
         {
             get { return this.owner; }
@@ -94,13 +80,15 @@ namespace ClearSkies.Prefabs.Bullets
         /// Updates the Bullet as a normal Prefab and checks to see if the 
         /// Bullet should still be alive.
         /// </summary>
-        /// <param name="deltaTime"></param>
+        /// <param name="deltaTime">
+        /// The time in seconds since the last update
+        /// </param>
         public override void update(float deltaTime)
         {
             base.update(deltaTime);
             this.timeAlive += deltaTime;
 
-            this.alive = this.alive && lifespan >= timeAlive && !destroy;
+            this.alive = this.alive && lifespan >= timeAlive;
         }
         
         #endregion

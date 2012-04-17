@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ParticleEngine;
-using Microsoft.DirectX;
+﻿using System.Collections.Generic;
 using ClearSkies.Content;
-using Microsoft.DirectX.Direct3D;
-using ClearSkies.Prefabs;
 using ClearSkies.Exceptions;
+using ClearSkies.Prefabs;
 using ClearSkies.Properties;
+using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
+using ParticleEngine;
 
 namespace ClearSkies.Managers
 {
@@ -16,7 +13,7 @@ namespace ClearSkies.Managers
     {
         #region Fields
 
-        private static List<ParticleEmitter> managedParticleEmitters = new List<ParticleEmitter>();
+        private static List<ParticleEmitter> managedParticleEmitters;
         private static bool initialized;
         private static Prefab camera;
 
@@ -24,9 +21,15 @@ namespace ClearSkies.Managers
 
         #region Initializer Methods
 
+        /// <summary>
+        /// Initailizes all data for use in the ParticleEmitterManager.
+        /// </summary>
+        /// <param name="playersCamera">The Camera that Particles will be 
+        /// viewed from</param>
         public ParticleEmitterManager(Prefab playersCamera)
         {
             camera = playersCamera;
+            managedParticleEmitters = new List<ParticleEmitter>();
             initialized = true;
         }
 
@@ -34,6 +37,15 @@ namespace ClearSkies.Managers
 
         #region Public Static Methods
 
+        /// <summary>
+        /// Spawns a ParticleEmitter of the specified type at the specified 
+        /// location.
+        /// </summary>
+        /// <param name="type">The type ParticleEmitter to spawn</param>
+        /// <param name="location">The location to spawn the ParticleEmitter 
+        /// at</param>
+        /// <returns>Returns a reference to the spawned ParticleEmitter
+        /// </returns>
         public static ParticleEmitter spawnParticleEmitter(ParticleEmitterType type, Vector3 location)
         {
             checkIfInitialized();
@@ -63,6 +75,10 @@ namespace ClearSkies.Managers
 
         #region Private Static Methods
 
+        /// <summary>
+        /// Checks if the ParticleEmitterManager was initialized. This should 
+        /// be called at the beginning of every public static method.
+        /// </summary>
         private static void checkIfInitialized()
         {
             if (!initialized)
@@ -75,6 +91,13 @@ namespace ClearSkies.Managers
 
         #region Public Methods
 
+        /// <summary>
+        /// Updates the managed ParticleEmitters and removes them if they no 
+        /// longer meet the requirement of being alive.
+        /// </summary>
+        /// <param name="deltaTime">
+        /// The time in seconds since last update
+        /// </param>
         public void update(float deltaTime)
         {
             for (int i = 0; i < managedParticleEmitters.Count; i++)
@@ -90,6 +113,10 @@ namespace ClearSkies.Managers
             }
         }
 
+        /// <summary>
+        /// Draws the particle emitters to the screen.
+        /// </summary>
+        /// <param name="device">The Device to draw the particles to</param>
         public void draw(Device device)
         {
             foreach (ParticleEmitter managedParticleEmitter in managedParticleEmitters)

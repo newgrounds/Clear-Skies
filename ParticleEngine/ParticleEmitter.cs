@@ -101,10 +101,10 @@ namespace ParticleEngine
             }
         }
 
-
-        public static void Quicksort(List<ParticleData> particles, int left, int right, Vector3 cameraLocation)
+        private void sortParticles(List<ParticleData> particles, int left, int right, Vector3 cameraLocation)
         {
-            int i = left, j = right;
+            int i = left;
+            int j = right;
             ParticleData pivot = particles[(left + right) / 2];
 
             while (i <= j)
@@ -137,23 +137,26 @@ namespace ParticleEngine
             // Recursive calls
             if (left < j)
             {
-                Quicksort(particles, left, j, cameraLocation);
+                sortParticles(particles, left, j, cameraLocation);
             }
 
             if (i < right)
             {
-                Quicksort(particles, i, right, cameraLocation);
+                sortParticles(particles, i, right, cameraLocation);
             }
         }
 
         public void draw(Vector3 cameraLocation, Vector3 cameraRotation, Device device)
         {
-            //particleList.Sort(new ParticleComparer(cameraLocation));
             if (particleList.Count > 0)
             {
-                Quicksort(particleList, 0, particleList.Count - 1, cameraLocation);
+                sortParticles(particleList, 0, particleList.Count - 1, cameraLocation);
             }
-            //TODO: sort particles based on distance to player
+
+            device.RenderState.AlphaBlendEnable = true;
+            device.RenderState.SourceBlend = Blend.SourceAlpha;
+            device.RenderState.DestinationBlend = Blend.InvSourceAlpha; 
+
             device.SetTexture(0, particleTexture);
 
             device.TextureState[0].AlphaOperation = TextureOperation.Modulate;

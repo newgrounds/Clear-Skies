@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ClearSkies.Managers
+﻿namespace ClearSkies.Managers
 {
+    /// <summary>
+    /// Structure for an Enemy Wave.
+    /// </summary>
     struct Wave
     {
-        public int planesToSpawn;
-        public int tanksToSpawn;
+        public int waveNumber = 0;
+        public int planesToSpawn = 0;
+        public int tanksToSpawn = 0;
 
-        public float planeSpeed;
-        public float planeTurnSpeed;
-        public float tankSpeed;
-        public float tankTurnSpeed;
+        public float planeSpeed = 0;
+        public float planeTurnSpeed = 0;
+        public float tankSpeed = 0;
+        public float tankTurnSpeed = 0;
 
-        public int tanksSpawned;
-        public int planesSpawned;
+        public int tanksSpawned = 0;
+        public int planesSpawned = 0;
 
-        public int tanksDestroyed;
-        public int planesDestroyed;
+        public int tanksDestroyed = 0;
+        public int planesDestroyed = 0;
 
-        public float spawnDelay;
-        public int enemiesPerSpawn;
+        public float spawnDelay = 0;
+        public int enemiesPerSpawn = 0;
 
-        public float spawnDistance;
+        public float spawnDistance = 0;
     }
 }

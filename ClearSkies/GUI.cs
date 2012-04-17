@@ -45,6 +45,8 @@ namespace ClearSkies
         public int width;
         public int height;
 
+        private Turret t;
+
         #endregion
 
         #region Initializer Methods
@@ -58,16 +60,17 @@ namespace ClearSkies
         /// <param name="device">The graphics device.</param>
         /// <param name="w">Width of the screen.</param>
         /// <param name="h">Height of the screen.</param>
-        public GUI(Rectangle healthA, Point healthP,
+        public GUI(Turret t, Rectangle healthA, Point healthP,
             Device device, int w, int h)
         {
+            this.t = t;
             this.healthArea = healthA;
             this.healthTexturePoint = healthP;
             this.device = device;
             this.width = w;
             this.height = h;
             this.enemies = EnemyManager.ManagedEnemies;
-            this.waveNumber = EnemyManager.WaveNumber;
+            this.waveNumber = EnemyManager.CurrentWave.waveNumber;
 
             this.healthBarSize = new Size((int)(this.width * 0.265f),
                 (int)(this.height * 0.12));
@@ -84,9 +87,9 @@ namespace ClearSkies
         /// </summary>
         public void draw()
         {
-            this.health = Turret.Health;
+            this.health = t.Health;
             this.enemies = EnemyManager.ManagedEnemies;
-            this.waveNumber = EnemyManager.WaveNumber;
+            this.waveNumber = EnemyManager.CurrentWave.waveNumber;
 
             drawText(new Rectangle(20, 10, 100, 20),
                     WAVE_STRING + waveNumber.ToString());
@@ -98,7 +101,7 @@ namespace ClearSkies
             }
             else
             {
-                float newScale = Turret.Health * 0.01f;
+                float newScale = t.Health * 0.01f;
                 drawTexture(healthBarTexture, healthTexturePoint, newScale);
             }
         }

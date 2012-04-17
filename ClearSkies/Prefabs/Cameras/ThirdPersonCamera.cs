@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.DirectX;
+﻿using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 
 namespace ClearSkies.Prefabs.Cameras
 {
     /// <summary>
-    /// A simple Third Person Camera that will focus on a defined Prefab.
+    /// A simple Third Person Camera that will focus on a given Prefab.
     /// </summary>
     class ThirdPersonCamera : Prefab
     {
@@ -27,8 +23,9 @@ namespace ClearSkies.Prefabs.Cameras
         /// </summary>
         /// <param name="focusOn">Prefab to focus the Camera's view on.</param>
         /// <param name="location">Location of the Camera in the world</param>
-        public ThirdPersonCamera(Prefab focusOn, Vector3 location) : base(location, Vector3.Empty, Vector3.Empty)
-        {
+        public ThirdPersonCamera(Prefab focusOn, Vector3 location) : 
+            base(location, Vector3.Empty, Vector3.Empty)
+        {   
             this.focusOn = focusOn;
         }
 

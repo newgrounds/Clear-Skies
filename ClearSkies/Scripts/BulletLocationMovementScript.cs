@@ -47,10 +47,6 @@ namespace ClearSkies.Scripts
         public void run(float deltaTime)
         {
             Vector3 bulletLocation = bullet.Location;
-            // make this send it towards the given location
-            //bulletLocation.Z += bullet.Speed * (float)(Math.Sin(bullet.Rotation.Y) * Math.Cos(bullet.Rotation.X));
-            //bulletLocation.X += bullet.Speed * (float)(Math.Sin(bullet.Rotation.Y) * Math.Sin(bullet.Rotation.X));
-            //bulletLocation.Y += bullet.Speed * (float)Math.Cos(turret.Rotation.Y - bullet.Rotation.Y);
             bulletLocation += bullet.Speed * deltaTime * (turret.Location - bullet.Location);
             bullet.Location = bulletLocation;
         }

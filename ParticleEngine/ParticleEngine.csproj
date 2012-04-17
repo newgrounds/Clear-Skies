@@ -54,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExplosionParticleEmitter.cs" />
-    <Compile Include="ParticleComparer.cs" />
     <Compile Include="ParticleData.cs" />
     <Compile Include="ParticleEmitter.cs" />
     <Compile Include="ParticleEmitterType.cs" />

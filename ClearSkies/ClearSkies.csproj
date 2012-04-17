@@ -63,9 +63,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Content\ContentLoader.cs" />
-    <Compile Include="Exceptions\ContentLoaderUninitializedException.cs" />
+    <Compile Include="Content\Model.cs" />
     <Compile Include="Exceptions\KeyboardNotFoundException.cs" />
     <Compile Include="Exceptions\MouseNotFoundException.cs" />
+    <Compile Include="Exceptions\UninitializedException.cs" />
     <Compile Include="Game.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,19 +76,23 @@
     <Compile Include="GameState.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="Managers\BulletManager.cs" />
+    <Compile Include="Managers\ParticleEmitterManager.cs" />
+    <Compile Include="Managers\Wave.cs" />
+    <Compile Include="Prefabs\Bullets\BombBullet.cs" />
     <Compile Include="Prefabs\Bullets\BulletType.cs" />
     <Compile Include="Managers\EnemyManager.cs" />
     <Compile Include="Managers\Manager.cs" />
     <Compile Include="Managers\TurretManager.cs" />
-    <Compile Include="Model.cs" />
     <Compile Include="Prefabs\Bullets\BasicBullet.cs" />
     <Compile Include="Prefabs\Bullets\Bullet.cs" />
-    <Compile Include="Prefabs\Bullets\TankBullet.cs" />
-    <Compile Include="Prefabs\Bullets\TracerBullet.cs" />
     <Compile Include="Prefabs\Cameras\ThirdPersonCamera.cs" />
     <Compile Include="Prefabs\Enemies\Enemy.cs" />
     <Compile Include="Prefabs\Enemies\EnemyType.cs" />
-    <Compile Include="Prefabs\Enemies\Tank.cs" />
+    <Compile Include="Prefabs\Enemies\Planes\BasicPlane.cs" />
+    <Compile Include="Prefabs\Enemies\Planes\Plane.cs" />
+    <Compile Include="Prefabs\Enemies\Planes\PlaneSmokeTrail.cs" />
+    <Compile Include="Prefabs\Enemies\Tanks\BasicTank.cs" />
+    <Compile Include="Prefabs\Enemies\Tanks\Tank.cs" />
     <Compile Include="Prefabs\Prefab.cs" />
     <Compile Include="Prefabs\Turrets\BasicTurret.cs" />
     <Compile Include="Prefabs\Turrets\BasicTurretHead.cs" />
@@ -99,15 +104,19 @@
     <Compile Include="Prefabs\Turrets\TurretType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\BombCollisionScript.cs" />
+    <Compile Include="Scripts\BombMovementScript.cs" />
     <Compile Include="Scripts\BulletLocationMovementScript.cs" />
     <Compile Include="Scripts\BulletPlainCollisionScript.cs" />
     <Compile Include="Scripts\BulletStraightMovementScript.cs" />
     <Compile Include="Scripts\BulletTurretCollisionScript.cs" />
+    <Compile Include="Scripts\DropBombScript.cs" />
+    <Compile Include="Scripts\PlaneFlyOverScript.cs" />
     <Compile Include="Scripts\Script.cs" />
     <Compile Include="Scripts\ShootScript.cs" />
     <Compile Include="Scripts\TankMovementScript.cs" />
-    <Compile Include="Scripts\TankShootScript.cs" />
     <Compile Include="Scripts\TurretRotationScript.cs" />
+    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Game.resx">
       <DependentUpon>Game.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,7 +130,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
+    <None Include="bin\Debug\ClearSkies.exe.config" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Content\Models\BasicPlane\basicPlane.x" />
     <None Include="Content\Models\BasicTurret\basic_turret_barrel.x" />
     <None Include="Content\Models\BasicTurret\basic_turret_base.x" />
@@ -150,9 +161,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\ClearSkies.exe" />
+    <Content Include="bin\Debug\ClearSkies.pdb" />
     <Content Include="Content\Textures\ground.jpg" />
     <Content Include="Content\Textures\health.png" />
     <Content Include="Content\Textures\healthBar.png" />
+    <Content Include="Content\Textures\Particles\cloud_particle.png" />
     <Content Include="Content\Textures\Particles\explosion.png" />
     <Content Include="Content\Textures\Particles\test_particle.png" />
     <Content Include="Content\Textures\Sky1\sback37.jpg" />

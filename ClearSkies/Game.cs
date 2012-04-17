@@ -86,6 +86,8 @@ namespace ClearSkies
             Rectangle scrn = Screen.GetBounds(this);
             this.Width = scrn.Width;
             this.Height = scrn.Height;
+            //this.Width = 400;
+            //this.Height = 400;
             
             //enterPressed = false;
         }
@@ -121,30 +123,41 @@ namespace ClearSkies
             ContentLoader.initialize(device);
 
             player = TurretManager.spawnTurret(TurretType.Basic, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
+            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 10f, -15f));
+            player.Head.addChild(camera);
+
+            List<Wave> waves = new List<Wave>();
+            Wave firstWave = new Wave();
+            firstWave.waveNumber = 1;
+            firstWave.enemiesPerSpawn = 1;
+            firstWave.planeSpeed = 5f;
+            firstWave.planeTurnSpeed = (float)(Math.PI / 8);
+            firstWave.planesToSpawn = 1;
+            firstWave.spawnDelay = 0f;
+            waves.Add(firstWave);
 
             managers = new List<Manager>();
-            BulletManager bulletManager = new BulletManager(player);
+            BulletManager bulletManager = new BulletManager();
             managers.Add(bulletManager);
             TurretManager turretManager = new TurretManager();
             managers.Add(turretManager);
             // the enemy manager also adds enemies
-            EnemyManager enemyManager = new EnemyManager(player);
+            EnemyManager enemyManager = new EnemyManager(waves, 0);
             managers.Add(enemyManager);
-            
+            ParticleEmitterManager particleEmitterManager = new ParticleEmitterManager(camera);
+            managers.Add(particleEmitterManager);
+
             // TODO: make the gui redraw based on the window size
-            gui = new GUI(new Rectangle(this.Width - (int)(this.Width * 0.0625),
+            gui = new GUI(player,
+                new Rectangle(this.Width - (int)(this.Width * 0.0625),
                 (int)(this.Height * 0.0052),
                 (int)(this.Width * 0.0521),
                 (int)(this.Height * 0.0104)),
                 new Point(this.Width - (int)(this.Width * 0.183), 0), 
                 device, this.Width, this.Height);
-            
-            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 7f, -7f));
-            player.Head.addChild(camera);
 
             #endregion
         }
-
 
         /// <summary>
         /// Initializes the Keyboard and Mouse.
@@ -188,7 +201,7 @@ namespace ClearSkies
         /// <param name="deltaTime">Time in seconds since last update.</param>
         public void update(float deltaTime)
         {
-            health = Turret.Health;
+            health = player.Health;
             gui.width = this.Width;
             gui.height = this.Height;
             gui.healthArea = new Rectangle(
@@ -253,7 +266,7 @@ namespace ClearSkies
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(128f, 0, -128f), new Vector3(0, 0, 1), 32, 32),
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(128f, 0, 128f), new Vector3(0, 0, 1), 32, 0),
                 ContentLoader.Terrain);
-            
+
 
             // TOP OF SKYBOX
             drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 254.5f, -256f), new Vector3(0, 0, -1), 0, 1),
@@ -262,7 +275,7 @@ namespace ClearSkies
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, 254.5f, 256f), new Vector3(0, 0, -1), 1, 0),
                 ContentLoader.SkyTop);
 
-            
+
             // LEFT OF SKYBOX
             drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, -256f, -256f), new Vector3(0, 0, 1), 0, 1),
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, 256f, -256f), new Vector3(0, 0, 1), 0, 0),
@@ -270,7 +283,7 @@ namespace ClearSkies
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, 256f, 256f), new Vector3(0, 0, 1), 1, 0),
                 ContentLoader.SkyLeft);
 
-            
+
             // RIGHT OF SKYBOX
             drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, -256f, -256f), new Vector3(0, 0, -1), 0, 1),
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, 256f, -256f), new Vector3(0, 0, -1), 0, 0),
@@ -278,7 +291,7 @@ namespace ClearSkies
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, 256f, 256f), new Vector3(0, 0, -1), 1, 0),
                 ContentLoader.SkyRight);
 
-            
+
             // FRONT OF SKYBOX
             drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, -256f, 254.5f), new Vector3(0, 0, 1), 0, 1),
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 256f, 254.5f), new Vector3(0, 0, 1), 0, 0),
@@ -328,7 +341,7 @@ namespace ClearSkies
 
             camera.view(device);
 
-            gui.draw();
+            //gui.draw();
 
             /*
             // BEGIN SHADER CODE
