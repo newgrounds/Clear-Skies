@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ClearSkies.Prefabs.Enemies;
+using ClearSkies.Prefabs.Turrets;
 using Microsoft.DirectX.Direct3D;
 using Microsoft.DirectX;
 using ClearSkies.Prefabs.Enemies.Planes;
@@ -55,6 +56,11 @@ namespace ClearSkies.Managers
             get { return managedEnemies; }
         }
 
+        public static Wave CurrentWave
+        {
+            get { return waves[currentWave]; }
+        }
+
         #endregion
 
         #region Static Methods
@@ -66,6 +72,7 @@ namespace ClearSkies.Managers
         /// <param name="enemyType">Type of Enemy to spawn</param>
         /// <param name="location">Locaiton to spawn Enemy at</param>
         /// <param name="rotation">Rotation for Enemy to face</param>
+        /// <param name="scale">Scale of the Enemy model</param>
         /// <returns>A reference to the spawned Enemy</returns>
         public static Enemy spawnEnemy(EnemyType enemyType, Vector3 location, Vector3 rotation, Vector3 scale, float speed, float turnSpeed)
         {
@@ -187,6 +194,23 @@ namespace ClearSkies.Managers
                     currentWave++;
                 }
             }
+        }
+
+        /// <summary>
+        /// Handles creation of waves of enemies.
+        /// </summary>
+        public void nextWave()
+        {
+            for (int j = 0; j < waveNumber; j++)
+            {
+                for (int i = 0; i < 21; i++)
+                {
+                    Enemy basicTank =
+                        EnemyManager.spawnEnemy(EnemyType.BasicTank, new Vector3(-5 + i, 4, 30 + (5 * j)), Vector3.Empty, new Vector3(1f,1f,1f));
+                }
+            }
+
+            waveNumber += 1;
         }
 
         /// <summary>

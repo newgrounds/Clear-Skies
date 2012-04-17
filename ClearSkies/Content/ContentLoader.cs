@@ -24,6 +24,9 @@ namespace ClearSkies.Content
         private static Texture explosionParticleTexture;
         private static Texture cloudParticleTexture;
 
+        private static Texture healthBarTexture;
+        private static Texture healthTexture;
+
         private static Material defaultMaterial;
 
         private static Model basicBulletModel;
@@ -41,6 +44,18 @@ namespace ClearSkies.Content
 
         private static Model basicPlaneModel;
 
+        private static Model tankModel;
+
+        private static Model radarEnemy;
+
+        private static Texture terrain;
+
+        private static Texture skyTop;
+        private static Texture skyLeft;
+        private static Texture skyRight;
+        private static Texture skyFront;
+        private static Texture skyBack;
+
         #endregion
 
         #region Initalizer Methods
@@ -55,6 +70,14 @@ namespace ClearSkies.Content
             testParticleTexture = TextureLoader.FromFile(device, Settings.TEST_PARTICLE_TEXTURE_PATH);
             explosionParticleTexture = TextureLoader.FromFile(device, Settings.EXPLOSION_PARTICLE_TEXTURE_PATH);
             cloudParticleTexture = TextureLoader.FromFile(device, Settings.CLOUD_PARTICLE_TEXTURE_PATH);
+            explosionParticleTexture = TextureLoader.FromFile(device, @"Content\Textures\Particles\explosion.png");
+
+            // load health bar texture with alpha removed
+            healthBarTexture = TextureLoader.FromFile(device, @"Content\Textures\healthBar.png",
+                0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
+                Color.White.ToArgb());
+            // to fill the bar
+            healthTexture = TextureLoader.FromFile(device, @"Content\Textures\health.png");
 
             defaultMaterial = new Material();
             defaultMaterial.Diffuse = Color.White;
@@ -105,12 +128,26 @@ namespace ClearSkies.Content
 
             basicPlaneModel = new Model(Settings.BASIC_PLANE_MODEL_PATH, new Vector3((float)Math.PI, 0f, 0f), device);
 
-			tankModel = new Model(Mesh.Box(device, 0.5f, 0.5f, 0.5f),
+            tankModel = new Model(Mesh.Box(device, 0.5f, 0.5f, 0.5f),
                 new Material[] { defaultMaterial },
                 new Texture[] { defaultTexture },
-                Vector3.Empty,
+				Vector3.Empty,
                 device,
                 true);
+
+            radarEnemy = new Model(Mesh.Sphere(device, 0.3f, 3, 3),
+                new Material[] { defaultMaterial },
+                new Texture[] { defaultTexture },
+                device,
+                true);
+
+            terrain = TextureLoader.FromFile(device, @"Content\Textures\ground.jpg");
+
+            skyTop = TextureLoader.FromFile(device, @"Content\Textures\Sky1\stop37.jpg");
+            skyLeft = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sleft37.jpg");
+            skyRight = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sright37.jpg");
+            skyFront = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sfront37.jpg");
+            skyBack = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sback37.jpg");
 
             initialized = true;
         }
@@ -147,12 +184,20 @@ namespace ClearSkies.Content
                 return testParticleTexture;
             }
         }
-        public static Texture ExplosionParticleTexture
+		public static Texture ExplosionParticleTexture
         {
             get 
             {
                 checkIfInitialized();
                 return explosionParticleTexture; 
+            }
+        }
+        public static Texture HealthBarTexture
+        {
+            get
+            {
+                checkIfInitialized();
+                return healthBarTexture;
             }
         }
         public static Texture CloudParticleTexture
@@ -161,6 +206,14 @@ namespace ClearSkies.Content
             {
                 checkIfInitialized();
                 return cloudParticleTexture;
+            }
+        }
+        public static Texture HealthTexture
+        {
+            get
+            {
+                checkIfInitialized();
+                return healthTexture;
             }
         }
 
@@ -248,8 +301,8 @@ namespace ClearSkies.Content
                 return basicPlaneModel;  
             }
         }
-
-		public static Model TankModel
+		
+        public static Model TankModel
         {
             get
             {
@@ -257,7 +310,64 @@ namespace ClearSkies.Content
                 return tankModel;
             }
         }
-		
+        public static Model RadarEnemy
+        {
+            get
+            {
+                checkIfInitialized();
+                return radarEnemy;
+            }
+        }
+        public static Texture Terrain
+        {
+            get
+            {
+                checkIfInitialized();
+                return terrain;
+            }
+        }
+
+        public static Texture SkyTop
+        {
+            get
+            {
+                checkIfInitialized();
+                return skyTop;
+            }
+        }
+        public static Texture SkyLeft
+        {
+            get
+            {
+                checkIfInitialized();
+                return skyLeft;
+            }
+        }
+        public static Texture SkyRight
+        {
+            get
+            {
+                checkIfInitialized();
+                return skyRight;
+            }
+        }
+        public static Texture SkyFront
+        {
+            get
+            {
+                checkIfInitialized();
+                return skyFront;
+            }
+        }
+        public static Texture SkyBack
+        {
+            get
+            {
+                checkIfInitialized();
+                return skyBack;
+            }
+        }
+
         #endregion
     }
 }

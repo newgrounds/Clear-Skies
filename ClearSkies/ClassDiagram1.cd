@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ClearSkies.Content.ContentLoader" Collapsed="true">
+    <Position X="4.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIEAEGAFJJEADAAAAEgAAAAgIKEGBICAQIAABACAAA=</HashCode>
+      <FileName>Content\ContentLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Exceptions.ContentLoaderUninitializedException" Collapsed="true">
+    <Position X="6.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ContentLoaderUninitializedException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Exceptions.KeyboardNotFoundException" Collapsed="true">
+    <Position X="4.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\KeyboardNotFoundException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Exceptions.MouseNotFoundException" Collapsed="true">
+    <Position X="8" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\MouseNotFoundException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Game" Collapsed="true">
+    <Position X="9.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgARKAiAAABoAAAKIAEACIAABQAABAAIgAAAEEAg=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.GUI" Collapsed="true">
+    <Position X="11.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAICgAACABAAAAQIQAYKAAAAAIABAAABCAIAAAAQAAg=</HashCode>
+      <FileName>GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Model" Collapsed="true">
+    <Position X="6.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAEAIAAAAAAIAAAAAAAABAAAAAAAAAABIAAA=</HashCode>
+      <FileName>Model.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Program" Collapsed="true">
+    <Position X="9.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Managers.BulletManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAIAAAABIAAAACAAAAAAAAAEAAA=</HashCode>
+      <FileName>Managers\BulletManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ClearSkies.Managers.EnemyManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAQAAAAAAAAAAAAIAIAACAAACAAAAAAAAABAAAEAAA=</HashCode>
+      <FileName>Managers\EnemyManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ClearSkies.Managers.TurretManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAIEAAAAAAIAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Managers\TurretManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Bullets.BasicBullet" Collapsed="true">
+    <Position X="8" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAQAAAEAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Prefabs\Bullets\BasicBullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Bullets.Bullet" Collapsed="true">
+    <Position X="6.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAACAAAAAgAAAAAAAAEABAABAAQAAAAAAABAEAAA=</HashCode>
+      <FileName>Prefabs\Bullets\Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Bullets.TankBullet" Collapsed="true">
+    <Position X="4.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAQAIAAAAAAAAAAAAAAAAQAAAAAAQAAAAAAAAAAAgA=</HashCode>
+      <FileName>Prefabs\Bullets\TankBullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Bullets.TracerBullet" Collapsed="true">
+    <Position X="6.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAQAAAEAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Prefabs\Bullets\TracerBullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Cameras.ThirdPersonCamera" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Prefabs\Cameras\ThirdPersonCamera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Enemies.Enemy" Collapsed="true">
+    <Position X="14" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Prefabs\Enemies\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Enemies.Tank" Collapsed="true">
+    <Position X="14" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAA=</HashCode>
+      <FileName>Prefabs\Enemies\Tank.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Prefab" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAABAAAAAIQAABKAAAACBAAAAAQEAAAAAAAMAAA=</HashCode>
+      <FileName>Prefabs\Prefab.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Turrets.BasicTurret" Collapsed="true">
+    <Position X="15.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Prefabs\Turrets\BasicTurret.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Turrets.BasicTurretHead" Collapsed="true">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Prefabs\Turrets\BasicTurretHead.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Turrets.TestTurret" Collapsed="true">
+    <Position X="17.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Prefabs\Turrets\TestTurret.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Turrets.TestTurretHead" Collapsed="true">
+    <Position X="11.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Prefabs\Turrets\TestTurretHead.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Turrets.Turret" Collapsed="true">
+    <Position X="16.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAACAAAgAAAAIgAAAAIAAAAACAAAAAgAAAAAAAAAAg=</HashCode>
+      <FileName>Prefabs\Turrets\Turret.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Turrets.TurretBarrel" Collapsed="true">
+    <Position X="8.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAIAAAAIAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Prefabs\Turrets\TurretBarrel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Prefabs.Turrets.TurretHead" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAIAAAAIAA=</HashCode>
+      <FileName>Prefabs\Turrets\TurretHead.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Properties.Resources" Collapsed="true">
+    <Position X="11.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Properties.Settings" Collapsed="true">
+    <Position X="4.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClearSkies.Scripts.BulletLocationMovementScript" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Scripts\BulletLocationMovementScript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ClearSkies.Scripts.BulletPlainCollisionScript" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Scripts\BulletPlainCollisionScript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ClearSkies.Scripts.BulletStraightMovementScript" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Scripts\BulletStraightMovementScript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ClearSkies.Scripts.BulletTurretCollisionScript" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Scripts\BulletTurretCollisionScript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ClearSkies.Scripts.ShootScript" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAIAAQAAQAAAAAIAACAIAAAAABAIgAAAAAAAAA=</HashCode>
+      <FileName>Scripts\ShootScript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ClearSkies.Scripts.TankMovementScript" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAABAAAA=</HashCode>
+      <FileName>Scripts\TankMovementScript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ClearSkies.Scripts.TankShootScript" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAQAAQAAAAAAAACAIgAAAABAIgAAAAAAAAA=</HashCode>
+      <FileName>Scripts\TankShootScript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ClearSkies.Scripts.TurretRotationScript" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAgAIAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Scripts\TurretRotationScript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="ClearSkies.Managers.Manager" Collapsed="true">
+    <Position X="15" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Managers\Manager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ClearSkies.Scripts.Script" Collapsed="true">
+    <Position X="16.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scripts\Script.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ClearSkies.GameState" Collapsed="true">
+    <Position X="15" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgQAAAACAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAQA=</HashCode>
+      <FileName>GameState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ClearSkies.Prefabs.Bullets.BulletType" Collapsed="true">
+    <Position X="15" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAEAAAACAAAA=</HashCode>
+      <FileName>Prefabs\Bullets\BulletType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ClearSkies.Prefabs.Enemies.EnemyType" Collapsed="true">
+    <Position X="16.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Prefabs\Enemies\EnemyType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ClearSkies.Prefabs.Turrets.TurretType" Collapsed="true">
+    <Position X="16.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACACAAAA=</HashCode>
+      <FileName>Prefabs\Turrets\TurretType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

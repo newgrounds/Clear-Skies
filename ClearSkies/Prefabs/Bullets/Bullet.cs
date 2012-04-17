@@ -78,6 +78,14 @@ namespace ClearSkies.Prefabs.Bullets
             get { return this.owner; }
         }
 
+        /// <summary>
+        /// The amount of damage this bullet does.
+        /// </summary>
+        public float Damage
+        {
+            get { return this.damage; }
+        }
+
         #endregion
 
         #region Public Methods
@@ -91,7 +99,6 @@ namespace ClearSkies.Prefabs.Bullets
         {
             base.update(deltaTime);
             this.timeAlive += deltaTime;
-
 
             this.alive = this.alive && lifespan >= timeAlive && !destroy;
         }
