@@ -1,6 +1,7 @@
 ﻿using ClearSkies.Content;
 using ClearSkies.Scripts;
 using Microsoft.DirectX;
+using ClearSkies.Managers;
 
 namespace ClearSkies.Prefabs.Enemies.Tanks
 {
@@ -22,9 +23,10 @@ namespace ClearSkies.Prefabs.Enemies.Tanks
         /// <param name="driveSpeed">Speed the Tank drives at</param>
         /// <param name="turnSpeed">Speed the Tank turns at</param>
         public BasicTank(Vector3 location, Vector3 rotation, Vector3 scale, float driveSpeed, float turnSpeed)
-            : base(ContentLoader.BasicTankModel, location, rotation, scale, Settings.TANK_COLLIDER_SIZE)
+            : base(ContentLoader.BasicTankBodyModel, location, rotation, scale, 
+            new BasicTankHead(location, rotation, scale), driveSpeed, turnSpeed, Settings.TANK_COLLIDER_SIZE)
         {
-            this.scripts.Add(new TankMovementScript(this, driveSpeed, turnSpeed));
+            this.scripts.Add(new TankMovementScript(this, TurretManager.ManagedTurrets[0]));
             //TODO: Add Shoot Script
         }
 

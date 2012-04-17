@@ -14,15 +14,17 @@ namespace ClearSkies.Scripts
     /// <summary>
     /// A Script for shooting BasicBullet projectiles
     /// </summary>
-    class ShootScript : Script
+    class TurretShootScript : Script
     {
         #region Fields
 
         private TurretBarrel shooter;
-        private DI.Device keyboard;
 
         private float timeSinceLastShot;
         private bool shooting;
+
+        private float pushTime;
+        private float pullTime;
 
         #endregion
 
@@ -35,13 +37,14 @@ namespace ClearSkies.Scripts
         /// </summary>
         /// <param name="shooter">Prefab to shoot the Bullets from</param>
         /// <param name="keyboard">Keyboard Device that determines when we shoot</param>
-        public ShootScript(TurretBarrel shooter, DI.Device keyboard)
+        public TurretShootScript(TurretBarrel shooter)
         {
             this.shooter = shooter;
-            this.keyboard = keyboard;
             
             this.shooting = false;
-            this.timeSinceLastShot = Settings.SHOOT_SHOOT_DELAY;
+            this.timeSinceLastShot = shooter.ShootDelay;
+            this.pushTime = shooter.ShootDelay * shooter.PullSpeed / (shooter.PullSpeed + shooter.PushSpeed);
+            this.pullTime = shooter.ShootDelay * shooter.PushSpeed / (shooter.PullSpeed + shooter.PushSpeed);        
         }
 
         #endregion
@@ -56,9 +59,9 @@ namespace ClearSkies.Scripts
         /// <param name="deltaTime">Time in seconds since last update</param>
         public void run(float deltaTime)
         {
-            DI.KeyboardState keys = keyboard.GetCurrentKeyboardState();
+            DI.KeyboardState keys = shooter.Keyboard.GetCurrentKeyboardState();
 
-            if (keys[DI.Key.Space] && timeSinceLastShot >= Settings.SHOOT_SHOOT_DELAY)
+            if (keys[DI.Key.Space] && timeSinceLastShot >= shooter.ShootDelay)
             {
                 shooting = true;
                 this.timeSinceLastShot = 0.0f;
@@ -71,13 +74,13 @@ namespace ClearSkies.Scripts
 
             if (shooting)
             {
-                if (timeSinceLastShot <= Settings.SHOOT_PULL_TIME)
+                if (timeSinceLastShot <= pullTime)
                 {
                     Vector3 recoilLocation = shooter.DrawLocation;
 
-                    recoilLocation.Z -= deltaTime * Settings.SHOOT_PULL_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Cos(shooter.Rotation.X));
-                    recoilLocation.X -= deltaTime * Settings.SHOOT_PULL_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Sin(shooter.Rotation.X));
-                    recoilLocation.Y -= deltaTime * Settings.SHOOT_PULL_SPEED * (float)Math.Cos(shooter.Rotation.Y);
+                    recoilLocation.Z -= deltaTime * shooter.PullSpeed * (float)(Math.Sin(shooter.Rotation.Y) * Math.Cos(shooter.Rotation.X));
+                    recoilLocation.X -= deltaTime * shooter.PullSpeed * (float)(Math.Sin(shooter.Rotation.Y) * Math.Sin(shooter.Rotation.X));
+                    recoilLocation.Y -= deltaTime * shooter.PullSpeed * (float)Math.Cos(shooter.Rotation.Y);
 
                     shooter.DrawLocation = recoilLocation;
                 }
@@ -85,11 +88,11 @@ namespace ClearSkies.Scripts
                 {
                     Vector3 recoilLocation = shooter.DrawLocation;
 
-                    recoilLocation.Z += deltaTime * Settings.SHOOT_PUSH_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Cos(shooter.Rotation.X));
-                    recoilLocation.X += deltaTime * Settings.SHOOT_PUSH_SPEED * (float)(Math.Sin(shooter.Rotation.Y) * Math.Sin(shooter.Rotation.X));
-                    recoilLocation.Y += deltaTime * Settings.SHOOT_PUSH_SPEED * (float)Math.Cos(shooter.Rotation.Y);
+                    recoilLocation.Z += deltaTime * shooter.PushSpeed * (float)(Math.Sin(shooter.Rotation.Y) * Math.Cos(shooter.Rotation.X));
+                    recoilLocation.X += deltaTime * shooter.PushSpeed * (float)(Math.Sin(shooter.Rotation.Y) * Math.Sin(shooter.Rotation.X));
+                    recoilLocation.Y += deltaTime * shooter.PushSpeed * (float)Math.Cos(shooter.Rotation.Y);
 
-                    shooting = timeSinceLastShot <= Settings.SHOOT_PULL_TIME + Settings.SHOOT_PUSH_TIME;
+                    shooting = timeSinceLastShot <= pullTime + pushTime;
 
                     if (!shooting)
                     {

@@ -1,27 +1,28 @@
 ﻿using System;
-using ClearSkies.Content;
-using ClearSkies.Scripts;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.DirectX;
-using D3D = Microsoft.DirectX.Direct3D;
-using DI = Microsoft.DirectX.DirectInput;
+using ClearSkies.Content;
+using Microsoft.DirectX.Direct3D;
+using ClearSkies.Scripts;
 
-namespace ClearSkies.Prefabs.Turrets
+namespace ClearSkies.Prefabs.Enemies.Tanks
 {
     /// <summary>
     /// A part of a Turret used to launch projectiles. Should only be used 
     /// with Turret Prefabs.
     /// </summary>
-    class TurretBarrel : Prefab
+    class TankBarrel : Prefab
     {
         #region Fields
 
-        private DI.Device keyboard;
         private float minRotation;
         private float maxRotation;
         private float shootDelay;
         private float pushSpeed;
         private float pullSpeed;
-
+        private float shootDistance;
         private Vector3 drawLocation;
 
         #endregion
@@ -42,20 +43,20 @@ namespace ClearSkies.Prefabs.Turrets
         /// <param name="keyboard">
         /// Keyboard Device used to control the TurretBarrel
         /// </param>
-        public TurretBarrel(Vector3 location, Vector3 rotation, Vector3 scale, Model barrelModel, float maxRotation,
-            float minRotation, float shootDelay, float pushSpeed, float pullSpeed, DI.Device keyboard)
+        public TankBarrel(Vector3 location, Vector3 rotation, Vector3 scale, Model barrelModel, float maxRotation,
+            float minRotation, float shootDistance, float shootDelay, float pushSpeed, float pullSpeed)
             : base(location, rotation, scale)
         {
-            this.keyboard = keyboard;
             this.minRotation = minRotation;
             this.maxRotation = maxRotation;
             this.drawLocation = location;
+            this.shootDistance = shootDistance;
             this.shootDelay = shootDelay;
             this.pushSpeed = pushSpeed;
             this.pullSpeed = pullSpeed;
 
             this.models.Add(barrelModel);
-            this.scripts.Add(new TurretShootScript(this));
+            this.scripts.Add(new TankShootScript(this));
         }
 
         #endregion
@@ -107,11 +108,6 @@ namespace ClearSkies.Prefabs.Turrets
             }
         }
 
-        public DI.Device Keyboard
-        {
-            get { return this.keyboard; }
-        }
-
         public float ShootDelay
         {
             get { return this.shootDelay; }
@@ -127,6 +123,10 @@ namespace ClearSkies.Prefabs.Turrets
             get { return this.pullSpeed; }
         }
 
+        public float ShootDistance
+        {
+            get { return this.shootDistance; }
+        }
         #endregion
 
         #region Public Methods
@@ -137,7 +137,7 @@ namespace ClearSkies.Prefabs.Turrets
         /// during animation.
         /// </summary>
         /// <param name="device">The Device to draw to</param>
-        public override void draw(D3D.Device device)
+        public override void draw(Device device)
         {
             //do transformations
             device.Transform.World = Matrix.Multiply(

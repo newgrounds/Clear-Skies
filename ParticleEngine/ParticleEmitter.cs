@@ -148,6 +148,8 @@ namespace ParticleEngine
 
         public void draw(Vector3 cameraLocation, Vector3 cameraRotation, Device device)
         {
+            Material initialMaterial = device.Material;
+
             if (particleList.Count > 0)
             {
                 sortParticles(particleList, 0, particleList.Count - 1, cameraLocation);
@@ -164,11 +166,6 @@ namespace ParticleEngine
             device.TextureState[0].AlphaArgument1 = TextureArgument.Diffuse;
             device.TextureState[0].AlphaArgument2 = TextureArgument.TextureColor;
 
-            device.TextureState[0].ColorArgument0 = TextureArgument.Current;
-            device.TextureState[0].ColorArgument1 = TextureArgument.Diffuse;
-            device.TextureState[0].ColorArgument2 = TextureArgument.TextureColor;
-            device.TextureState[0].ColorOperation = TextureOperation.Modulate;
-
             foreach (ParticleData particle in particleList)
             {
                 device.Transform.World =
@@ -181,22 +178,26 @@ namespace ParticleEngine
                 material.Emissive = Color.White;
                 device.Material = material;
 
-                VertexBuffer buffer = new VertexBuffer(typeof(CustomVertex.PositionNormalTextured), 4, device, 0, CustomVertex.PositionNormalTextured.Format, Pool.Default);
-                CustomVertex.PositionNormalTextured[] vertices = (CustomVertex.PositionNormalTextured[])buffer.Lock(0, 0);
+                VertexBuffer buffer = new VertexBuffer(typeof(CustomVertex.PositionTextured), 4, device, 0, CustomVertex.PositionNormalTextured.Format, Pool.Default);
+                CustomVertex.PositionTextured[] vertices = (CustomVertex.PositionTextured[])buffer.Lock(0, 0);
 
                 float particleRadius = particle.size / 2;
 
-                vertices[0] = new CustomVertex.PositionNormalTextured(new Vector3(-particleRadius, -particleRadius, 0f), new Vector3(0, 1, 0), 0, 1); // bottom right
-                vertices[1] = new CustomVertex.PositionNormalTextured(new Vector3(-particleRadius, particleRadius, 0f), new Vector3(0, 1, 0), 0, 0); // top right
-                vertices[2] = new CustomVertex.PositionNormalTextured(new Vector3(particleRadius, -particleRadius, 0f), new Vector3(0, 1, 0), 1, 1); // bottom left
-                vertices[3] = new CustomVertex.PositionNormalTextured(new Vector3(particleRadius, particleRadius, 0), new Vector3(0, 1, 0), 1, 0); // top left
+                vertices[0] = new CustomVertex.PositionTextured(new Vector3(-particleRadius, -particleRadius, 0f), 0, 1); // bottom right
+                vertices[1] = new CustomVertex.PositionTextured(new Vector3(-particleRadius, particleRadius, 0f), 0, 0); // top right
+                vertices[2] = new CustomVertex.PositionTextured(new Vector3(particleRadius, -particleRadius, 0f), 1, 1); // bottom left
+                vertices[3] = new CustomVertex.PositionTextured(new Vector3(particleRadius, particleRadius, 0), 1, 0); // top left
 
                 buffer.Unlock();
 
-                device.VertexFormat = CustomVertex.PositionNormalTextured.Format;
+                device.VertexFormat = CustomVertex.PositionTextured.Format;
+
                 device.SetStreamSource(0, buffer, 0);
                 device.DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
             }
+
+            device.RenderState.AlphaBlendEnable = false;
+            device.Material = initialMaterial;
         }
         
         public virtual bool Alive

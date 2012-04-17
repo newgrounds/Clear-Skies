@@ -23,7 +23,7 @@ namespace ClearSkies.Prefabs.Turrets
         /// Keyboard Device used to controll the Turret
         /// </param>
         public TestTurretHead(Vector3 location, Vector3 rotation, Vector3 scale, Device keyboard)
-            : base(location + Settings.TEST_TURRET_HEAD_OFFSET, rotation, scale, Settings.TEST_TURRET_ROTATION_SPEED, keyboard)
+            : base(location + Settings.TEST_TURRET_HEAD_OFFSET, rotation, scale, Settings.TEST_TURRET_HEAD_ROTATION_SPEED, Settings.TEST_TURRET_BARREL_ROTATION_SPEED, keyboard)
         {
             this.models.Add(ContentLoader.TestTurretHeadModel);
 
@@ -32,6 +32,11 @@ namespace ClearSkies.Prefabs.Turrets
                 new Vector3(this.rotation.X, this.rotation.Y, this.rotation.Z) + Settings.TEST_TURRET_BARREL_DEFAULT_ROTATION,
                 scale,
                 ContentLoader.TestTurretBarrelModel,
+                Settings.TEST_TURRET_BARREL_MAX_PITCH,
+                Settings.TEST_TURRET_BARREL_MIN_PITCH,
+                Settings.TEST_TURRET_BARREL_SHOOT_DELAY,
+                Settings.TEST_TURRET_BARREL_PUSH_SPEED,
+                Settings.TEST_TURRET_BARREL_PULL_SPEED,
                 keyboard
                 ));
 
@@ -40,6 +45,11 @@ namespace ClearSkies.Prefabs.Turrets
                 new Vector3(this.rotation.X, this.rotation.Y, this.rotation.Z) + Settings.TEST_TURRET_BARREL_DEFAULT_ROTATION,
                 scale,
                 ContentLoader.TestTurretBarrelModel,
+                Settings.TEST_TURRET_BARREL_MAX_PITCH,
+                Settings.TEST_TURRET_BARREL_MIN_PITCH,
+                Settings.TEST_TURRET_BARREL_SHOOT_DELAY,
+                Settings.TEST_TURRET_BARREL_PUSH_SPEED,
+                Settings.TEST_TURRET_BARREL_PULL_SPEED,
                 keyboard
                 ));
         }

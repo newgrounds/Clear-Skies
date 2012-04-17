@@ -8,6 +8,13 @@ namespace ClearSkies.Prefabs.Enemies.Tanks
 {
     abstract class Tank : Enemy
     {
+        #region Fields
+
+        private float driveSpeed;
+        private float turnSpeed;
+
+        #endregion
+
         #region Initializer Methods
 
         /// <summary>
@@ -22,10 +29,34 @@ namespace ClearSkies.Prefabs.Enemies.Tanks
         /// <param name="colliderSize">
         /// Size of the Tanks collision sphere
         /// </param>
-        public Tank(Model tankModel, Vector3 location, Vector3 rotation, Vector3 scale, float colliderSize)
+        public Tank(Model tankModel, Vector3 location, Vector3 rotation, Vector3 scale, TankHead head, float driveSpeed, float turnSpeed, float colliderSize)
             : base(location, rotation, scale, colliderSize)
         {
+            this.driveSpeed = driveSpeed;
+            this.turnSpeed = turnSpeed;
+
+            this.children.Add(head);
             this.models.Add(tankModel);
+        }
+
+        #endregion
+
+        #region Getter and Setter Methods
+
+        /// <summary>
+        /// The speed at which the tank can drive.
+        /// </summary>
+        public float DriveSpeed
+        {
+            get { return this.driveSpeed; }
+        }
+
+        /// <summary>
+        /// The speed at which the Tank can turn.
+        /// </summary>
+        public float TurnSpeed
+        {
+            get { return this.turnSpeed; }
         }
 
         #endregion
@@ -40,16 +71,19 @@ namespace ClearSkies.Prefabs.Enemies.Tanks
         public override void detectCollision(Prefab collider)
         {
             base.detectCollision(collider);
+            bool die = true;
 
             if (collider is Bullet)
             {
                 Bullet collidingBullet = (Bullet)collider;
-                if (collidingBullet.Owner != this)
-                {
-                    this.scripts.Clear();
-                    this.alive = false;
-                    ParticleEmitterManager.spawnParticleEmitter(ParticleEmitterType.explosion, location);
-                }
+                die = collidingBullet.Owner != this;
+            }
+
+            if (die)
+            {
+                this.scripts.Clear();
+                this.alive = false;
+                ParticleEmitterManager.spawnParticleEmitter(ParticleEmitterType.explosion, location);
             }
         }
 

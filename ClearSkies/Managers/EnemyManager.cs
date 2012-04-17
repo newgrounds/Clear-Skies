@@ -79,7 +79,11 @@ namespace ClearSkies.Managers
         /// </summary>
         public static Wave CurrentWave
         {
-            get { return waves[currentWave]; }
+            get 
+            {
+                checkIfInitialized();
+                return waves[currentWave]; 
+            }
         }
 
         /// <summary>
@@ -147,7 +151,7 @@ namespace ClearSkies.Managers
         #endregion
 
         #region Public Methods
-
+        
         /// <summary>
         /// Updates all Enemy Prefabs being managed within this manager, 
         /// removes any Enemy Prefabs that no longer meet the requirements of 
@@ -231,12 +235,13 @@ namespace ClearSkies.Managers
 
                     if (waves[currentWave].planesDestroyed == waves[currentWave].planesToSpawn &&
                         waves[currentWave].tanksDestroyed == waves[currentWave].tanksToSpawn &&
-                        currentWave < waves.Count)
+                        currentWave + 1 < waves.Count)
                     {
                         currentWave++;
                     }
                 }
             }
+            
         }
 
         /// <summary>
