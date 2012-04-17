@@ -130,7 +130,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
+    <None Include="bin\Debug\ClearSkies.exe.config" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Content\Models\BasicPlane\basicPlane.x" />
     <None Include="Content\Models\BasicTurret\basic_turret_barrel.x" />
     <None Include="Content\Models\BasicTurret\basic_turret_base.x" />
@@ -159,7 +161,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Textures\enemy.png" />
+    <Content Include="bin\Debug\ClearSkies.exe" />
+    <Content Include="bin\Debug\ClearSkies.pdb" />
     <Content Include="Content\Textures\ground.jpg" />
     <Content Include="Content\Textures\health.png" />
     <Content Include="Content\Textures\healthBar.png" />

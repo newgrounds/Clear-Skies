@@ -1,18 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.DirectX;
-using ClearSkies.Content;
+﻿using ClearSkies.Content;
 using ClearSkies.Scripts;
-using ClearSkies.Prefabs.Bullets;
-using ClearSkies.Managers;
-using ParticleEngine;
+using Microsoft.DirectX;
 
 namespace ClearSkies.Prefabs.Enemies.Planes
 {
+    /// <summary>
+    /// A Plane unit that will fly over and around the target location.
+    /// </summary>
     class BasicPlane : Plane
-    { 
+    {
+        /// <summary>
+        /// Creates a Basic Plane at the given location facing the given 
+        /// rotation, flying with the given speeds, and scaled to the give
+        /// amount.
+        /// </summary>
+        /// <param name="location">The location of the Plane</param>
+        /// <param name="rotation">The rotaiton of the Plane</param>
+        /// <param name="scale">The scale of the Plane model</param>
+        /// <param name="flightSpeed">The speed the Plane will fly at</param>
+        /// <param name="turnSpeed">The speed the Plane will turn at</param>
         public BasicPlane(Vector3 location, Vector3 rotation, Vector3 scale, float flightSpeed, float turnSpeed) : 
             base(ContentLoader.BasicPlaneModel, location, rotation, scale, Settings.PLANE_COLLIDER_SIZE)
         {

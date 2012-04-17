@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.DirectX;
-using DI = Microsoft.DirectX.DirectInput;
-using ClearSkies.Scripts;
-using ClearSkies.Managers;
 using ClearSkies.Content;
+using ClearSkies.Scripts;
+using Microsoft.DirectX;
+using D3D = Microsoft.DirectX.Direct3D;
+using DI = Microsoft.DirectX.DirectInput;
 
 namespace ClearSkies.Prefabs.Turrets
 {
@@ -16,7 +13,11 @@ namespace ClearSkies.Prefabs.Turrets
     /// </summary>
     class TurretBarrel : Prefab
     {
+        #region Fields
+
         private Vector3 drawLocation;
+
+        #endregion
 
         #region Initializer Methods
 
@@ -25,10 +26,15 @@ namespace ClearSkies.Prefabs.Turrets
         /// given Model at the given location facing the given rotation. The
         /// TurretBarrel will be controlled by the given keyboard Device.
         /// </summary>
-        /// <param name="barrelModel">Model to represent the TurretBarrel</param>
-        /// <param name="location">Location of the TurretBarrel in the gameworld</param>
+        /// <param name="barrelModel">
+        /// Model to represent the TurretBarrel
+        /// </param>
+        /// <param name="location">Location of the TurretBarrel</param>
         /// <param name="rotation">Rotation the TurretBarrel is facing</param>
-        /// <param name="keyboard">Keyboard Device used to controll the TurretBarrel</param>
+        /// <param name="scale">Scale of the TurretBarrel</param>
+        /// <param name="keyboard">
+        /// Keyboard Device used to control the TurretBarrel
+        /// </param>
         public TurretBarrel(Vector3 location, Vector3 rotation, Vector3 scale, Model barrelModel, DI.Device keyboard)
             : base(location, rotation, scale)
         {
@@ -89,7 +95,15 @@ namespace ClearSkies.Prefabs.Turrets
 
         #endregion
 
-        public override void draw(Microsoft.DirectX.Direct3D.Device device)
+        #region Public Methods
+
+        /// <summary>
+        /// Draws the TurretBarrel to the given Device. Overloaded to allow a 
+        /// special draw position used to keep the barrels from running away
+        /// during animation.
+        /// </summary>
+        /// <param name="device">The Device to draw to</param>
+        public override void draw(D3D.Device device)
         {
             //do transformations
             device.Transform.World = Matrix.Multiply(
@@ -106,5 +120,7 @@ namespace ClearSkies.Prefabs.Turrets
                 child.draw(device);
             }
         }
+
+        #endregion
     }
 }

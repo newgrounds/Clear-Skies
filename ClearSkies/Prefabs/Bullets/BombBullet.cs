@@ -1,31 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.DirectX;
-using ClearSkies.Content;
-using ClearSkies.Scripts;
-using ClearSkies.Prefabs.Enemies;
+﻿using ClearSkies.Content;
 using ClearSkies.Managers;
+using ClearSkies.Scripts;
 using ParticleEngine;
 
 namespace ClearSkies.Prefabs.Bullets
 {
     /// <summary>
-    /// A basic bullet that glows for extra visiability and explodes on impact with enemy.
+    /// A bomb bullet that is dropped on Turret objects.
     /// </summary>
     class BombBullet : Bullet
     {
         #region Initializer Methods
 
         /// <summary>
-        /// Creates a TracerBullet at the given location facing the given rotation.
+        /// Creates a BombBullet at the given location facing the given 
+        /// rotation.
         /// </summary>
-        /// <param name="location"></param>
-        /// <param name="rotation"></param>
-        public BombBullet(Prefab owner) : base(owner, ContentLoader.BombBulletModel, Settings.BOMB_BULLET_DAMAGE, Settings.BOMB_BULLET_LIFESPAN, Settings.BOMB_BULLET_SPEED)
+        /// <param name="owner">The Prefab that owns this Bomb</param>
+        public BombBullet(Prefab owner) : base(owner, ContentLoader.BombBulletModel, Settings.BOMB_BULLET_DAMAGE, 
+            Settings.BOMB_BULLET_LIFESPAN, Settings.BOMB_BULLET_SPEED)
         {
-            this.scripts.Add(new BombMovementScript(this, speed));
+            this.scripts.Add(new BombMovementScript(this, this.speed));
             this.scripts.Add(new BombCollisionScript(this));
         }
 
@@ -34,14 +29,17 @@ namespace ClearSkies.Prefabs.Bullets
         #region Public Methods
 
         /// <summary>
-        /// If collider is instance of Enemy the Bullet will explode.
+        /// If collider is not the Bombs owner it will explode.
         /// </summary>
-        /// <param name="collider">Prefab that has collided witht the Bullet</param>
+        /// <param name="collider">Prefab that has collided witht the Bomb</param>
         public override void detectCollision(Prefab collider)
         {
             base.detectCollision(collider);
-            ParticleEmitterManager.spawnParticleEmitter(ParticleEmitterType.explosion, this.location);
-            this.alive = false;
+            if (owner != collider)
+            {
+                ParticleEmitterManager.spawnParticleEmitter(ParticleEmitterType.explosion, this.location);
+                this.alive = false;
+            }
         }
 
         #endregion

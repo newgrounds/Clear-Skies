@@ -35,6 +35,7 @@ namespace ClearSkies.Prefabs
         /// </summary>
         /// <param name="location">Location of the Prefab</param>
         /// <param name="rotation">Rotation the Prefab is facing</param>
+        /// <param name="scale">Scale of the Prefab</param>
         protected Prefab(Vector3 location, Vector3 rotation, Vector3 scale)
         {
             this.alive = true;
@@ -66,6 +67,7 @@ namespace ClearSkies.Prefabs
                 this.location = value; 
             }
         }
+
         /// <summary>
         /// Gets or Sets the Prefabs current rotation.
         /// </summary>
@@ -88,6 +90,7 @@ namespace ClearSkies.Prefabs
                 this.rotation = value;
             }
         }
+
         /// <summary>
         /// Gets or Sets the Prefabs current scaling values.
         /// </summary>
@@ -103,6 +106,7 @@ namespace ClearSkies.Prefabs
                 }
             }
         }
+
         /// <summary>
         /// Determines if the Prefab is still alive in the scene. If not it
         /// should be removed by its Manager.
@@ -138,7 +142,9 @@ namespace ClearSkies.Prefabs
         /// <summary>
         /// Detects a collision with the given Prefab.
         /// </summary>
-        /// <param name="collider">Prefab that has collided with this Prefab</param>
+        /// <param name="collider">
+        /// Prefab that has collided with this Prefab
+        /// </param>
         public virtual void detectCollision(Prefab collider) { }
 
         /// <summary>
@@ -163,7 +169,7 @@ namespace ClearSkies.Prefabs
         /// There is a bug currently in this code as the children do not have
         /// coordinatesystems within their parent.
         /// </summary>
-        /// <param name="device"></param>
+        /// <param name="device">Device to draw Prefab to</param>
         public virtual void draw(Device device)
         {
             //do transformations

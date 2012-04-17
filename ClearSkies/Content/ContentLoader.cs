@@ -40,7 +40,7 @@ namespace ClearSkies.Content
         private static Model basicTurretBaseModel; 
         private static Model basicTurretHeadModel;
 
-        private static Model tankModel;
+        private static Model basicTankModel;
 
         private static Model basicPlaneModel;
 
@@ -68,7 +68,6 @@ namespace ClearSkies.Content
             testParticleTexture = TextureLoader.FromFile(device, Settings.TEST_PARTICLE_TEXTURE_PATH);
             explosionParticleTexture = TextureLoader.FromFile(device, Settings.EXPLOSION_PARTICLE_TEXTURE_PATH);
             cloudParticleTexture = TextureLoader.FromFile(device, Settings.CLOUD_PARTICLE_TEXTURE_PATH);
-            explosionParticleTexture = TextureLoader.FromFile(device, @"Content\Textures\Particles\explosion.png");
 
             // load health bar texture with alpha removed
             healthBarTexture = TextureLoader.FromFile(device, @"Content\Textures\healthBar.png",
@@ -126,7 +125,7 @@ namespace ClearSkies.Content
 
             basicPlaneModel = new Model(Settings.BASIC_PLANE_MODEL_PATH, new Vector3((float)Math.PI, 0f, 0f), device);
 
-            tankModel = new Model(Mesh.Box(device, 0.5f, 0.5f, 0.5f),
+            basicTankModel = new Model(Mesh.Box(device, 0.5f, 0.5f, 0.5f),
                 new Material[] { defaultMaterial },
                 new Texture[] { defaultTexture },
 				Vector3.Empty,
@@ -298,12 +297,12 @@ namespace ClearSkies.Content
             }
         }
 		
-        public static Model TankModel
+        public static Model BasicTankModel
         {
             get
             {
                 checkIfInitialized();
-                return tankModel;
+                return basicTankModel;
             }
         }
         public static Texture RadarEnemy

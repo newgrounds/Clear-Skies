@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ClearSkies.Prefabs.Bullets;
-using Microsoft.DirectX;
-using ClearSkies.Prefabs.Enemies;
-using Microsoft.DirectX.Direct3D;
-using ClearSkies.Content;
-using ClearSkies.Prefabs;
+﻿using System.Collections.Generic;
 using ClearSkies.Exceptions;
+using ClearSkies.Prefabs;
+using ClearSkies.Prefabs.Bullets;
 using ClearSkies.Properties;
+using Microsoft.DirectX.Direct3D;
 
 namespace ClearSkies.Managers
 {
     /// <summary>
-    /// Manages the drawing, updating, and creation of all Bullet objects for use within the game.
+    /// Manages the drawing, updating, and creation of all Bullet objects for 
+    /// use within the game.
     /// </summary>
     class BulletManager : Manager
     {
         #region Fields
 
-        private static List<Bullet> managedBullets = new List<Bullet>();
         private static bool initialized;
+        private static List<Bullet> managedBullets;
 
         #endregion
 
@@ -33,6 +28,7 @@ namespace ClearSkies.Managers
         public BulletManager() 
         {
             initialized = true;
+            managedBullets = new List<Bullet>();
         }
 
         #endregion
@@ -40,7 +36,7 @@ namespace ClearSkies.Managers
         #region Getter Methods
 
         /// <summary>
-        /// All Bullet Prefabs currently being Managed
+        /// All Bullet Prefabs currently being managed.
         /// </summary>
         public static List<Bullet> ManagedBullets
         {
@@ -52,11 +48,10 @@ namespace ClearSkies.Managers
         #region Public Static Methods
 
         /// <summary>
-        /// Spawns a single Bullet of the give type at the desired location and rotation.
+        /// Spawns a single Bullet of the give type at the owners location and rotation.
         /// </summary>
         /// <param name="bulletType">Type of bullet to spawn</param>
-        /// <param name="location">Location to spawn bullet at</param>
-        /// <param name="rotation">Rotation bullet should be facing</param>
+        /// <param name="owner">The Prefab that owns the Bullet</param>
         /// <returns>A refernce to the spawned Bullet</returns>
         public static Bullet spawn(BulletType bulletType, Prefab owner)
         {
@@ -85,6 +80,10 @@ namespace ClearSkies.Managers
 
         #region Private Static Methods
 
+        /// <summary>
+        /// Checks if the BulletManager was initialized. This should be called 
+        /// at the beginning of every public static method.
+        /// </summary>
         private static void checkIfInitialized()
         {
             if (!initialized)

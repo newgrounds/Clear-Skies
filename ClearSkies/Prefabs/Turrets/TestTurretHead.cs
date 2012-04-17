@@ -1,27 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using ClearSkies.Content;
 using Microsoft.DirectX;
 using Microsoft.DirectX.DirectInput;
-using ClearSkies.Content;
 
 namespace ClearSkies.Prefabs.Turrets
 {
     /// <summary>
-    /// A simple dual barreled Turret used for testing.
+    /// A simple dual barreled TurretHead used for testing.
     /// </summary>
     class TestTurretHead : TurretHead
     {
         #region Initializer Methods
 
         /// <summary>
-        /// Creates a simple twin barreled Turret at the given location facing
-        /// the given rotation and controlled by the given kayboard Device.
+        /// Creates a simple twin barreled TurretHead at the given location 
+        /// facing the given rotation and controlled by the given kayboard 
+        /// Device.
         /// </summary>
-        /// <param name="location">Location of the Turret in the gameworld</param>
-        /// <param name="rotation">Rotation the Turret is facing</param>
-        /// <param name="keyboard">Keyboard Device used to controll the Turret</param>
+        /// <param name="location">Location of the TurretHead</param>
+        /// <param name="rotation">Rotation the TurretHead is facing</param>
+        /// <param name="scale">Scale of the TurretHead</param>
+        /// <param name="keyboard">
+        /// Keyboard Device used to controll the Turret
+        /// </param>
         public TestTurretHead(Vector3 location, Vector3 rotation, Vector3 scale, Device keyboard)
             : base(location + Settings.TEST_TURRET_HEAD_OFFSET, rotation, scale, Settings.TEST_TURRET_ROTATION_SPEED, keyboard)
         {

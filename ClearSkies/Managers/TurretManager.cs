@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ClearSkies.Prefabs.Turrets;
-using Microsoft.DirectX;
-using DI = Microsoft.DirectX.DirectInput;
-using D3D = Microsoft.DirectX.Direct3D;
-using Microsoft.DirectX.Direct3D;
-using ClearSkies.Prefabs;
+﻿using System.Collections.Generic;
 using ClearSkies.Exceptions;
+using ClearSkies.Prefabs.Turrets;
 using ClearSkies.Properties;
+using Microsoft.DirectX;
+using D3D = Microsoft.DirectX.Direct3D;
+using DI = Microsoft.DirectX.DirectInput;
 
 namespace ClearSkies.Managers
 {
     /// <summary>
-    /// Manages the drawing, updating, and creation of all Turret objects for use within the game.
+    /// Manages the drawing, updating, and creation of all Turret objects for 
+    /// use within the game.
     /// </summary>
     class TurretManager : Manager
     {
         #region Fields
 
-        private static List<Turret> managedTurrets;
         private static bool initialized;
+        private static List<Turret> managedTurrets;
 
         #endregion
 
@@ -32,8 +28,8 @@ namespace ClearSkies.Managers
         /// </summary>
         static TurretManager() 
         {
+            initialized = true; 
             managedTurrets = new List<Turret>();
-            initialized = true;
         }
 
         #endregion
@@ -50,7 +46,7 @@ namespace ClearSkies.Managers
 
         #endregion
 
-        #region Static Methods
+        #region Public Static Methods
 
         /// <summary>
         /// Spawns a new turret of the given type and the given location and 
@@ -85,6 +81,10 @@ namespace ClearSkies.Managers
 
         #region Private Static Methods
 
+        /// <summary>
+        /// Checks if the TurretManager was initialized. This should 
+        /// be called at the beginning of every public static method.
+        /// </summary>
         private static void checkIfInitialized()
         {
             if (!initialized)
@@ -122,7 +122,7 @@ namespace ClearSkies.Managers
         /// Draws all Turret Prefabs managed in this Manager.
         /// </summary>
         /// <param name="device">Device to draw Turret Prefabs to</param>
-        public void draw(Device device)
+        public void draw(D3D.Device device)
         {
             foreach (Turret managedTurret in managedTurrets)
             {

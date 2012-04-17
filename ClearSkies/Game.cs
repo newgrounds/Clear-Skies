@@ -58,6 +58,23 @@ namespace ClearSkies
             InitializeGame();
 
             theFont = new D3DFont(device, systemFont);
+
+            //Show();
+
+            //DateTime lastUpdate = DateTime.Now;
+
+            //while (gameState != GameState.Quit)
+            //{
+                //TimeSpan deltaTime = DateTime.Now.Subtract(lastUpdate);
+
+                //update(deltaTime.Milliseconds / 1000f);
+                //lastUpdate = DateTime.Now;
+
+                //draw();
+            //}
+
+            //DisposeGraphics();
+            //Application.Exit();
         }
 
         /// <summary>
@@ -66,10 +83,11 @@ namespace ClearSkies
         private void InitializeWindow()
         {
             this.WindowState = FormWindowState.Maximized;
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             Rectangle scrn = Screen.GetBounds(this);
             this.Width = scrn.Width;
             this.Height = scrn.Height;
+            //this.Width = 400;
+            //this.Height = 400;
             
             //enterPressed = false;
         }
@@ -105,50 +123,41 @@ namespace ClearSkies
             ContentLoader.initialize(device);
 
             player = TurretManager.spawnTurret(TurretType.Basic, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
+            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 10f, -15f));
+            player.Head.addChild(camera);
+
+            List<Wave> waves = new List<Wave>();
+            Wave firstWave = new Wave();
+            firstWave.waveNumber = 1;
+            firstWave.enemiesPerSpawn = 1;
+            firstWave.planeSpeed = 5f;
+            firstWave.planeTurnSpeed = (float)(Math.PI / 8);
+            firstWave.planesToSpawn = 1;
+            firstWave.spawnDelay = 0f;
+            waves.Add(firstWave);
 
             managers = new List<Manager>();
             BulletManager bulletManager = new BulletManager();
             managers.Add(bulletManager);
             TurretManager turretManager = new TurretManager();
             managers.Add(turretManager);
-
             // the enemy manager also adds enemies
-            List<Wave> waves = new List<Wave>();
-            Wave wave = new Wave();
-            wave.planesToSpawn = 5;
-            wave.tanksToSpawn = 5;
-            wave.planeSpeed = 1f;
-            wave.planeTurnSpeed = 1f;
-            wave.tankSpeed = 1f;
-            wave.tankTurnSpeed = 1f;
-            wave.tanksSpawned = 0;
-            wave.planesSpawned = 0;
-            wave.tanksDestroyed = 0;
-            wave.planesDestroyed = 0;
-            wave.spawnDelay = 5f;
-            wave.enemiesPerSpawn = 10;
-            wave.spawnDistance = 50f;
-            waves.Add(wave);
             EnemyManager enemyManager = new EnemyManager(waves, 0);
             managers.Add(enemyManager);
-            
+            ParticleEmitterManager particleEmitterManager = new ParticleEmitterManager(camera);
+            managers.Add(particleEmitterManager);
+
             // TODO: make the gui redraw based on the window size
-            gui = new GUI(this.player, new Rectangle(this.Width - (int)(this.Width * 0.0625),
+            gui = new GUI(player,
+                new Rectangle(this.Width - (int)(this.Width * 0.0625),
                 (int)(this.Height * 0.0052),
                 (int)(this.Width * 0.0521),
                 (int)(this.Height * 0.0104)),
                 new Point(this.Width - (int)(this.Width * 0.183), 0), 
                 device, this.Width, this.Height);
-            
-            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 7f, -7f));
-            player.Head.addChild(camera);
-
-            ParticleEmitterManager particleManager = new ParticleEmitterManager(camera);
-            managers.Add(particleManager);
 
             #endregion
         }
-
 
         /// <summary>
         /// Initializes the Keyboard and Mouse.
@@ -257,7 +266,7 @@ namespace ClearSkies
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(128f, 0, -128f), new Vector3(0, 0, 1), 32, 32),
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(128f, 0, 128f), new Vector3(0, 0, 1), 32, 0),
                 ContentLoader.Terrain);
-            
+
 
             // TOP OF SKYBOX
             drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 254.5f, -256f), new Vector3(0, 0, -1), 0, 1),
@@ -266,7 +275,7 @@ namespace ClearSkies
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, 254.5f, 256f), new Vector3(0, 0, -1), 1, 0),
                 ContentLoader.SkyTop);
 
-            
+
             // LEFT OF SKYBOX
             drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, -256f, -256f), new Vector3(0, 0, 1), 0, 1),
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, 256f, -256f), new Vector3(0, 0, 1), 0, 0),
@@ -274,7 +283,7 @@ namespace ClearSkies
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, 256f, 256f), new Vector3(0, 0, 1), 1, 0),
                 ContentLoader.SkyLeft);
 
-            
+
             // RIGHT OF SKYBOX
             drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, -256f, -256f), new Vector3(0, 0, -1), 0, 1),
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, 256f, -256f), new Vector3(0, 0, -1), 0, 0),
@@ -282,7 +291,7 @@ namespace ClearSkies
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, 256f, 256f), new Vector3(0, 0, -1), 1, 0),
                 ContentLoader.SkyRight);
 
-            
+
             // FRONT OF SKYBOX
             drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, -256f, 254.5f), new Vector3(0, 0, 1), 0, 1),
                 new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 256f, 254.5f), new Vector3(0, 0, 1), 0, 0),
@@ -332,7 +341,7 @@ namespace ClearSkies
 
             camera.view(device);
 
-            gui.draw();
+            //gui.draw();
 
             /*
             // BEGIN SHADER CODE
