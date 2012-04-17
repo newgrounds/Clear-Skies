@@ -130,13 +130,20 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
-    <None Include="bin\Debug\ClearSkies.exe.config" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="Content\Models\BasicPlane\basicPlane.x" />
-    <None Include="Content\Models\BasicTurret\basic_turret_barrel.x" />
-    <None Include="Content\Models\BasicTurret\basic_turret_base.x" />
-    <None Include="Content\Models\BasicTurret\basic_turret_head.x" />
+    <None Include="bin\Debug\Content\Models\Planes\BasicPlane\basicPlane.x" />
+    <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_barrel.x" />
+    <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_body.x" />
+    <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_head.x" />
+    <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_barrel.x" />
+    <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_base.x" />
+    <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_head.x" />
+    <None Include="Content\Models\Planes\BasicPlane\basicPlane.x" />
+    <None Include="Content\Models\Tanks\BasicTank\basic_tank_barrel.x" />
+    <None Include="Content\Models\Tanks\BasicTank\basic_tank_body.x" />
+    <None Include="Content\Models\Tanks\BasicTank\basic_tank_head.x" />
+    <None Include="Content\Models\Turrets\BasicTurret\basic_turret_barrel.x" />
+    <None Include="Content\Models\Turrets\BasicTurret\basic_turret_base.x" />
+    <None Include="Content\Models\Turrets\BasicTurret\basic_turret_head.x" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -146,13 +153,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="scene_toonEdges.fx\docs\GPU-Img-Proc-Intro.pdf" />
-    <None Include="scene_toonEdges.fx\HLSL\include\Quad.fxh" />
-    <None Include="scene_toonEdges.fx\HLSL\scene_toonEdges.fx" />
-    <None Include="scene_toonEdges.fx\textures\Default_color.dds" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Models\BasicTank\" />
+    <Folder Include="bin\Debug\Content\Models\Bullets\" />
+    <Folder Include="Content\Models\Bullets\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ParticleEngine\ParticleEngine.csproj">
@@ -161,8 +165,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\ClearSkies.exe" />
-    <Content Include="bin\Debug\ClearSkies.pdb" />
+    <Content Include="bin\Debug\Content\Textures\ground.jpg" />
+    <Content Include="bin\Debug\Content\Textures\health.png" />
+    <Content Include="bin\Debug\Content\Textures\healthBar.png" />
+    <Content Include="bin\Debug\Content\Textures\Particles\cloud_particle.png" />
+    <Content Include="bin\Debug\Content\Textures\Particles\explosion.png" />
+    <Content Include="bin\Debug\Content\Textures\Particles\test_particle.png" />
+    <Content Include="bin\Debug\Content\Textures\Sky1\sback37.jpg" />
+    <Content Include="bin\Debug\Content\Textures\Sky1\sfront37.jpg" />
+    <Content Include="bin\Debug\Content\Textures\Sky1\sleft37.jpg" />
+    <Content Include="bin\Debug\Content\Textures\Sky1\sright37.jpg" />
+    <Content Include="bin\Debug\Content\Textures\Sky1\stop37.jpg" />
     <Content Include="Content\Textures\ground.jpg" />
     <Content Include="Content\Textures\health.png" />
     <Content Include="Content\Textures\healthBar.png" />
