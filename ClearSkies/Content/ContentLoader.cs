@@ -44,9 +44,7 @@ namespace ClearSkies.Content
 
         private static Model basicPlaneModel;
 
-        private static Model tankModel;
-
-        private static Model radarEnemy;
+        private static Texture radarEnemy;
 
         private static Texture terrain;
 
@@ -135,11 +133,9 @@ namespace ClearSkies.Content
                 device,
                 true);
 
-            radarEnemy = new Model(Mesh.Sphere(device, 0.3f, 3, 3),
-                new Material[] { defaultMaterial },
-                new Texture[] { defaultTexture },
-                device,
-                true);
+            radarEnemy = TextureLoader.FromFile(device, @"Content\Textures\enemy.png",
+                0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
+                Color.White.ToArgb());
 
             terrain = TextureLoader.FromFile(device, @"Content\Textures\ground.jpg");
 
@@ -310,7 +306,7 @@ namespace ClearSkies.Content
                 return tankModel;
             }
         }
-        public static Model RadarEnemy
+        public static Texture RadarEnemy
         {
             get
             {

@@ -25,8 +25,6 @@ namespace ClearSkies.Scripts
         private const float PULL_TIME = SHOOT_DELAY * PUSH_SPEED / (PULL_SPEED + PUSH_SPEED);
         private const float PUSH_TIME = SHOOT_DELAY * PULL_SPEED / (PULL_SPEED + PUSH_SPEED);
 
-        private Tank shooter;
-
         private float timeSinceLastShot;
 
         private Vector3 turretLoc;
@@ -41,10 +39,8 @@ namespace ClearSkies.Scripts
         /// controlled by the given keyboard Device.
         /// </summary>
         /// <param name="shooter">Prefab to shoot the Bullets from</param>
-        public TankShootScript(Tank shooter, Vector3 turretLocation)
+        public TankShootScript(Vector3 turretLocation)
         {
-            this.shooter = shooter;
-
             this.turretLoc = turretLocation;
 
             this.timeSinceLastShot = SHOOT_DELAY;

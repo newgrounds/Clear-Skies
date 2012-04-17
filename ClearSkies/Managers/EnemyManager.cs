@@ -112,7 +112,7 @@ namespace ClearSkies.Managers
         #endregion
 
         #region Public Methods
-
+        
         /// <summary>
         /// Updates all Enemy Prefabs being managed within this manager. Also
         /// removes any Enemy Prefabs that no longer meet the requirements of 
@@ -194,23 +194,7 @@ namespace ClearSkies.Managers
                     currentWave++;
                 }
             }
-        }
-
-        /// <summary>
-        /// Handles creation of waves of enemies.
-        /// </summary>
-        public void nextWave()
-        {
-            for (int j = 0; j < waveNumber; j++)
-            {
-                for (int i = 0; i < 21; i++)
-                {
-                    Enemy basicTank =
-                        EnemyManager.spawnEnemy(EnemyType.BasicTank, new Vector3(-5 + i, 4, 30 + (5 * j)), Vector3.Empty, new Vector3(1f,1f,1f));
-                }
-            }
-
-            waveNumber += 1;
+            
         }
 
         /// <summary>

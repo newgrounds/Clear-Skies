@@ -16,11 +16,12 @@ namespace ClearSkies.Prefabs.Bullets
     {
         #region Fields
 
-        private static float speed = 0;
+        private const float SPEED = 1f;
         private const float DAMAGE = 1f;
         private const float LIFESPAN = 2f;
         private Turret turret;
-        Random rand = new Random();
+        private Prefab owner;
+        //Random rand = new Random();
 
         #endregion
 
@@ -30,15 +31,16 @@ namespace ClearSkies.Prefabs.Bullets
         /// Creates a BasicBullet object at the given location facing the given rotation.
         /// Bullet will travel forward and use standard collisions.
         /// </summary>
-        /// <param name="location">Location of the Bullet</param>
-        /// <param name="rotation">Rotation the Bullet should face</param>
-        public TankBullet(Vector3 location, Vector3 rotation, Vector3 scale, Turret t)
-            : base(location, rotation, scale, ContentLoader.BasicBulletModel, DAMAGE, LIFESPAN, speed)
+        /// <param name="owner">The prefab that fired this bullet.</param>
+        /// <param name="t">The turret to aim for.</param>
+        public TankBullet(Prefab owner, Turret t)
+            : base(owner, ContentLoader.BasicBulletModel, DAMAGE, LIFESPAN, SPEED)
         {
+            this.owner = owner;
             this.turret = t;
             this.scripts.Add(new BulletLocationMovementScript(this, this.turret));
             this.scripts.Add(new BulletTurretCollisionScript(this));
-            speed = ((float)(rand.Next(0, 5)) * 0.1f) + 1f;
+            //speed = ((float)(rand.Next(0, 5)) * 0.1f) + 1f;
         }
 
         #endregion

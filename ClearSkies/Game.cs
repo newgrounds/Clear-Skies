@@ -58,23 +58,6 @@ namespace ClearSkies
             InitializeGame();
 
             theFont = new D3DFont(device, systemFont);
-
-            //Show();
-
-            //DateTime lastUpdate = DateTime.Now;
-
-            //while (gameState != GameState.Quit)
-            //{
-                //TimeSpan deltaTime = DateTime.Now.Subtract(lastUpdate);
-
-                //update(deltaTime.Milliseconds / 1000f);
-                //lastUpdate = DateTime.Now;
-
-                //draw();
-            //}
-
-            //DisposeGraphics();
-            //Application.Exit();
         }
 
         /// <summary>
@@ -83,6 +66,7 @@ namespace ClearSkies
         private void InitializeWindow()
         {
             this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             Rectangle scrn = Screen.GetBounds(this);
             this.Width = scrn.Width;
             this.Height = scrn.Height;
@@ -123,16 +107,33 @@ namespace ClearSkies
             player = TurretManager.spawnTurret(TurretType.Basic, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
 
             managers = new List<Manager>();
-            BulletManager bulletManager = new BulletManager(player);
+            BulletManager bulletManager = new BulletManager();
             managers.Add(bulletManager);
             TurretManager turretManager = new TurretManager();
             managers.Add(turretManager);
+
             // the enemy manager also adds enemies
-            EnemyManager enemyManager = new EnemyManager(player);
+            List<Wave> waves = new List<Wave>();
+            Wave wave = new Wave();
+            wave.planesToSpawn = 5;
+            wave.tanksToSpawn = 5;
+            wave.planeSpeed = 1f;
+            wave.planeTurnSpeed = 1f;
+            wave.tankSpeed = 1f;
+            wave.tankTurnSpeed = 1f;
+            wave.tanksSpawned = 0;
+            wave.planesSpawned = 0;
+            wave.tanksDestroyed = 0;
+            wave.planesDestroyed = 0;
+            wave.spawnDelay = 5f;
+            wave.enemiesPerSpawn = 10;
+            wave.spawnDistance = 50f;
+            waves.Add(wave);
+            EnemyManager enemyManager = new EnemyManager(waves, 0);
             managers.Add(enemyManager);
             
             // TODO: make the gui redraw based on the window size
-            gui = new GUI(new Rectangle(this.Width - (int)(this.Width * 0.0625),
+            gui = new GUI(this.player, new Rectangle(this.Width - (int)(this.Width * 0.0625),
                 (int)(this.Height * 0.0052),
                 (int)(this.Width * 0.0521),
                 (int)(this.Height * 0.0104)),
@@ -141,6 +142,9 @@ namespace ClearSkies
             
             this.camera = new ThirdPersonCamera(player, new Vector3(0f, 7f, -7f));
             player.Head.addChild(camera);
+
+            ParticleEmitterManager particleManager = new ParticleEmitterManager(camera);
+            managers.Add(particleManager);
 
             #endregion
         }
@@ -188,7 +192,7 @@ namespace ClearSkies
         /// <param name="deltaTime">Time in seconds since last update.</param>
         public void update(float deltaTime)
         {
-            health = Turret.Health;
+            health = player.Health;
             gui.width = this.Width;
             gui.height = this.Height;
             gui.healthArea = new Rectangle(

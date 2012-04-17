@@ -100,7 +100,7 @@ namespace ClearSkies
         public const float CAMERA_FIELD_OF_VIEW = (float)Math.PI / 2;
         public const float CAMERA_ASPECT_RATIO = 1f;
         public const float CAMERA_NEAR_PLANE = 1f;
-        public const float CAMERA_FAR_PLANE = 100f;
+        public const float CAMERA_FAR_PLANE = 400f;
 
         public const float BOMB_DROP_DISTANCE_FROM_TARGET = 1f;
         public const float PLANE_FLY_OVER_OVERRUN_TIME = 5f;
