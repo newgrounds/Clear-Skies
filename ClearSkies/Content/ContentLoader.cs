@@ -47,6 +47,8 @@ namespace ClearSkies.Content
         private static Model basicPlaneModel;
 
         private static Texture radarEnemy;
+        private static Texture radar;
+        private static Texture guiBack;
 
         private static Texture terrain;
 
@@ -132,6 +134,13 @@ namespace ClearSkies.Content
             basicTankBarrelModel = new Model(Settings.BASIC_TANK_BARREL_MODEL_PATH, Vector3.Empty, device);
 
             radarEnemy = TextureLoader.FromFile(device, @"Content\Textures\enemy.png",
+                0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
+                Color.White.ToArgb());
+
+            radar = TextureLoader.FromFile(device, @"Content\Textures\gui_radar.png",
+                0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
+                Color.White.ToArgb());
+            guiBack = TextureLoader.FromFile(device, @"Content\Textures\gui_box.png",
                 0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
                 Color.White.ToArgb());
 
@@ -327,6 +336,22 @@ namespace ClearSkies.Content
             {
                 checkIfInitialized();
                 return radarEnemy;
+            }
+        }
+        public static Texture Radar
+        {
+            get
+            {
+                checkIfInitialized();
+                return radar;
+            }
+        }
+        public static Texture GUIBack
+        {
+            get
+            {
+                checkIfInitialized();
+                return guiBack;
             }
         }
         public static Texture Terrain

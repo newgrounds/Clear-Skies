@@ -34,6 +34,7 @@ namespace ClearSkies
         //private Texture radarTexture;
         private Texture radarEnemyTexture = ContentLoader.RadarEnemy;
         private Point radarPoint;
+        private Size radarSize;
         private float radarScaleX = 0.1f;
         private float radarScaleY = 0.2f;
 
@@ -87,8 +88,9 @@ namespace ClearSkies
         {
             this.health = player.Health;
             this.enemies = EnemyManager.ManagedEnemies;
-            this.radarPoint = new Point((int)(this.width * radarScaleX), 
-                this.height - (int)(this.height * radarScaleY));
+            this.radarPoint = new Point(0, (int)(this.height - (this.height * radarScaleY)));
+            this.radarSize = new Size((int)(this.width * this.radarScaleX),
+                (int)(this.height - (this.height * this.radarScaleY)));
 
             drawRadar();
 
@@ -148,29 +150,30 @@ namespace ClearSkies
         /// </summary>
         public void drawRadar()
         {
+            Point playerP = new Point((int)player.Location.X + radarSize.Width,
+                (int)player.Location.Z + radarSize.Height);
+
             Sprite s = new Sprite(device);
             s.Begin(SpriteFlags.AlphaBlend);
 
-            s.Transform..RotateY(0);
+            // Draw the radar background
+            s.Draw2D(ContentLoader.Radar, Rectangle.Empty, new Size(335, 307),
+                new Point((int)(radarPoint.X+(this.width * 0.0495f)),
+                    (int)(radarPoint.Y-(this.height * 0.0759f))), Color.White);
 
-            Point playerP = new Point((int)player.Location.X + radarPoint.X,
-                (int)player.Location.Z + radarPoint.Y);
-
+            // draw the player
             s.Draw2D(this.radarEnemyTexture, Rectangle.Empty,
                 this.enemySize, playerP, Color.LightSkyBlue);
 
-            s.Transform.RotateY(player.Head.Rotation.X);
-
+            // draw all the enemies
             foreach (Enemy e in enemies)
             {
                 Point point = new Point(
-                    (int)e.Location.X+radarPoint.X,
-                    (int)e.Location.Z+radarPoint.Y);
+                    (int)e.Location.X+radarSize.Width,
+                    (int)e.Location.Z+radarSize.Height);
                     
                 s.Draw2D(this.radarEnemyTexture, Rectangle.Empty,
                     this.enemySize, point, Color.Red);
-                    //new Point(15,15),//0, (int)(player.Location-e.Location).Length() * 2),
-                    //player.Head.Rotation.X, point, Color.Red);
             }
             s.End();
         }
