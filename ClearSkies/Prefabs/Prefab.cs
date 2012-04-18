@@ -165,7 +165,8 @@ namespace ClearSkies.Prefabs
 
             for (int i = 0; i < children.Count; i++)
             {
-                children[i].update(deltaTime);
+                if(children[i].Alive)
+                    children[i].update(deltaTime);
             }
         }
 

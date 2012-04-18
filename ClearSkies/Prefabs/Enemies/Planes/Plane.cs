@@ -80,7 +80,6 @@ namespace ClearSkies.Prefabs.Enemies.Planes
                     this.scripts.Clear();
                     this.alive = false;
                     ParticleEmitterManager.spawnParticleEmitter(ParticleEmitterType.explosion, location);
-                    // TODO: Add death animation script
 
                     foreach (Prefab child in children)
                     {

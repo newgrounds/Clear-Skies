@@ -157,14 +157,9 @@ namespace ParticleEngine
 
             device.RenderState.AlphaBlendEnable = true;
             device.RenderState.SourceBlend = Blend.SourceAlpha;
-            device.RenderState.DestinationBlend = Blend.InvSourceAlpha; 
+            device.RenderState.DestinationBlend = Blend.InvSourceAlpha;
 
             device.SetTexture(0, particleTexture);
-
-            device.TextureState[0].AlphaOperation = TextureOperation.Modulate;
-            device.TextureState[0].AlphaArgument0 = TextureArgument.Current;
-            device.TextureState[0].AlphaArgument1 = TextureArgument.Diffuse;
-            device.TextureState[0].AlphaArgument2 = TextureArgument.TextureColor;
 
             foreach (ParticleData particle in particleList)
             {

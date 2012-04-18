@@ -69,8 +69,12 @@ namespace ClearSkies.Content
         {
             defaultTexture = null;
             testParticleTexture = TextureLoader.FromFile(device, Settings.TEST_PARTICLE_TEXTURE_PATH);
-            explosionParticleTexture = TextureLoader.FromFile(device, Settings.EXPLOSION_PARTICLE_TEXTURE_PATH);
-            cloudParticleTexture = TextureLoader.FromFile(device, Settings.CLOUD_PARTICLE_TEXTURE_PATH);
+            explosionParticleTexture = TextureLoader.FromFile(device, Settings.EXPLOSION_PARTICLE_TEXTURE_PATH,
+                0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
+                Color.White.ToArgb());
+            cloudParticleTexture = TextureLoader.FromFile(device, Settings.CLOUD_PARTICLE_TEXTURE_PATH,
+                0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
+                Color.White.ToArgb());
 
             // load health bar texture with alpha removed
             healthBarTexture = TextureLoader.FromFile(device, @"Content\Textures\healthBar.png",
@@ -327,7 +331,6 @@ namespace ClearSkies.Content
             }
         }
 
-        public static Texture WorldBoxTop
         public static Texture Radar
         {
             get
@@ -345,6 +348,14 @@ namespace ClearSkies.Content
             }
         }
         public static Texture Terrain
+        {
+            get
+            {
+                checkIfInitialized();
+                return worldBoxTop;
+            }
+        }
+        public static Texture WorldBoxTop
         {
             get
             {

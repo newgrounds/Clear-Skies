@@ -187,7 +187,7 @@ namespace ClearSkies.Managers
 
                 timeSinceLastSpawn += deltaTime;
 
-                // spawn enemies if nessecary
+                // spawn enemies if necessary
                 if (timeSinceLastSpawn >= waves[currentWave].spawnDelay)
                 {
                     for (int i = 0; i < waves[currentWave].enemiesPerSpawn; i++)

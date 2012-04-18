@@ -281,6 +281,10 @@ namespace ClearSkies
         protected void SetupLights()
         {
             device.RenderState.Lighting = true;
+
+            D3D.Material material = device.Material;
+            material.Emissive = Color.White;
+            device.Material = material;
             
             device.Lights[0].Type = D3D.LightType.Directional;
             device.Lights[0].Diffuse = System.Drawing.Color.White;
@@ -293,7 +297,7 @@ namespace ClearSkies
             device.Lights[1].Enabled = true;
             
             // this doesn't show any noticeable changes:
-            //device.RenderState.Ambient = Color.Gray;
+            device.RenderState.Ambient = Color.Gray;
         }
 
         /// <summary>
