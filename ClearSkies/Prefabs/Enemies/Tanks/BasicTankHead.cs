@@ -10,16 +10,17 @@ namespace ClearSkies.Prefabs.Enemies.Tanks
     class BasicTankHead : TankHead
     {
 
-        public BasicTankHead(Vector3 location, Vector3 rotation, Vector3 scale) : 
+        public BasicTankHead(Tank tank, Vector3 location, Vector3 rotation, Vector3 scale) : 
             base(location + Settings.BASIC_TANK_HEAD_OFFSET, rotation, scale, Settings.BASIC_TANK_HEAD_ROTATION_SPEED, Settings.BASIC_TANK_BARREL_ROTATION_SPEED)
         {
-            this.models.Add(ContentLoader.BasicTurretHeadModel);
+            this.models.Add(ContentLoader.BasicTankHeadModel);
 
             addChild(new TankBarrel(
+                tank,
                 new Vector3(this.location.X, this.location.Y, this.location.Z) + Settings.BASIC_TANK_BARREL_OFFSET,
                 new Vector3(this.rotation.X, this.rotation.Y, this.rotation.Z) + Settings.BASIC_TANK_BARREL_DEFAULT_ROTATION,
                 scale,
-                ContentLoader.BasicTurretBarrelModel,
+                ContentLoader.BasicTankBarrelModel,
                 Settings.BASIC_TANK_BARREL_MAX_PITCH,
                 Settings.BASIC_TANK_BARREL_MIN_PITCH,
                 Settings.BASIC_TANK_BARREL_SHOOT_DISTANCE,

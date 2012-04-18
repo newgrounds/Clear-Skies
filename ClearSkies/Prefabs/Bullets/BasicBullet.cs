@@ -1,5 +1,6 @@
 ﻿using ClearSkies.Content;
 using ClearSkies.Scripts;
+using Microsoft.DirectX;
 
 namespace ClearSkies.Prefabs.Bullets
 {
@@ -15,11 +16,12 @@ namespace ClearSkies.Prefabs.Bullets
         /// Bullet will travel forward and use standard collisions.
         /// </summary>
         /// <param name="owner">The Prefab that spawned the bullet</param>
-        public BasicBullet(Prefab owner) : base(owner, ContentLoader.BasicBulletModel, 
+        public BasicBullet(Prefab owner, Vector3 location, Vector3 rotation, Vector3 scale) : 
+            base(owner, ContentLoader.BasicBulletModel, location, rotation, scale, 
             Settings.BASIC_BULLET_DAMAGE, Settings.BASIC_BULLET_LIFESPAN, Settings.BASIC_BULLET_SPEED)
         {
             this.scripts.Add(new BulletStraightMovementScript(this));
-            this.scripts.Add(new BulletPlainCollisionScript(this));
+            this.scripts.Add(new BulletCollisionScript(this));
         }
 
         #endregion

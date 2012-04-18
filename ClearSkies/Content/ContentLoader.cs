@@ -50,13 +50,12 @@ namespace ClearSkies.Content
         private static Texture radar;
         private static Texture guiBack;
 
-        private static Texture terrain;
-
-        private static Texture skyTop;
-        private static Texture skyLeft;
-        private static Texture skyRight;
-        private static Texture skyFront;
-        private static Texture skyBack;
+        private static Texture worldBoxTop;
+        private static Texture worldBoxBottom;
+        private static Texture worldBoxLeft;
+        private static Texture worldBoxRight;
+        private static Texture worldBoxFront;
+        private static Texture worldBoxBack;
 
         #endregion
 
@@ -85,23 +84,11 @@ namespace ClearSkies.Content
             defaultMaterial.Specular = Color.White;
             defaultMaterial.SpecularSharpness = 15.0f;
 
-            basicBulletModel = new Model(Mesh.Sphere(device, 1f, 3, 3), 
+            basicBulletModel = new Model(Mesh.Sphere(device, Settings.BASIC_BULLET_SIZE, 3, 3), 
                 new Material[] { defaultMaterial }, 
                 new Texture[] { defaultTexture }, 
                 Vector3.Empty,
                 device, 
-                true);
-
-            Material tracerMaterial = new Material();
-            tracerMaterial.Diffuse = Color.Yellow;
-            tracerMaterial.Specular = Color.Yellow;
-            tracerMaterial.SpecularSharpness = 15.0f;
-
-            bombBulletModel = new Model(Mesh.Sphere(device, 1.5f, 2, 2),
-                new Material[] { tracerMaterial },
-                new Texture[] { defaultTexture },
-                Vector3.Empty,
-                device,
                 true);
 
             testTurretBarrelModel = new Model(Mesh.Box(device, 0.1f, 1f, 0.1f), 
@@ -131,7 +118,9 @@ namespace ClearSkies.Content
 
             basicTankBodyModel = new Model(Settings.BASIC_TANK_BODY_MODEL_PATH, Vector3.Empty, device);
             basicTankHeadModel = new Model(Settings.BASIC_TANK_HEAD_MODEL_PATH, Vector3.Empty, device);
-            basicTankBarrelModel = new Model(Settings.BASIC_TANK_BARREL_MODEL_PATH, Vector3.Empty, device);
+            basicTankBarrelModel = new Model(Settings.BASIC_TANK_BARREL_MODEL_PATH, new Vector3(0, (float)(Math.PI / 2), 0), device);
+
+            bombBulletModel = new Model(Settings.BOMB_BULLET_MODEL_PATH, Vector3.Empty, device);
 
             radarEnemy = TextureLoader.FromFile(device, @"Content\Textures\enemy.png",
                 0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
@@ -144,13 +133,12 @@ namespace ClearSkies.Content
                 0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
                 Color.White.ToArgb());
 
-            terrain = TextureLoader.FromFile(device, @"Content\Textures\ground.jpg");
-
-            skyTop = TextureLoader.FromFile(device, @"Content\Textures\Sky1\stop37.jpg");
-            skyLeft = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sleft37.jpg");
-            skyRight = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sright37.jpg");
-            skyFront = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sfront37.jpg");
-            skyBack = TextureLoader.FromFile(device, @"Content\Textures\Sky1\sback37.jpg");
+            worldBoxTop = TextureLoader.FromFile(device, Settings.WORLD_BOX_TOP_TEXTURE_PATH);
+            worldBoxBottom = TextureLoader.FromFile(device, Settings.WORLD_BOX_BOTTOM_TEXTURE_PATH);
+            worldBoxLeft = TextureLoader.FromFile(device, Settings.WORLD_BOX_LEFT_TEXTURE_PATH);
+            worldBoxRight = TextureLoader.FromFile(device, Settings.WORLD_BOX_RIGHT_TEXTURE_PATH);
+            worldBoxFront = TextureLoader.FromFile(device, Settings.WORLD_BOX_FRONT_TEXTURE_PATH);
+            worldBoxBack = TextureLoader.FromFile(device, Settings.WORLD_BOX_BACK_TEXTURE_PATH);
 
             initialized = true;
         }
@@ -338,6 +326,8 @@ namespace ClearSkies.Content
                 return radarEnemy;
             }
         }
+
+        public static Texture WorldBoxTop
         public static Texture Radar
         {
             get
@@ -359,48 +349,47 @@ namespace ClearSkies.Content
             get
             {
                 checkIfInitialized();
-                return terrain;
+                return worldBoxTop;
             }
         }
-
-        public static Texture SkyTop
+        public static Texture WorldBoxBottom
         {
             get
             {
                 checkIfInitialized();
-                return skyTop;
+                return worldBoxBottom;
             }
         }
-        public static Texture SkyLeft
+        public static Texture WorldBoxLeft
         {
             get
             {
                 checkIfInitialized();
-                return skyLeft;
+                return worldBoxLeft;
             }
         }
-        public static Texture SkyRight
+        public static Texture WorldBoxRight
         {
             get
             {
                 checkIfInitialized();
-                return skyRight;
+                return worldBoxRight;
             }
         }
-        public static Texture SkyFront
+        public static Texture WorldBoxFront
         {
             get
             {
                 checkIfInitialized();
-                return skyFront;
+                return worldBoxFront;
             }
         }
-        public static Texture SkyBack
+        public static Texture WorldBoxBack
         {
             get
             {
                 checkIfInitialized();
-                return skyBack;
+                return worldBoxBack;
             }
         }
 

@@ -49,7 +49,7 @@ namespace ClearSkies.Content
             {
                 this.materials[i] = exMaterials[i].Material3D;
                 this.materials[i].Ambient = materials[i].Diffuse;
-
+                
                 if (!String.IsNullOrEmpty(exMaterials[i].TextureFilename))
                 {
                     string texturePath = Path.Combine(Path.GetDirectoryName(path), exMaterials[i].TextureFilename);

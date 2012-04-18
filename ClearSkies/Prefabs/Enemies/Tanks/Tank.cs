@@ -29,13 +29,12 @@ namespace ClearSkies.Prefabs.Enemies.Tanks
         /// <param name="colliderSize">
         /// Size of the Tanks collision sphere
         /// </param>
-        public Tank(Model tankModel, Vector3 location, Vector3 rotation, Vector3 scale, TankHead head, float driveSpeed, float turnSpeed, float colliderSize)
+        public Tank(Model tankModel, Vector3 location, Vector3 rotation, Vector3 scale, float driveSpeed, float turnSpeed, float colliderSize)
             : base(location, rotation, scale, colliderSize)
         {
             this.driveSpeed = driveSpeed;
             this.turnSpeed = turnSpeed;
 
-            this.children.Add(head);
             this.models.Add(tankModel);
         }
 

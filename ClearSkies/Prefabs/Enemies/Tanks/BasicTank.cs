@@ -23,11 +23,10 @@ namespace ClearSkies.Prefabs.Enemies.Tanks
         /// <param name="driveSpeed">Speed the Tank drives at</param>
         /// <param name="turnSpeed">Speed the Tank turns at</param>
         public BasicTank(Vector3 location, Vector3 rotation, Vector3 scale, float driveSpeed, float turnSpeed)
-            : base(ContentLoader.BasicTankBodyModel, location, rotation, scale, 
-            new BasicTankHead(location, rotation, scale), driveSpeed, turnSpeed, Settings.TANK_COLLIDER_SIZE)
+            : base(ContentLoader.BasicTankBodyModel, location, rotation, scale, driveSpeed, turnSpeed, Settings.TANK_COLLIDER_SIZE)
         {
+            this.children.Add(new BasicTankHead(this, location, rotation, scale));
             this.scripts.Add(new TankMovementScript(this, TurretManager.ManagedTurrets[0]));
-            //TODO: Add Shoot Script
         }
 
         #endregion

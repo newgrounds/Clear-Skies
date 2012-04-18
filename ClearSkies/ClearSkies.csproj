@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\Model.cs" />
+    <Compile Include="Content\WorldBox.cs" />
     <Compile Include="Exceptions\KeyboardNotFoundException.cs" />
     <Compile Include="Exceptions\MouseNotFoundException.cs" />
     <Compile Include="Exceptions\UninitializedException.cs" />
@@ -114,7 +115,7 @@
     <Compile Include="Scripts\BombCollisionScript.cs" />
     <Compile Include="Scripts\BombMovementScript.cs" />
     <Compile Include="Scripts\BulletLocationMovementScript.cs" />
-    <Compile Include="Scripts\BulletPlainCollisionScript.cs" />
+    <Compile Include="Scripts\BulletCollisionScript.cs" />
     <Compile Include="Scripts\BulletStraightMovementScript.cs" />
     <Compile Include="Scripts\BulletTurretCollisionScript.cs" />
     <Compile Include="Scripts\DropBombScript.cs" />
@@ -139,15 +140,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
-    <None Include="bin\Debug\Content\Models\Planes\BasicPlane\basicPlane.x" />
+    <None Include="bin\Debug\Content\Models\Bullets\Bomb\bomb.x" />
+    <None Include="bin\Debug\Content\Models\Planes\BasicPlane\basic_plane.x" />
     <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_barrel.x" />
     <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_body.x" />
     <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_head.x" />
     <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_barrel.x" />
     <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_base.x" />
     <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_head.x" />
-    <None Include="bin\Debug\ClearSkies.exe.config" />
-    <None Include="Content\Models\Planes\BasicPlane\basicPlane.x" />
+    <None Include="Content\Models\Bullets\Bomb\bomb.x" />
+    <None Include="Content\Models\Planes\BasicPlane\basic_plane.x" />
     <None Include="Content\Models\Tanks\BasicTank\basic_tank_barrel.x" />
     <None Include="Content\Models\Tanks\BasicTank\basic_tank_body.x" />
     <None Include="Content\Models\Tanks\BasicTank\basic_tank_head.x" />
@@ -165,8 +167,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Debug\Content\Models\Bullets\" />
-    <Folder Include="Content\Models\Bullets\" />
+    <Folder Include="bin\Debug\Content\Textures\GUI\" />
+    <Folder Include="Content\Textures\GUI\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ParticleEngine\ParticleEngine.csproj">
@@ -175,31 +177,37 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\Content\Textures\ground.jpg" />
+    <Content Include="bin\Debug\Content\Models\Bullets\Bomb\bomb.uv.jpg" />
+    <Content Include="bin\Debug\Content\Models\Planes\BasicPlane\basic_plane.uv.jpg" />
+    <Content Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank.uv.jpg" />
+    <Content Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret.uv.jpg" />
+    <Content Include="bin\Debug\Content\Textures\WorldBox\bottom.jpg" />
     <Content Include="bin\Debug\Content\Textures\health.png" />
     <Content Include="bin\Debug\Content\Textures\healthBar.png" />
     <Content Include="bin\Debug\Content\Textures\Particles\cloud_particle.png" />
     <Content Include="bin\Debug\Content\Textures\Particles\explosion.png" />
     <Content Include="bin\Debug\Content\Textures\Particles\test_particle.png" />
-    <Content Include="bin\Debug\Content\Textures\Sky1\sback37.jpg" />
-    <Content Include="bin\Debug\Content\Textures\Sky1\sfront37.jpg" />
-    <Content Include="bin\Debug\Content\Textures\Sky1\sleft37.jpg" />
-    <Content Include="bin\Debug\Content\Textures\Sky1\sright37.jpg" />
-    <Content Include="bin\Debug\Content\Textures\Sky1\stop37.jpg" />
-    <Content Include="bin\Debug\ClearSkies.exe" />
-    <Content Include="bin\Debug\ClearSkies.pdb" />
+    <Content Include="bin\Debug\Content\Textures\WorldBox\back.jpg" />
+    <Content Include="bin\Debug\Content\Textures\WorldBox\front.jpg" />
+    <Content Include="bin\Debug\Content\Textures\WorldBox\left.jpg" />
+    <Content Include="bin\Debug\Content\Textures\WorldBox\right.jpg" />
+    <Content Include="bin\Debug\Content\Textures\WorldBox\top.jpg" />
+    <Content Include="Content\Models\Bullets\Bomb\bomb.uv.jpg" />
+    <Content Include="Content\Models\Planes\BasicPlane\basic_plane.uv.jpg" />
+    <Content Include="Content\Models\Tanks\BasicTank\basic_tank.uv.jpg" />
+    <Content Include="Content\Models\Turrets\BasicTurret\basic_turret.uv.jpg" />
     <Content Include="Content\Textures\enemy.png" />
-    <Content Include="Content\Textures\ground.jpg" />
+    <Content Include="Content\Textures\WorldBox\bottom.jpg" />
     <Content Include="Content\Textures\health.png" />
     <Content Include="Content\Textures\healthBar.png" />
     <Content Include="Content\Textures\Particles\cloud_particle.png" />
     <Content Include="Content\Textures\Particles\explosion.png" />
     <Content Include="Content\Textures\Particles\test_particle.png" />
-    <Content Include="Content\Textures\Sky1\sback37.jpg" />
-    <Content Include="Content\Textures\Sky1\sfront37.jpg" />
-    <Content Include="Content\Textures\Sky1\sleft37.jpg" />
-    <Content Include="Content\Textures\Sky1\sright37.jpg" />
-    <Content Include="Content\Textures\Sky1\stop37.jpg" />
+    <Content Include="Content\Textures\WorldBox\back.jpg" />
+    <Content Include="Content\Textures\WorldBox\front.jpg" />
+    <Content Include="Content\Textures\WorldBox\left.jpg" />
+    <Content Include="Content\Textures\WorldBox\right.jpg" />
+    <Content Include="Content\Textures\WorldBox\top.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

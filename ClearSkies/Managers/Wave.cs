@@ -23,6 +23,7 @@
         public float spawnDelay;
         public int enemiesPerSpawn;
 
-        public float spawnDistance;
+        public float minimumSpawnDistance;
+        public float maximumSpawnDistance;
     }
 }

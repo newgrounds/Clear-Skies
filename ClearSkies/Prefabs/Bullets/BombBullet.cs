@@ -2,6 +2,7 @@
 using ClearSkies.Managers;
 using ClearSkies.Scripts;
 using ParticleEngine;
+using Microsoft.DirectX;
 
 namespace ClearSkies.Prefabs.Bullets
 {
@@ -17,8 +18,9 @@ namespace ClearSkies.Prefabs.Bullets
         /// rotation.
         /// </summary>
         /// <param name="owner">The Prefab that owns this Bomb</param>
-        public BombBullet(Prefab owner) : base(owner, ContentLoader.BombBulletModel, Settings.BOMB_BULLET_DAMAGE, 
-            Settings.BOMB_BULLET_LIFESPAN, Settings.BOMB_BULLET_SPEED)
+        public BombBullet(Prefab owner, Vector3 location, Vector3 rotation, Vector3 scale) :
+            base(owner, ContentLoader.BombBulletModel, location, rotation, scale, 
+            Settings.BOMB_BULLET_DAMAGE, Settings.BOMB_BULLET_LIFESPAN, Settings.BOMB_BULLET_SPEED)
         {
             this.scripts.Add(new BombMovementScript(this, this.speed));
             this.scripts.Add(new BombCollisionScript(this));
