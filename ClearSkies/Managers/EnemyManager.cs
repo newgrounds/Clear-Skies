@@ -235,9 +235,9 @@ namespace ClearSkies.Managers
                             timeSinceLastSpawn = 0f;
                         }
                     }
-
-                    waves[currentWave] = changedWave;
                 }
+
+                waves[currentWave] = changedWave;
 
                 if (waves[currentWave].planesDestroyed == waves[currentWave].planesToSpawn &&
                         waves[currentWave].tanksDestroyed == waves[currentWave].tanksToSpawn &&

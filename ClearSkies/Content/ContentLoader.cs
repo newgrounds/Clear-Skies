@@ -74,7 +74,7 @@ namespace ClearSkies.Content
                 Color.White.ToArgb());
             cloudParticleTexture = TextureLoader.FromFile(device, Settings.CLOUD_PARTICLE_TEXTURE_PATH,
                 0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
-                Color.White.ToArgb());
+                Color.FromArgb(255,0,0,0).ToArgb());
 
             // load health bar texture with alpha removed
             healthBarTexture = TextureLoader.FromFile(device, @"Content\Textures\healthBar.png",

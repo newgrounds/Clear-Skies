@@ -173,7 +173,7 @@ namespace ClearSkies
             get { return new Vector3(0f, 1f, 0f); }
         }
         public const float CAMERA_FIELD_OF_VIEW = (float)(Math.PI / 2f);
-        public const float CAMERA_ASPECT_RATIO = 1.25f;
+        public const float CAMERA_ASPECT_RATIO = 1.78f;
         public const float CAMERA_NEAR_PLANE = 1f;
         public const float CAMERA_FAR_PLANE = 400f;
 

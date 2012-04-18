@@ -22,13 +22,6 @@ namespace ClearSkies
 
         private const String WAVE_STRING = "Wave: ";
 
-        Size healthSize;
-        Point newPoint;
-
-        private float newScale;
-
-        private int offset = 15;
-
         private float health = 100;
         private Texture healthBarTexture = ContentLoader.HealthBarTexture;
         private Texture healthTexture = ContentLoader.HealthTexture;
@@ -38,9 +31,9 @@ namespace ClearSkies
         public Size healthBarSize;
 
         private List<Enemy> enemies;
+        //private Texture radarTexture;
         private Texture radarEnemyTexture = ContentLoader.RadarEnemy;
         private Point radarPoint;
-        private Size radarSize;
         private float radarScaleX = 0.1f;
         private float radarScaleY = 0.2f;
 
@@ -49,7 +42,6 @@ namespace ClearSkies
         private Device device;
 
         private Turret player;
-        private Point playerP;
 
         private System.Drawing.Font sysFont = 
             new System.Drawing.Font("Arial", 12f, FontStyle.Regular);
@@ -95,30 +87,27 @@ namespace ClearSkies
         {
             this.health = player.Health;
             this.enemies = EnemyManager.ManagedEnemies;
-            this.radarPoint = new Point(0, (int)(this.height - (this.height * radarScaleY)));
-            this.radarSize = new Size((int)(this.width * this.radarScaleX),
-                (int)(this.height - (this.height * this.radarScaleY)));
+            this.radarPoint = new Point((int)(this.width * radarScaleX), 
+                this.height - (int)(this.height * radarScaleY));
 
+            drawRadar();
+
+            // MAKE THIS BETTER, BASED CURRENTLY ON A 1920X1080 SCREEN SIZE
             int waveTextX = (int)(this.width*0.0104);
 
-            drawText(new Rectangle(waveTextX, 10, (int)(this.width * 0.06f), 20),
+            drawText(new Rectangle(waveTextX, 10, (int)(this.width * 0.1f), 20),
                 WAVE_STRING + EnemyManager.CurrentWave.waveNumber.ToString());
-            drawText(new Rectangle(waveTextX, 34, (int)(this.width * 0.06f), 20),
+            drawText(new Rectangle(waveTextX, 34, (int)(this.width * 0.1f), 20),
                 "Tanks: " + EnemyManager.CurrentWave.tanksDestroyed
-                + "/" + EnemyManager.CurrentWave.tanksSpawned);
-            drawText(new Rectangle(waveTextX, 58, (int)(this.width * 0.06f), 20),
+                + "/" + EnemyManager.CurrentWave.tanksToSpawn);
+            drawText(new Rectangle(waveTextX, 58, (int)(this.width * 0.1f), 20),
                 "Planes: " + EnemyManager.CurrentWave.planesDestroyed
-                + "/" + EnemyManager.CurrentWave.planesSpawned);
+                + "/" + EnemyManager.CurrentWave.planesToSpawn);
 
-            this.newScale = player.Health * 0.01f;
-            this.healthSize = new Size((int)((this.width * 0.288f) * newScale),
-                (int)(this.height * 0.060));
-            this.healthBarSize = new Size((int)(this.width * 0.530f),
-                (int)(this.height * 0.24));
-            this.newPoint = new Point((int)(this.width * 0.0344) + healthTexturePoint.X,
-                (int)(this.height * 0.0736) + healthTexturePoint.Y);
+            float newScale = player.Health * 0.01f;
+            drawHealth(healthBarTexture, healthTexturePoint, newScale);
 
-            drawEverything();
+            //drawEverything();
         }
 
         /// <summary>
@@ -128,46 +117,72 @@ namespace ClearSkies
         /// <param name="text">The text to write.</param>
         public void drawText(Rectangle textRect, string text)
         {
-            font.DrawText(null, text, textRect, DrawTextFormat.WordBreak | DrawTextFormat.Center, Color.Black);
+            font.DrawText(null, text, textRect, DrawTextFormat.WordBreak, Color.LightGreen);
         }
 
         /// <summary>
-        /// Draws GUI elements.
+        /// Draws the given texture to the given point on the screen.
         /// </summary>
-        public void drawEverything()
+        /// <param name="texture">The texture to draw.</param>
+        /// <param name="point">Where to display the texture on the screen.</param>
+        /// <param name="scale">The amount to scale the x value of the Sprite.</param>
+        public void drawHealth(Texture texture, Point point, float scale)
         {
-            Point playerP = new Point((int)player.Location.X + offset + radarSize.Width,
-                (int)player.Location.Z + offset + radarSize.Height);
+            Size healthSize = new Size((int)((this.width * 0.288f) * scale),
+                (int)(this.height * 0.060));
+            this.healthBarSize = new Size((int)(this.width * 0.530f),
+                (int)(this.height * 0.24));
+            
 
-            Sprite s = new Sprite(device);
-            s.Begin(SpriteFlags.AlphaBlend);
-
-            // Draw the Health
-            s.Draw2D(healthTexture, new Rectangle(healthTexturePoint, healthSize),
-                    healthSize, newPoint, Color.Red);
-            s.Draw2D(healthBarTexture, Rectangle.Empty,
-                healthBarSize, this.healthTexturePoint, Color.Black);
-
-            // Draw the radar background
-            s.Draw2D(ContentLoader.Radar, Rectangle.Empty, new Size(670, 614),
-                new Point(radarPoint.X,
-                    (int)(radarPoint.Y-(this.height * 2 * 0.0759f))), Color.White);
-
-            // draw the player
-            s.Draw2D(this.radarEnemyTexture, Rectangle.Empty,
-                this.enemySize, playerP, Color.LightSkyBlue);
-
-            // draw all the enemies
-            foreach (Enemy e in enemies)
+            using (Sprite s = new Sprite(device))
             {
-                Point point = new Point(
-                    (int)e.Location.X + radarSize.Width + offset,
-                    (int)e.Location.Z + radarSize.Height + offset);
-                    
-                s.Draw2D(this.radarEnemyTexture, Rectangle.Empty,
-                    this.enemySize, point, Color.Red);
+                Point newPoint = new Point((int)(this.width * 0.0344) + point.X,
+                        (int)(this.height * 0.0736) + point.Y);
+                Size healthBack = new Size((int)(this.width-(this.width-newPoint.X+30)),
+                (int)(this.height * 0.120));
+
+                s.Begin(SpriteFlags.AlphaBlend);
+                s.Draw2D(ContentLoader.GUIBack, Rectangle.Empty,
+                    healthBack, new Point(newPoint.X-30, 0), Color.White);
+                s.Draw2D(healthTexture, new Rectangle(point, healthSize),
+                    healthSize, newPoint, Color.Red);
+                s.Draw2D(texture, Rectangle.Empty, healthBarSize, point, Color.Black);
+                s.End();
             }
-            s.End();
+        }
+
+        /// <summary>
+        /// Draws the radar.
+        /// </summary>
+        public void drawRadar()
+        {
+            using (Sprite s = new Sprite(device))
+            {
+                s.Begin(SpriteFlags.AlphaBlend);
+
+                Point playerP = new Point((int)player.Location.X + radarPoint.X,
+                    (int)player.Location.Z + radarPoint.Y);
+
+                s.Draw2D(ContentLoader.Radar, Rectangle.Empty, new Size((int)(playerP.X * 2), (int)((this.height-playerP.Y) * 2)),
+                    new Point(0, (int)(this.height - (this.height - playerP.Y) * 2)), Color.White);
+
+                s.Draw2D(this.radarEnemyTexture, Rectangle.Empty,
+                    this.enemySize, playerP, Color.LightSkyBlue);
+
+                s.Draw2D(ContentLoader.GUIBack, Rectangle.Empty, new Size((int)(this.width * 0.15f), 120),
+                    new Point(0, 0), Color.White);
+
+                foreach (Enemy e in enemies)
+                {
+                    Point point = new Point(
+                        (int)(radarPoint.X + e.Location.X * Math.Cos(player.Head.Rotation.X) - e.Location.Z * Math.Sin(player.Head.Rotation.X)),
+                        (int)(radarPoint.Y - e.Location.X * Math.Sin(player.Head.Rotation.X) - e.Location.Z * Math.Cos(player.Head.Rotation.X)));
+
+                    s.Draw2D(this.radarEnemyTexture, Rectangle.Empty,
+                        this.enemySize, point, Color.Red);
+                }
+                s.End();
+            }
         }
 
         #endregion
