@@ -1,1 +1,8 @@
 *.doc
+*.wmv
+*.DS_Store
+*.pptx
+Maya
+ParticleEngine\bin
+ParticleEngine\obj
+ClearSkies\obj
