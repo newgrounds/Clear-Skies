@@ -29,7 +29,7 @@ namespace ClearSkies
         }
         public const float BASIC_TURRET_HEAD_ROTATION_SPEED = 1f;
         public const float BASIC_TURRET_BARREL_ROTATION_SPEED = 1;
-        public const float BASIC_TURRET_COLLIDER_SIZE = 1f;
+        public const float BASIC_TURRET_COLLIDER_SIZE = 5f;
         public const float BASIC_TURRET_BARREL_MAX_PITCH = (float)(Math.PI / 2.0f);
         public const float BASIC_TURRET_BARREL_MIN_PITCH = 0f;
 
@@ -59,7 +59,7 @@ namespace ClearSkies
         {
             get { return new Vector3(1.0f, 1.0f, 1.0f); }
         }
-        public const float TANK_COLLIDER_SIZE = 1.0f;
+        public const float TANK_COLLIDER_SIZE = 3.0f;
         public const float TANK_COLLIDE_DAMAGE = 4f;
         public const float BASIC_TANK_BARREL_MAX_PITCH = (float)(Math.PI / 2.0f);
         public const float BASIC_TANK_BARREL_MIN_PITCH = 0f;
@@ -86,7 +86,7 @@ namespace ClearSkies
         {
             get { return new Vector3(1.0f, 1.0f, 1.0f); }
         }
-        public const float PLANE_COLLIDER_SIZE = 1.0f;
+        public const float PLANE_COLLIDER_SIZE = 3.0f;
         public const float PLANE_RELOAD_TIME = 5f;
 
         public const int EXPLOSION_PARTICLES = 80;
