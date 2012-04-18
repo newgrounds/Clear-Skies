@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1A1B9BCF-2B82-4372-AE93-030D9DA60E47}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ClearSkies</RootNamespace>
     <AssemblyName>ClearSkies</AssemblyName>
@@ -34,7 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ClearSkies.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
@@ -139,14 +140,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
-    <None Include="bin\Debug\Content\Models\Planes\BasicPlane\basicPlane.x" />
+    <None Include="bin\Debug\Content\Models\Bullets\Bomb\bomb.x" />
+    <None Include="bin\Debug\Content\Models\Planes\BasicPlane\basic_plane.x" />
     <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_barrel.x" />
     <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_body.x" />
     <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_head.x" />
     <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_barrel.x" />
     <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_base.x" />
     <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_head.x" />
-    <None Include="Content\Models\Planes\BasicPlane\basicPlane.x" />
+    <None Include="Content\Models\Bullets\Bomb\bomb.x" />
+    <None Include="Content\Models\Planes\BasicPlane\basic_plane.x" />
     <None Include="Content\Models\Tanks\BasicTank\basic_tank_barrel.x" />
     <None Include="Content\Models\Tanks\BasicTank\basic_tank_body.x" />
     <None Include="Content\Models\Tanks\BasicTank\basic_tank_head.x" />
@@ -164,9 +167,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Debug\Content\Models\Bullets\" />
     <Folder Include="bin\Debug\Content\Textures\GUI\" />
-    <Folder Include="Content\Models\Bullets\" />
     <Folder Include="Content\Textures\GUI\" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +177,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\Content\Models\Bullets\Bomb\bomb.uv.jpg" />
+    <Content Include="bin\Debug\Content\Models\Planes\BasicPlane\basic_plane.uv.jpg" />
     <Content Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank.uv.jpg" />
     <Content Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret.uv.jpg" />
     <Content Include="bin\Debug\Content\Textures\WorldBox\bottom.jpg" />
@@ -189,7 +192,9 @@
     <Content Include="bin\Debug\Content\Textures\WorldBox\left.jpg" />
     <Content Include="bin\Debug\Content\Textures\WorldBox\right.jpg" />
     <Content Include="bin\Debug\Content\Textures\WorldBox\top.jpg" />
-    <Content Include="Content\Models\Tanks\BasicTank\tank.uv.jpg" />
+    <Content Include="Content\Models\Bullets\Bomb\bomb.uv.jpg" />
+    <Content Include="Content\Models\Planes\BasicPlane\basic_plane.uv.jpg" />
+    <Content Include="Content\Models\Tanks\BasicTank\basic_tank.uv.jpg" />
     <Content Include="Content\Models\Turrets\BasicTurret\basic_turret.uv.jpg" />
     <Content Include="Content\Textures\enemy.png" />
     <Content Include="Content\Textures\WorldBox\bottom.jpg" />

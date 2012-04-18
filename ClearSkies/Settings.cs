@@ -16,10 +16,11 @@ namespace ClearSkies
         public const string BASIC_TURRET_BARREL_MODEL_PATH = @"Content\Models\Turrets\BasicTurret\basic_turret_barrel.x";
         public const string BASIC_TURRET_BASE_MODEL_PATH = @"Content\Models\Turrets\BasicTurret\basic_turret_base.x";
         public const string BASIC_TURRET_HEAD_MODEL_PATH = @"Content\Models\Turrets\BasicTurret\basic_turret_head.x";
-        public const string BASIC_PLANE_MODEL_PATH = @"Content\Models\Planes\BasicPlane\basicPlane.x";
+        public const string BASIC_PLANE_MODEL_PATH = @"Content\Models\Planes\BasicPlane\basic_plane.x";
         public const string BASIC_TANK_BODY_MODEL_PATH = @"Content\Models\Tanks\BasicTank\basic_tank_body.x";
         public const string BASIC_TANK_HEAD_MODEL_PATH = @"Content\Models\Tanks\BasicTank\basic_tank_head.x";
         public const string BASIC_TANK_BARREL_MODEL_PATH = @"Content\Models\Tanks\BasicTank\basic_tank_barrel.x";
+        public const string BOMB_BULLET_MODEL_PATH = @"Content\Models\Bullets\Bomb\bomb.x";
 
         public const string WORLD_BOX_TOP_TEXTURE_PATH = @"Content\Textures\WorldBox\top.jpg";
         public const string WORLD_BOX_LEFT_TEXTURE_PATH = @"Content\Textures\WorldBox\left.jpg";
@@ -95,6 +96,7 @@ namespace ClearSkies
         {
             get { return new Vector3(1.0f, 1.0f, 1.0f); }
         }
+
         public const float TANK_COLLIDER_SIZE = 5.0f;
         public const float TANK_COLLIDE_DAMAGE = 4f;
         public const float BASIC_TANK_BARREL_MAX_PITCH = (float)(Math.PI / 2.0f);
@@ -130,10 +132,12 @@ namespace ClearSkies
         {
             get { return new Vector3(1.0f, 1.0f, 1.0f); }
         }
+
         public const float BASIC_PLANE_COLLIDER_SIZE = 5.0f;
         public const float PLANE_RELOAD_TIME = 5f;
         public const float BOMB_DROP_DISTANCE_FROM_TARGET = BASIC_TURRET_COLLIDER_SIZE;
         public const float PLANE_FLY_OVER_OVERRUN_TIME = 5f;
+
         #endregion
 
         #region Particles

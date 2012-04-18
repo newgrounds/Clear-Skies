@@ -37,7 +37,7 @@ namespace ClearSkies
         private float radarScaleX = 0.1f;
         private float radarScaleY = 0.2f;
 
-        private Size enemySize = new Size(44, 44);
+        private Size enemySize = new Size(30, 30);
 
         private Device device;
 
@@ -93,8 +93,16 @@ namespace ClearSkies
             drawRadar();
 
             // MAKE THIS BETTER, BASED CURRENTLY ON A 1920X1080 SCREEN SIZE
-            drawText(new Rectangle(20, 10, 100, 20),
-                    WAVE_STRING + EnemyManager.CurrentWave.ToString());
+            int waveTextX = (int)(this.width*0.0104);
+
+            drawText(new Rectangle(waveTextX, 10, (int)(this.width * 0.06f), 20),
+                WAVE_STRING + EnemyManager.CurrentWave.waveNumber.ToString());
+            drawText(new Rectangle(waveTextX, 34, (int)(this.width * 0.06f), 20),
+                "Tanks: " + EnemyManager.CurrentWave.tanksDestroyed
+                + "/" + EnemyManager.CurrentWave.tanksSpawned);
+            drawText(new Rectangle(waveTextX, 58, (int)(this.width * 0.06f), 20),
+                "Planes: " + EnemyManager.CurrentWave.planesDestroyed
+                + "/" + EnemyManager.CurrentWave.planesSpawned);
 
             float newScale = player.Health * 0.01f;
             drawHealth(healthBarTexture, healthTexturePoint, newScale);
@@ -140,32 +148,31 @@ namespace ClearSkies
         /// </summary>
         public void drawRadar()
         {
+            Sprite s = new Sprite(device);
+            s.Begin(SpriteFlags.AlphaBlend);
+
+            s.Transform.RotateY(0);
+
             Point playerP = new Point((int)player.Location.X + radarPoint.X,
                 (int)player.Location.Z + radarPoint.Y);
 
-            using (Sprite f = new Sprite(device))
-            {
-                f.Begin(SpriteFlags.AlphaBlend);
-                f.Draw2D(this.radarEnemyTexture, Rectangle.Empty,
-                    this.enemySize, playerP, Color.LightSkyBlue);
-                f.End();
-            }
+            s.Draw2D(this.radarEnemyTexture, Rectangle.Empty,
+                this.enemySize, playerP, Color.LightSkyBlue);
+
+            s.Transform.RotateY(player.Head.Rotation.X);
 
             foreach (Enemy e in enemies)
             {
                 Point point = new Point(
                     (int)e.Location.X+radarPoint.X,
                     (int)e.Location.Z+radarPoint.Y);
-
-                using (Sprite s = new Sprite(device))
-                {
-                    s.Begin(SpriteFlags.AlphaBlend);
-                    s.Draw2D(this.radarEnemyTexture, Rectangle.Empty,
-                        this.enemySize, new Point(0,(int)(player.Location-e.Location).Length()),
-                        player.Head.Rotation.X, point, Color.Red);
-                    s.End();
-                }
+                    
+                s.Draw2D(this.radarEnemyTexture, Rectangle.Empty,
+                    this.enemySize, point, Color.Red);
+                    //new Point(15,15),//0, (int)(player.Location-e.Location).Length() * 2),
+                    //player.Head.Rotation.X, point, Color.Red);
             }
+            s.End();
         }
 
         #endregion

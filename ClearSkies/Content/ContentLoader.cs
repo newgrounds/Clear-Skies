@@ -89,18 +89,6 @@ namespace ClearSkies.Content
                 device, 
                 true);
 
-            Material bombMaterial = new Material();
-            bombMaterial.Diffuse = Color.Yellow;
-            bombMaterial.Specular = Color.Yellow;
-            bombMaterial.SpecularSharpness = 15.0f;
-
-            bombBulletModel = new Model(Mesh.Sphere(device, Settings.BOMB_BULLET_SIZE, 5, 5),
-                new Material[] { bombMaterial },
-                new Texture[] { defaultTexture },
-                Vector3.Empty,
-                device,
-                true);
-
             testTurretBarrelModel = new Model(Mesh.Box(device, 0.1f, 1f, 0.1f), 
                 new Material[] { defaultMaterial }, 
                 new Texture[] { defaultTexture }, 
@@ -129,6 +117,8 @@ namespace ClearSkies.Content
             basicTankBodyModel = new Model(Settings.BASIC_TANK_BODY_MODEL_PATH, Vector3.Empty, device);
             basicTankHeadModel = new Model(Settings.BASIC_TANK_HEAD_MODEL_PATH, Vector3.Empty, device);
             basicTankBarrelModel = new Model(Settings.BASIC_TANK_BARREL_MODEL_PATH, new Vector3(0, (float)(Math.PI / 2), 0), device);
+
+            bombBulletModel = new Model(Settings.BOMB_BULLET_MODEL_PATH, Vector3.Empty, device);
 
             radarEnemy = TextureLoader.FromFile(device, @"Content\Textures\enemy.png",
                 0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
