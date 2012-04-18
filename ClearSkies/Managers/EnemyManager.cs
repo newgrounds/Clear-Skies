@@ -117,7 +117,7 @@ namespace ClearSkies.Managers
             switch (enemyType)
             {
                 case EnemyType.BasicPlane:
-                    spawnedEnemy = new BasicPlane(location + Settings.DEFAULT_PLANE_HEIGHT, rotation, scale, speed, turnSpeed);
+                    spawnedEnemy = new BasicPlane(location + Settings.BASIC_PLANE_HEIGHT, rotation, scale, speed, turnSpeed);
                     break;
                 case EnemyType.BasicTank:
                     spawnedEnemy = new BasicTank(location, rotation, scale, speed, turnSpeed);
@@ -195,53 +195,58 @@ namespace ClearSkies.Managers
                         bool spawnTanks = changedWave.tanksSpawned < changedWave.tanksToSpawn;
                         bool spawnPlanes = changedWave.planesSpawned < changedWave.planesToSpawn;
 
+                        float distanceAway = changedWave.minimumSpawnDistance + random.Next((int)(changedWave.maximumSpawnDistance - changedWave.minimumSpawnDistance));
                         Vector3 spawnRotation = new Vector3((float)(2 * Math.PI * random.NextDouble()), 0f, 0f);
                         Vector3 spawnLocation = new Vector3(
-                            (float)Math.Cos(spawnRotation.X) * changedWave.spawnDistance, 
+                            (float)Math.Cos(spawnRotation.X) * distanceAway, 
                             0f, 
-                            (float)Math.Sin(spawnRotation.X) * changedWave.spawnDistance);
-
+                            (float)Math.Sin(spawnRotation.X) * distanceAway);
+                        
                         if (spawnTanks & spawnPlanes)
                         {
                             switch (random.Next(1))
                             {
                                 case 0:
-                                    spawnEnemy(EnemyType.BasicTank, spawnLocation, -spawnRotation, Settings.DEFAULT_TANK_SCALE, 
+                                    spawnEnemy(EnemyType.BasicTank, spawnLocation, -spawnRotation, Settings.BASIC_TANK_SCALE, 
                                         changedWave.tankSpeed, changedWave.tankTurnSpeed);
                                     changedWave.tanksSpawned++;
+                                    timeSinceLastSpawn = 0f;
                                     break;
                                 case 1:
-                                    spawnEnemy(EnemyType.BasicPlane, spawnLocation, spawnRotation, Settings.DEFAULT_PLANE_SCALE, 
+                                    spawnEnemy(EnemyType.BasicPlane, spawnLocation, spawnRotation, Settings.BASIC_PLANE_SCALE, 
                                         changedWave.planeSpeed, changedWave.planeTurnSpeed);
                                     changedWave.planesSpawned++;
+                                    timeSinceLastSpawn = 0f;
                                     break;
                             }
                         }
                         else if (spawnTanks)
                         {
-                            spawnEnemy(EnemyType.BasicTank, spawnLocation, spawnRotation, Settings.DEFAULT_TANK_SCALE, 
+                            spawnEnemy(EnemyType.BasicTank, spawnLocation, spawnRotation, Settings.BASIC_TANK_SCALE, 
                                 changedWave.tankSpeed, changedWave.tankTurnSpeed);
                             changedWave.tanksSpawned++;
+                            timeSinceLastSpawn = 0f;
                         }
                         else if (spawnPlanes)
                         {
-                            spawnEnemy(EnemyType.BasicPlane, spawnLocation, spawnRotation, Settings.DEFAULT_PLANE_SCALE, 
+                            spawnEnemy(EnemyType.BasicPlane, spawnLocation, spawnRotation, Settings.BASIC_PLANE_SCALE, 
                                 changedWave.planeSpeed, changedWave.planeTurnSpeed);
                             changedWave.planesSpawned++;
+                            timeSinceLastSpawn = 0f;
                         }
                     }
 
                     waves[currentWave] = changedWave;
+                }
 
-                    if (waves[currentWave].planesDestroyed == waves[currentWave].planesToSpawn &&
+                if (waves[currentWave].planesDestroyed == waves[currentWave].planesToSpawn &&
                         waves[currentWave].tanksDestroyed == waves[currentWave].tanksToSpawn &&
                         currentWave + 1 < waves.Count)
-                    {
-                        currentWave++;
-                    }
+                {
+                    currentWave++;
+                    timeSinceLastSpawn = 0f;
                 }
             }
-            
         }
 
         /// <summary>

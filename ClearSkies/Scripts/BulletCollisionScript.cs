@@ -6,6 +6,7 @@ using ClearSkies.Prefabs;
 using ClearSkies.Managers;
 using ClearSkies.Prefabs.Enemies;
 using ClearSkies.Prefabs.Bullets;
+using ClearSkies.Prefabs.Turrets;
 
 namespace ClearSkies.Scripts
 {
@@ -13,7 +14,7 @@ namespace ClearSkies.Scripts
     /// A simple collision script that detects if a Bullet collides with an
     /// Enemy.
     /// </summary>
-    class BulletPlainCollisionScript : Script
+    class BulletCollisionScript : Script
     {
         #region Fields
 
@@ -27,7 +28,7 @@ namespace ClearSkies.Scripts
         /// Creates the bullet movement Script to apply to the given Bullet.
         /// </summary>
         /// <param name="bullet">Bullet to apply the Script to</param>
-        public BulletPlainCollisionScript(Bullet bullet)
+        public BulletCollisionScript(Bullet bullet)
         {
             this.bullet = bullet;
         }
@@ -51,6 +52,17 @@ namespace ClearSkies.Scripts
                 {
                     bullet.detectCollision(enemy);
                     enemy.detectCollision(bullet);
+                }
+            }
+
+            foreach (Prefab prefab in TurretManager.ManagedTurrets)
+            {
+                Turret turret = (Turret)prefab;
+
+                if (bullet.Owner != null && bullet.Owner != turret && turret.ColliderSize > (turret.Location - bullet.Location).Length())
+                {
+                    bullet.detectCollision(turret);
+                    turret.detectCollision(bullet);
                 }
             }
         }

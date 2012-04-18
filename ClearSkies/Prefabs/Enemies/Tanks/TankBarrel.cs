@@ -43,7 +43,7 @@ namespace ClearSkies.Prefabs.Enemies.Tanks
         /// <param name="keyboard">
         /// Keyboard Device used to control the TurretBarrel
         /// </param>
-        public TankBarrel(Vector3 location, Vector3 rotation, Vector3 scale, Model barrelModel, float maxRotation,
+        public TankBarrel(Tank tank, Vector3 location, Vector3 rotation, Vector3 scale, Model barrelModel, float maxRotation,
             float minRotation, float shootDistance, float shootDelay, float pushSpeed, float pullSpeed)
             : base(location, rotation, scale)
         {
@@ -56,7 +56,7 @@ namespace ClearSkies.Prefabs.Enemies.Tanks
             this.pullSpeed = pullSpeed;
 
             this.models.Add(barrelModel);
-            this.scripts.Add(new TankShootScript(this));
+            this.scripts.Add(new TankShootScript(tank, this));
         }
 
         #endregion

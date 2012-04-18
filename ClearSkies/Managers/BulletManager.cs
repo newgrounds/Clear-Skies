@@ -4,6 +4,7 @@ using ClearSkies.Prefabs;
 using ClearSkies.Prefabs.Bullets;
 using ClearSkies.Properties;
 using Microsoft.DirectX.Direct3D;
+using Microsoft.DirectX;
 
 namespace ClearSkies.Managers
 {
@@ -53,7 +54,7 @@ namespace ClearSkies.Managers
         /// <param name="bulletType">Type of bullet to spawn</param>
         /// <param name="owner">The Prefab that owns the Bullet</param>
         /// <returns>A refernce to the spawned Bullet</returns>
-        public static Bullet spawn(BulletType bulletType, Prefab owner)
+        public static Bullet spawn(BulletType bulletType, Prefab owner, Vector3 location, Vector3 rotation, Vector3 scale)
         {
             checkIfInitialized();
             Bullet spawnedBullet = null;
@@ -61,10 +62,10 @@ namespace ClearSkies.Managers
             switch (bulletType)
             {
                 case BulletType.Basic:
-                    spawnedBullet= new BasicBullet(owner);
+                    spawnedBullet= new BasicBullet(owner, location, rotation, scale);
                     break;
                 case BulletType.Bomb:
-                    spawnedBullet = new BombBullet(owner);
+                    spawnedBullet = new BombBullet(owner, location, rotation, scale);
                     break;
             }
 

@@ -5,6 +5,7 @@ Material lambert1 {
 	 0.000000;
 	 0.000000; 0.000000; 0.000000;;
 	 0.000000; 0.000000; 0.000000;;
+	 TextureFileName {"basic_turret.uv.jpg";}
 }
 Frame turret_head {
 	FrameTransformMatrix {

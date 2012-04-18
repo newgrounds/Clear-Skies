@@ -5,6 +5,7 @@ Material lambert1 {
 	 0.000000;
 	 0.000000; 0.000000; 0.000000;;
 	 0.000000; 0.000000; 0.000000;;
+	 TextureFileName {"basic_tank.uv.jpg";}
 }
 Frame tank_head {
 	FrameTransformMatrix {

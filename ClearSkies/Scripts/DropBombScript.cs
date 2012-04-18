@@ -32,7 +32,7 @@ namespace ClearSkies.Scripts
 
             if (timeSinceLastBomb > reloadTime && closeToTarget)
             {
-                BulletManager.spawn(BulletType.Bomb, bomber);
+                BulletManager.spawn(BulletType.Bomb, bomber, bomber.Location, bomber.Rotation, bomber.Scale);
                 timeSinceLastBomb = 0f;
             }
         }

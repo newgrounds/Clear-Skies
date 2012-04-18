@@ -52,6 +52,11 @@ namespace ClearSkies.Prefabs
 
         #region Getters and Setters
 
+        public List<Prefab> Children
+        {
+            get { return children; }
+        }
+
         /// <summary>
         /// Gets or Sets the Prefabs current location.
         /// </summary>

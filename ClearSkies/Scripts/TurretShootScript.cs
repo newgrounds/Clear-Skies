@@ -65,7 +65,7 @@ namespace ClearSkies.Scripts
             {
                 shooting = true;
                 this.timeSinceLastShot = 0.0f;
-                BulletManager.spawn(BulletType.Basic, shooter);
+                BulletManager.spawn(BulletType.Basic, TurretManager.ManagedTurrets[0], shooter.Location, shooter.Rotation, shooter.Scale);
             }
             else
             {

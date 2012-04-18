@@ -32,6 +32,7 @@ namespace ClearSkies
         Font systemFont = new Font("Arial", 12f, FontStyle.Regular);
         D3DFont theFont;
 
+        WorldBox world;
         Turret player;
         float health;
 
@@ -58,23 +59,6 @@ namespace ClearSkies
             InitializeGame();
 
             theFont = new D3DFont(device, systemFont);
-
-            //Show();
-
-            //DateTime lastUpdate = DateTime.Now;
-
-            //while (gameState != GameState.Quit)
-            //{
-                //TimeSpan deltaTime = DateTime.Now.Subtract(lastUpdate);
-
-                //update(deltaTime.Milliseconds / 1000f);
-                //lastUpdate = DateTime.Now;
-
-                //draw();
-            //}
-
-            //DisposeGraphics();
-            //Application.Exit();
         }
 
         /// <summary>
@@ -98,6 +82,55 @@ namespace ClearSkies
         private void InitializeGame()
         {
             this.gameState = GameState.Start;
+
+            player = TurretManager.spawnTurret(TurretType.Basic, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
+            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 10f, -15f));
+            player.Head.addChild(camera);
+
+            List<Wave> waves = new List<Wave>();
+            for (int i = 1; i <= 10; i++)
+            {
+                Wave wave = new Wave();
+                wave.waveNumber = i;
+                wave.enemiesPerSpawn = i;
+                wave.planeSpeed = 5f + i * 2;
+                wave.planeTurnSpeed = (float)(Math.PI / 8);
+                wave.tankSpeed = 5f + i;
+                wave.tankTurnSpeed = (float)(Math.PI / 8);
+                wave.planesToSpawn = (int)(i / 2);
+                wave.tanksToSpawn = (int)(i / 2) + (i % 2);
+                wave.spawnDelay = 1f + i;
+                wave.minimumSpawnDistance = 150f;
+                wave.maximumSpawnDistance = 200f;
+                waves.Add(wave);
+            }
+
+            managers = new List<Manager>();
+            BulletManager bulletManager = new BulletManager();
+            managers.Add(bulletManager);
+            TurretManager turretManager = new TurretManager();
+            managers.Add(turretManager);
+            EnemyManager enemyManager = new EnemyManager(waves, 0);
+            managers.Add(enemyManager);
+            ParticleEmitterManager particleEmitterManager = new ParticleEmitterManager(camera);
+            managers.Add(particleEmitterManager);
+
+            world = new WorldBox(
+                ContentLoader.WorldBoxTop,
+                ContentLoader.WorldBoxBottom,
+                ContentLoader.WorldBoxLeft,
+                ContentLoader.WorldBoxRight,
+                ContentLoader.WorldBoxFront,
+                ContentLoader.WorldBoxBack);
+
+            // TODO: make the gui redraw based on the window size
+            gui = new GUI(player,
+                new Rectangle(this.Width - (int)(this.Width * 0.0625),
+                (int)(this.Height * 0.0052),
+                (int)(this.Width * 0.0521),
+                (int)(this.Height * 0.0104)),
+                new Point(this.Width - (int)(this.Width * 0.183), 0),
+                device, this.Width, this.Height);
         }
 
         /// <summary>
@@ -105,8 +138,6 @@ namespace ClearSkies
         /// </summary>
         private void InitializeGraphics()
         {
-            #region Presentation Parameters
-
             D3D.PresentParameters pres = new D3D.PresentParameters();
             pres.Windowed = true;
             pres.SwapEffect = D3D.SwapEffect.Discard;
@@ -116,55 +147,7 @@ namespace ClearSkies
             device = new D3D.Device(0, D3D.DeviceType.Hardware, this, D3D.CreateFlags.SoftwareVertexProcessing, pres);
             device.RenderState.CullMode = D3D.Cull.None;
 
-            #endregion
-
-            #region Game Objects
-
             ContentLoader.initialize(device);
-
-            player = TurretManager.spawnTurret(TurretType.Basic, Vector3.Empty, Vector3.Empty, new Vector3(1f, 1f, 1f), keyboard);
-            this.camera = new ThirdPersonCamera(player, new Vector3(0f, 10f, -15f));
-            player.Head.addChild(camera);
-
-            List<Wave> waves = new List<Wave>();
-            Wave firstWave = new Wave();
-            firstWave.waveNumber = 1;
-            firstWave.enemiesPerSpawn = 1;
-            firstWave.planeSpeed = 5f;
-            firstWave.planeTurnSpeed = (float)(Math.PI / 8);
-            firstWave.tankSpeed = 5f;
-            firstWave.tankTurnSpeed = (float)(Math.PI / 8);
-            firstWave.planesToSpawn = 3;
-            firstWave.tanksToSpawn = 3;
-            firstWave.spawnDelay = 0f;
-            firstWave.tanksSpawned = 0;
-            firstWave.planesSpawned = 0;
-            firstWave.tanksDestroyed = 0;
-            firstWave.planesDestroyed = 0;
-            firstWave.spawnDistance = 50f;
-            waves.Add(firstWave);
-
-            managers = new List<Manager>();
-            BulletManager bulletManager = new BulletManager();
-            managers.Add(bulletManager);
-            TurretManager turretManager = new TurretManager();
-            managers.Add(turretManager);
-            // the enemy manager also adds enemies
-            EnemyManager enemyManager = new EnemyManager(waves, 0);
-            managers.Add(enemyManager);
-            ParticleEmitterManager particleEmitterManager = new ParticleEmitterManager(camera);
-            managers.Add(particleEmitterManager);
-
-            // TODO: make the gui redraw based on the window size
-            gui = new GUI(player,
-                new Rectangle(this.Width - (int)(this.Width * 0.0625),
-                (int)(this.Height * 0.0052),
-                (int)(this.Width * 0.0521),
-                (int)(this.Height * 0.0104)),
-                new Point(this.Width - (int)(this.Width * 0.183), 0), 
-                device, this.Width, this.Height);
-
-            #endregion
         }
 
         /// <summary>
@@ -266,70 +249,7 @@ namespace ClearSkies
             SetupLights();
 
             device.Transform.World = Matrix.Translation(0, 0, 0);
-
-
-            // TERRAIN
-            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-128f, 0, -128f), new Vector3(0, 0, 1), 0, 32),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-128f, 0, 128f), new Vector3(0, 0, 1), 0, 0),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(128f, 0, -128f), new Vector3(0, 0, 1), 32, 32),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(128f, 0, 128f), new Vector3(0, 0, 1), 32, 0),
-                ContentLoader.Terrain);
-
-
-            // TOP OF SKYBOX
-            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 254.5f, -256f), new Vector3(0, 0, -1), 0, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 254.5f, 256f), new Vector3(0, 0, -1), 0, 0),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, 254.5f, -256f), new Vector3(0, 0, -1), 1, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, 254.5f, 256f), new Vector3(0, 0, -1), 1, 0),
-                ContentLoader.SkyTop);
-
-
-            // LEFT OF SKYBOX
-            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, -256f, -256f), new Vector3(0, 0, 1), 0, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, 256f, -256f), new Vector3(0, 0, 1), 0, 0),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, -256f, 256f), new Vector3(0, 0, 1), 1, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-254.5f, 256f, 256f), new Vector3(0, 0, 1), 1, 0),
-                ContentLoader.SkyLeft);
-
-
-            // RIGHT OF SKYBOX
-            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, -256f, -256f), new Vector3(0, 0, -1), 0, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, 256f, -256f), new Vector3(0, 0, -1), 0, 0),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, -256f, 256f), new Vector3(0, 0, -1), 1, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(254.5f, 256f, 256f), new Vector3(0, 0, -1), 1, 0),
-                ContentLoader.SkyRight);
-
-
-            // FRONT OF SKYBOX
-            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, -256f, 254.5f), new Vector3(0, 0, 1), 0, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 256f, 254.5f), new Vector3(0, 0, 1), 0, 0),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, -256f, 254.5f), new Vector3(0, 0, 1), 1, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, 256f, 254.5f), new Vector3(0, 0, 1), 1, 0),
-                ContentLoader.SkyFront);
-
-
-            // BACK OF SKYBOX
-            drawTerrain(new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, -256f, -254.5f), new Vector3(0, 0, -1), 0, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(-256f, 256f, -254.5f), new Vector3(0, 0, -1), 0, 0),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, -256f, -254.5f), new Vector3(0, 0, -1), 1, 1),
-                new D3D.CustomVertex.PositionNormalTextured(new Vector3(256f, 256f, -254.5f), new Vector3(0, 0, -1), 1, 0),
-                ContentLoader.SkyBack);
-            
-
-            /*
-            // BEGIN SHADER SNIPPET
-
-            // Load the effect from file.
-            D3D.Effect effect = D3D.Effect.FromFile(device, "../../scene_toonEdges.fx/HLSL/scene_toonEdges.fx", 
-                                            null, null, D3D.ShaderFlags.Debug, null);
-            // Set the technique.
-            effect.Technique = "Main";
-
-            // Note: Effect.Begin returns the number of
-            // passes required to render the effect.
-            int passes = effect.Begin(0);
-
-            // END SHADER SNIPPET*/
+            world.draw(device);
 
             switch (gameState)
             {
@@ -350,34 +270,6 @@ namespace ClearSkies
             camera.view(device);
 
             gui.draw();
-
-            /*
-            // BEGIN SHADER CODE
-
-            // Loop through all of the effect's passes.
-            for (int i = 0; i < passes; i++)
-            {
-                // Set a shader constant
-                //effect.SetValue("WorldMatrix", true);
-
-                // Set state for the current effect pass.
-                effect.BeginPass(i);
-
-                // Render some primitives.
-                //device.DrawPrimitives(D3D.PrimitiveType.TriangleList, 0, 1);
-                foreach (Manager m in managers)
-                {
-                    m.draw(device);
-                }
-
-                // End the effect pass
-                effect.EndPass();
-            }
-
-            // Must call Effect.End to signal the end of the technique.
-            effect.End();
-
-            // END SHADER CODE*/
 
             device.EndScene();
             device.Present();
@@ -413,39 +305,6 @@ namespace ClearSkies
         protected void drawText(D3DFont font, Rectangle textRect, string text)
         {
             font.DrawText(null, text, textRect, D3D.DrawTextFormat.WordBreak | D3D.DrawTextFormat.Center, Color.Black);
-        }
-
-        /// <summary>
-        /// Creates and draws the terrain and skybox based on input vertices.
-        /// </summary>
-        /// <param name="vert0">The first vertex to be drawn.</param>
-        /// <param name="vert1">The second vertex to be drawn.</param>
-        /// <param name="vert2">The third vertex to be drawn.</param>
-        /// <param name="vert3">The fourth vertex to be drawn.</param>
-        /// <param name="texture">The texture to draw.</param>
-        protected void drawTerrain(D3D.CustomVertex.PositionNormalTextured vert0,
-            D3D.CustomVertex.PositionNormalTextured vert1, 
-            D3D.CustomVertex.PositionNormalTextured vert2,
-            D3D.CustomVertex.PositionNormalTextured vert3, 
-            D3D.Texture texture)
-        {
-            device.SetTexture(0, texture);
-
-            D3D.VertexBuffer buffer = new D3D.VertexBuffer(typeof(D3D.CustomVertex.PositionNormalTextured),
-                4, device, 0, D3D.CustomVertex.PositionNormalTextured.Format, D3D.Pool.Default);
-
-            D3D.CustomVertex.PositionNormalTextured[] vertices = (D3D.CustomVertex.PositionNormalTextured[])buffer.Lock(0, 0);
-
-            vertices[0] = vert0;
-            vertices[1] = vert1;
-            vertices[2] = vert2;
-            vertices[3] = vert3;
-
-            buffer.Unlock();
-
-            device.VertexFormat = D3D.CustomVertex.PositionNormalTextured.Format;
-            device.SetStreamSource(0, buffer, 0);
-            device.DrawPrimitives(D3D.PrimitiveType.TriangleStrip, 0, 2);
         }
 
         #endregion
