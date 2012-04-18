@@ -13,30 +13,24 @@ namespace ClearSkies.Scripts
     /// A script that will allow a Turret Prefab to be shifted based on the 
     /// current key state.
     /// </summary>
-    class TurretRotationScript : Script
+    class TurretHeadRotationScript : Script
     {
         #region Fields
 
-        private float rotationSpeed;
-        private TurretHead turret;
-        private DI.Device keyboard;
+        private TurretHead turretHead;
 
         #endregion
 
         #region Initializer Methods
 
         /// <summary>
-        /// Script allows a Turret to rotate based on keyboard input at a 
+        /// Script allows a TurretHead to rotate based on keyboard input at a 
         /// certain speed.
         /// </summary>
-        /// <param name="turret">Turret to translate.</param>
-        /// <param name="keyboard">Keyboard Device to recieve input from.</param>
-        /// <param name="translateSpeed">Speed to translate at.</param>
-        public TurretRotationScript(TurretHead turret, DI.Device keyboard, float rotationSpeed)
+        /// <param name="turretHead">TurretHead to translate.</param>
+        public TurretHeadRotationScript(TurretHead turretHead)
         {
-            this.turret = turret;
-            this.keyboard = keyboard;
-            this.rotationSpeed = rotationSpeed;
+            this.turretHead = turretHead;
         }
 
         #endregion
@@ -50,27 +44,27 @@ namespace ClearSkies.Scripts
         /// <param name="deltaTime">Time in seconds since last Update</param>
         public void run(float deltaTime)
         {
-            DI.KeyboardState keys = keyboard.GetCurrentKeyboardState();
-            Vector3 rotation = turret.Rotation;
+            DI.KeyboardState keys = turretHead.Keyboard.GetCurrentKeyboardState();
+            Vector3 rotation = turretHead.Rotation;
 
             if (keys[DI.Key.Up] || keys[DI.Key.UpArrow] || keys[DI.Key.W])
             {
-                turret.BarrelRotation -= rotationSpeed * deltaTime;
+                turretHead.BarrelRotation -= turretHead.BarrelRotationSpeed * deltaTime;
             }
             if (keys[DI.Key.Left] || keys[DI.Key.LeftArrow] || keys[DI.Key.A])
             {
-                rotation.X -= rotationSpeed * deltaTime;
+                rotation.X -= turretHead.HeadRotationSpeed * deltaTime;
             }
             if (keys[DI.Key.Down] || keys[DI.Key.DownArrow] || keys[DI.Key.S])
             {
-                turret.BarrelRotation += rotationSpeed * deltaTime;
+                turretHead.BarrelRotation += turretHead.BarrelRotationSpeed * deltaTime;
             }
             if (keys[DI.Key.Right] || keys[DI.Key.RightArrow] || keys[DI.Key.D])
             {
-                rotation.X += rotationSpeed * deltaTime;
+                rotation.X += turretHead.HeadRotationSpeed * deltaTime;
             }
 
-            turret.Rotation = rotation;
+            turretHead.Rotation = rotation;
         }
 
         #endregion

@@ -15,6 +15,9 @@ namespace ClearSkies
         public const string BASIC_TURRET_BASE_MODEL_PATH = @"Content\Models\Turrets\BasicTurret\basic_turret_base.x";
         public const string BASIC_TURRET_HEAD_MODEL_PATH = @"Content\Models\Turrets\BasicTurret\basic_turret_head.x";
         public const string BASIC_PLANE_MODEL_PATH = @"Content\Models\Planes\BasicPlane\basicPlane.x";
+        public const string BASIC_TANK_BODY_MODEL_PATH = @"Content\Models\Tanks\BasicTank\basic_tank_body.x";
+        public const string BASIC_TANK_HEAD_MODEL_PATH = @"Content\Models\Tanks\BasicTank\basic_tank_body.x";
+        public const string BASIC_TANK_BARREL_MODEL_PATH = @"Content\Models\Tanks\BasicTank\basic_tank_body.x";
 
         public static Vector3 BASIC_TURRET_HEAD_OFFSET
         {
@@ -24,8 +27,11 @@ namespace ClearSkies
         {
             get { return new Vector3(0f, (float)Math.PI / 2f, 0f); }
         }
-        public const float BASIC_TURRET_ROTATION_SPEED = 1f;
+        public const float BASIC_TURRET_HEAD_ROTATION_SPEED = 1f;
+        public const float BASIC_TURRET_BARREL_ROTATION_SPEED = 1;
         public const float BASIC_TURRET_COLLIDER_SIZE = 1f;
+        public const float BASIC_TURRET_BARREL_MAX_PITCH = (float)(Math.PI / 2.0f);
+        public const float BASIC_TURRET_BARREL_MIN_PITCH = 0f;
 
         public static Vector3 TEST_TURRET_HEAD_OFFSET
         {
@@ -35,7 +41,8 @@ namespace ClearSkies
         {
             get { return new Vector3(0f, (float)(Math.PI / 2), 0f); }
         }
-        public const float TEST_TURRET_ROTATION_SPEED = 1f;
+        public const float TEST_TURRET_HEAD_ROTATION_SPEED = 1f;
+        public const float TEST_TURRET_BARREL_ROTATION_SPEED = 1f;
         public static Vector3 TEST_TURRET_BARREL_ONE_OFFSET
         {
             get { return new Vector3(0.25f, 0.5f, 0.5f); }
@@ -45,12 +52,31 @@ namespace ClearSkies
             get { return new Vector3(-0.25f, 0.5f, 0.5f); }
         }
         public const float TEST_TURRET_COLLIDER_SIZE = 1f;
+        public const float TEST_TURRET_BARREL_MAX_PITCH = (float)(Math.PI / 2.0f);
+        public const float TEST_TURRET_BARREL_MIN_PITCH = 0;
 
         public static Vector3 DEFAULT_TANK_SCALE
         {
             get { return new Vector3(1.0f, 1.0f, 1.0f); }
         }
         public const float TANK_COLLIDER_SIZE = 1.0f;
+        public const float TANK_COLLIDE_DAMAGE = 4f;
+        public const float BASIC_TANK_BARREL_MAX_PITCH = (float)(Math.PI / 2.0f);
+        public const float BASIC_TANK_BARREL_MIN_PITCH = 0f;
+        public const float BASIC_TANK_HEAD_ROTATION_SPEED = 1;
+        public const float BASIC_TANK_BARREL_ROTATION_SPEED = 1;
+        public static Vector3 BASIC_TANK_BARREL_DEFAULT_ROTATION
+        {
+            get { return new Vector3(0f, (float)Math.PI / 2f, 0f); }
+        }
+        public static Vector3 BASIC_TANK_BARREL_OFFSET
+        {
+            get { return new Vector3(0f, 0.5f, 0f); }
+        }
+        public static Vector3 BASIC_TANK_HEAD_OFFSET
+        {
+            get { return new Vector3(0f, 3.8f, 0f); }
+        }
 
         public static Vector3 DEFAULT_PLANE_HEIGHT
         {
@@ -105,10 +131,19 @@ namespace ClearSkies
         public const float BOMB_DROP_DISTANCE_FROM_TARGET = 1f;
         public const float PLANE_FLY_OVER_OVERRUN_TIME = 5f;
 
-        public const float SHOOT_PULL_SPEED = 2f;
-        public const float SHOOT_PUSH_SPEED = 1f;
-        public const float SHOOT_SHOOT_DELAY = 0.2f;
-        public const float SHOOT_PULL_TIME = SHOOT_SHOOT_DELAY * SHOOT_PUSH_SPEED / (SHOOT_PULL_SPEED + SHOOT_PUSH_SPEED);
-        public const float SHOOT_PUSH_TIME = SHOOT_SHOOT_DELAY * SHOOT_PULL_SPEED / (SHOOT_PULL_SPEED + SHOOT_PUSH_SPEED);
+
+        public const float TEST_TURRET_BARREL_SHOOT_DELAY = 0.2f;
+        public const float TEST_TURRET_BARREL_PUSH_SPEED = 1f;
+        public const float TEST_TURRET_BARREL_PULL_SPEED = 2f;
+
+
+        public const float BASIC_TURRET_BARREL_PULL_SPEED = 2f;
+        public const float BASIC_TURRET_BARREL_PUSH_SPEED = 1f;
+        public const float BASIC_TURRET_BARREL_SHOOT_DELAY = 0.2f;
+
+        public const float BASIC_TANK_BARREL_SHOOT_DISTANCE = 100f;
+        public const float BASIC_TANK_BARREL_SHOOT_DELAY = 2f;
+        public const float BASIC_TANK_BARREL_PUSH_SPEED = 2f;
+        public const float BASIC_TANK_BARREL_PULL_SPEED = 0.2f;
     }
 }

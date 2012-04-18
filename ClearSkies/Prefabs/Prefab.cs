@@ -153,14 +153,14 @@ namespace ClearSkies.Prefabs
         /// <param name="deltaTime">Time since last update in seconds</param>
         public virtual void update(float deltaTime)
         {
-            foreach (Script script in scripts)
+            for (int i = 0; i < scripts.Count; i++)
             {
-                script.run(deltaTime);
+                scripts[i].run(deltaTime);
             }
 
-            foreach (Prefab child in children)
+            for (int i = 0; i < children.Count; i++)
             {
-                child.update(deltaTime);
+                children[i].update(deltaTime);
             }
         }
 

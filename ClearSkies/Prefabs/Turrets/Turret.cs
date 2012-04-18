@@ -1,5 +1,6 @@
 ﻿using ClearSkies.Prefabs.Bullets;
 using Microsoft.DirectX;
+using ClearSkies.Prefabs.Enemies.Tanks;
 
 namespace ClearSkies.Prefabs.Turrets
 {
@@ -78,21 +79,28 @@ namespace ClearSkies.Prefabs.Turrets
         {
             base.detectCollision(collider);
 
+            float damage = 0f;
+
             if (collider is Bullet)
             {
                 Bullet collidingBullet = (Bullet)collider;
 
                 if (collidingBullet.Owner != this)
                 {
-                    health -= collidingBullet.Damage;
-
-                    if (health <= 0)
-                    {
-                        this.health = 0;
-                        this.alive = false;
-                    }
+                    damage = collidingBullet.Damage;
                 }
-                
+            }
+            else if (collider is Tank)
+            {
+                damage = Settings.TANK_COLLIDE_DAMAGE;
+            }
+
+            health -= damage;
+
+            if (health <= 0)
+            {
+                this.health = 0;
+                this.alive = false;
                 // TODO: Add death animation script
             }
         }

@@ -11,6 +11,13 @@ namespace ClearSkies.Prefabs.Enemies.Planes
     /// </summary>
     class Plane : Enemy
     {
+        #region Fields
+
+        private float flightSpeed;
+        private float turnSpeed;
+
+        #endregion
+
         #region Initializer Methods
 
         /// <summary>
@@ -23,11 +30,34 @@ namespace ClearSkies.Prefabs.Enemies.Planes
         /// <param name="rotation">Rotaiton the Plane is facing</param>
         /// <param name="scale">Scale of the Plane</param>
         /// <param name="colliderSize">Size of the collider sphere</param>
-        public Plane(Model model, Vector3 location, Vector3 rotation, Vector3 scale, float colliderSize) : 
+        public Plane(Model model, Vector3 location, Vector3 rotation, Vector3 scale, float flightSpeed, float turnSpeed, float colliderSize) : 
             base(location, rotation, scale, colliderSize)
         {
+            this.flightSpeed = flightSpeed;
+            this.turnSpeed = turnSpeed;
             this.models.Add(model);
+
             this.children.Add(new PlaneSmokeTrail(location));
+        }
+
+        #endregion
+
+        #region Getter and Setter Methods
+
+        /// <summary>
+        /// The speed the Plane can fly at.
+        /// </summary>
+        public float FlightSpeed
+        {
+            get { return this.flightSpeed; }
+        }
+
+        /// <summary>
+        /// The speed the Plane can turn at.
+        /// </summary>
+        public float TurnSpeed
+        {
+            get { return this.turnSpeed; }
         }
 
         #endregion

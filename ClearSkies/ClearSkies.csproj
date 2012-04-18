@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ClearSkies.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <SpecificVersion>False</SpecificVersion>
@@ -92,7 +95,10 @@
     <Compile Include="Prefabs\Enemies\Planes\Plane.cs" />
     <Compile Include="Prefabs\Enemies\Planes\PlaneSmokeTrail.cs" />
     <Compile Include="Prefabs\Enemies\Tanks\BasicTank.cs" />
+    <Compile Include="Prefabs\Enemies\Tanks\BasicTankHead.cs" />
     <Compile Include="Prefabs\Enemies\Tanks\Tank.cs" />
+    <Compile Include="Prefabs\Enemies\Tanks\TankBarrel.cs" />
+    <Compile Include="Prefabs\Enemies\Tanks\TankHead.cs" />
     <Compile Include="Prefabs\Prefab.cs" />
     <Compile Include="Prefabs\Turrets\BasicTurret.cs" />
     <Compile Include="Prefabs\Turrets\BasicTurretHead.cs" />
@@ -113,9 +119,11 @@
     <Compile Include="Scripts\DropBombScript.cs" />
     <Compile Include="Scripts\PlaneFlyOverScript.cs" />
     <Compile Include="Scripts\Script.cs" />
-    <Compile Include="Scripts\ShootScript.cs" />
+    <Compile Include="Scripts\TankHeadRotationScript.cs" />
+    <Compile Include="Scripts\TurretShootScript.cs" />
     <Compile Include="Scripts\TankMovementScript.cs" />
-    <Compile Include="Scripts\TurretRotationScript.cs" />
+    <Compile Include="Scripts\TankShootScript.cs" />
+    <Compile Include="Scripts\TurretHeadRotationScript.cs" />
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Game.resx">
       <DependentUpon>Game.cs</DependentUpon>
@@ -130,6 +138,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
+    <None Include="bin\Debug\Content\Models\Planes\BasicPlane\basicPlane.x" />
+    <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_barrel.x" />
+    <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_body.x" />
+    <None Include="bin\Debug\Content\Models\Tanks\BasicTank\basic_tank_head.x" />
+    <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_barrel.x" />
+    <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_base.x" />
+    <None Include="bin\Debug\Content\Models\Turrets\BasicTurret\basic_turret_head.x" />
     <None Include="bin\Debug\ClearSkies.exe.config" />
     <None Include="Content\Models\Planes\BasicPlane\basicPlane.x" />
     <None Include="Content\Models\Tanks\BasicTank\basic_tank_barrel.x" />
@@ -147,13 +162,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="scene_toonEdges.fx\docs\GPU-Img-Proc-Intro.pdf" />
-    <None Include="scene_toonEdges.fx\HLSL\include\Quad.fxh" />
-    <None Include="scene_toonEdges.fx\HLSL\scene_toonEdges.fx" />
-    <None Include="scene_toonEdges.fx\textures\Default_color.dds" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Models\BasicTank\" />
+    <Folder Include="bin\Debug\Content\Models\Bullets\" />
+    <Folder Include="Content\Models\Bullets\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ParticleEngine\ParticleEngine.csproj">
@@ -162,6 +174,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\Content\Textures\ground.jpg" />
+    <Content Include="bin\Debug\Content\Textures\health.png" />
+    <Content Include="bin\Debug\Content\Textures\healthBar.png" />
+    <Content Include="bin\Debug\Content\Textures\Particles\cloud_particle.png" />
+    <Content Include="bin\Debug\Content\Textures\Particles\explosion.png" />
+    <Content Include="bin\Debug\Content\Textures\Particles\test_particle.png" />
+    <Content Include="bin\Debug\Content\Textures\Sky1\sback37.jpg" />
+    <Content Include="bin\Debug\Content\Textures\Sky1\sfront37.jpg" />
+    <Content Include="bin\Debug\Content\Textures\Sky1\sleft37.jpg" />
+    <Content Include="bin\Debug\Content\Textures\Sky1\sright37.jpg" />
+    <Content Include="bin\Debug\Content\Textures\Sky1\stop37.jpg" />
     <Content Include="bin\Debug\ClearSkies.exe" />
     <Content Include="bin\Debug\ClearSkies.pdb" />
     <Content Include="Content\Textures\enemy.png" />

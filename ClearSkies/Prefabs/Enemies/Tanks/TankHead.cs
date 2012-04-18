@@ -1,22 +1,20 @@
+﻿using System;
 using System.Collections.Generic;
-using ClearSkies.Scripts;
+using System.Linq;
+using System.Text;
 using Microsoft.DirectX;
 using DI = Microsoft.DirectX.DirectInput;
+using ClearSkies.Scripts;
 
-namespace ClearSkies.Prefabs.Turrets
+namespace ClearSkies.Prefabs.Enemies.Tanks
 {
-    /// <summary>
-    /// A Prefab used to represent the TurretHead that Players will use to 
-    /// shoot at Enemies.
-    /// </summary>
-    abstract class TurretHead : Prefab
+    abstract class TankHead : Prefab
     {
         #region Fields
 
-        private List<TurretBarrel> barrels;
+        private List<TankBarrel> barrels;
         private float headRotationSpeed;
         private float barrelRotationSpeed;
-        private DI.Device keyboard;
 
         #endregion
 
@@ -36,14 +34,13 @@ namespace ClearSkies.Prefabs.Turrets
         /// <param name="keyboard">
         /// Keyboard Device used to control the TurretHead
         /// </param>
-        public TurretHead(Vector3 location, Vector3 rotation, Vector3 scale, float headRotationSpeed, float barrelRotationSpeed, DI.Device keyboard) : base(location, rotation, scale)
+        public TankHead(Vector3 location, Vector3 rotation, Vector3 scale, float headRotationSpeed, float barrelRotationSpeed) : base(location, rotation, scale)
         {
             this.headRotationSpeed = headRotationSpeed;
             this.barrelRotationSpeed = barrelRotationSpeed;
-            this.keyboard = keyboard;
-            this.barrels = new List<TurretBarrel>();
+            this.barrels = new List<TankBarrel>();
 
-            this.scripts.Add(new TurretHeadRotationScript(this));
+            this.scripts.Add(new TankHeadRotationScript(this));
         }
 
         #endregion
@@ -55,7 +52,7 @@ namespace ClearSkies.Prefabs.Turrets
         /// </summary>
         public float BarrelRotation
         {
-            get 
+            get
             {
                 float barrelRotation = 0.0f;
 
@@ -66,11 +63,11 @@ namespace ClearSkies.Prefabs.Turrets
 
                 return barrelRotation;
             }
-            set 
-            { 
+            set
+            {
                 foreach (Prefab child in children)
                 {
-                    if (child is TurretBarrel)
+                    if (child is TankBarrel)
                     {
                         Vector3 childRotation = child.Rotation;
                         childRotation.Y = value;
@@ -88,11 +85,6 @@ namespace ClearSkies.Prefabs.Turrets
         public float HeadRotationSpeed
         {
             get { return this.headRotationSpeed; }
-        }
-
-        public DI.Device Keyboard
-        {
-            get { return this.keyboard; }
         }
 
         #endregion

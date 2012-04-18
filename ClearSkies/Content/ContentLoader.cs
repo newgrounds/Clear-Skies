@@ -40,7 +40,9 @@ namespace ClearSkies.Content
         private static Model basicTurretBaseModel; 
         private static Model basicTurretHeadModel;
 
-        private static Model basicTankModel;
+        private static Model basicTankBodyModel;
+        private static Model basicTankHeadModel;
+        private static Model basicTankBarrelModel;
 
         private static Model basicPlaneModel;
 
@@ -125,12 +127,9 @@ namespace ClearSkies.Content
 
             basicPlaneModel = new Model(Settings.BASIC_PLANE_MODEL_PATH, new Vector3((float)Math.PI, 0f, 0f), device);
 
-            basicTankModel = new Model(Mesh.Box(device, 0.5f, 0.5f, 0.5f),
-                new Material[] { defaultMaterial },
-                new Texture[] { defaultTexture },
-				Vector3.Empty,
-                device,
-                true);
+            basicTankBodyModel = new Model(Settings.BASIC_TANK_BODY_MODEL_PATH, Vector3.Empty, device);
+            basicTankHeadModel = new Model(Settings.BASIC_TANK_HEAD_MODEL_PATH, Vector3.Empty, device);
+            basicTankBarrelModel = new Model(Settings.BASIC_TANK_BARREL_MODEL_PATH, Vector3.Empty, device);
 
             radarEnemy = TextureLoader.FromFile(device, @"Content\Textures\enemy.png",
                 0, 0, 1, Usage.None, Format.Unknown, Pool.Managed, Filter.None, Filter.None,
@@ -297,14 +296,31 @@ namespace ClearSkies.Content
             }
         }
 		
-        public static Model BasicTankModel
+        public static Model BasicTankBodyModel
         {
             get
             {
                 checkIfInitialized();
-                return basicTankModel;
+                return basicTankBodyModel;
             }
         }
+        public static Model BasicTankHeadModel
+        {
+            get
+            {
+                checkIfInitialized();
+                return basicTankHeadModel;
+            }
+        }
+        public static Model BasicTankBarrelModel
+        {
+            get
+            {
+                checkIfInitialized();
+                return basicTankBarrelModel;
+            }
+        }
+
         public static Texture RadarEnemy
         {
             get
