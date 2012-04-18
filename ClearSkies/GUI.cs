@@ -93,8 +93,16 @@ namespace ClearSkies
             drawRadar();
 
             // MAKE THIS BETTER, BASED CURRENTLY ON A 1920X1080 SCREEN SIZE
-            drawText(new Rectangle(20, 10, 100, 20),
-                    WAVE_STRING + EnemyManager.CurrentWave.ToString());
+            int waveTextX = (int)(this.width*0.0104);
+
+            drawText(new Rectangle(waveTextX, 10, (int)(this.width * 0.06f), 20),
+                WAVE_STRING + EnemyManager.CurrentWave.waveNumber.ToString());
+            drawText(new Rectangle(waveTextX, 34, (int)(this.width * 0.06f), 20),
+                "Tanks: " + EnemyManager.CurrentWave.tanksDestroyed
+                + "/" + EnemyManager.CurrentWave.tanksSpawned);
+            drawText(new Rectangle(waveTextX, 58, (int)(this.width * 0.06f), 20),
+                "Planes: " + EnemyManager.CurrentWave.planesDestroyed
+                + "/" + EnemyManager.CurrentWave.planesSpawned);
 
             float newScale = player.Health * 0.01f;
             drawHealth(healthBarTexture, healthTexturePoint, newScale);
